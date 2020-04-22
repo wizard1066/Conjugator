@@ -9,7 +9,7 @@
 import SwiftUI
 import Combine
 
-let populatePublisher = PassthroughSubject<Void,Never>()
+let populatePublisher = PassthroughSubject<String?,Never>()
 
 var shaker = false
 
@@ -107,11 +107,14 @@ let asize:CGFloat = 32
 let fsize:CGFloat = 32
 let qsize:CGFloat = 20
 
+
+var verbs: [Int:String] = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
+
 struct ContentView: View {
   @ObservedObject var verby = verbDB()
   @ObservedObject var tensey = tenseDB()
   @ObservedObject var answery = answerDB()
-  @State var verbs = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir",2020:""]
+//  @State var verbs = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
   @State var tenses = [1:"Présent de l'indicatif",
                        2:"Futur Simple",
                        3:"Imparfait de l'Indicatif",
@@ -684,6 +687,14 @@ struct ContentView: View {
       self.isSelect3S = false
     }
     
+    func findIndex() -> Int? {
+//      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
+      let zak = answery.answerx.firstIndex { ( data ) -> Bool in
+          data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
+        }
+      return zak
+    }
+    
     func findAnswer() -> String? {
       let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
       print("answer [\(bob)]")
@@ -732,6 +743,8 @@ struct ContentView: View {
             Text(self.blanks[$0])
               .font(Fonts.avenirNextCondensedBold(size: 16))
           }
+          
+          
         }.labelsHidden()
           .frame(width: 256, height: 128, alignment: .center)
       }
@@ -769,13 +782,37 @@ struct ContentView: View {
         }
         .frame(width: bsize, height: asize, alignment: .center)
       }
-      TextField("X", text: $verbText)
+      TextField("Verb", text: $verbText, onCommit: {
+        // new verb
+        self.display1 = false
+        let random = Int.random(in: 2020...3030)
+//        let newVerb = verbBlob(id: random, name: self.verbText)
+//        self.verby.verbx.append(newVerb)
+        
+        let already = self.verby.verbx.filter { self.verbText.contains($0.name)}
+        if already.isEmpty {
+          verbs[random] = self.verbText
+          print("self.verby.verbx ",self.verby.verbx)
+          populatePublisher.send(self.verbText)
+        } else {
+          self.display1 = true
+        }
+      })
         .multilineTextAlignment(.center)
         .font(Fonts.avenirNextCondensedMedium(size: fsize))
         .labelsHidden()
         .border(Color.gray)
         .frame(width: 256, height: 48, alignment: .center)
-      TextField("Y", text: $answerText)
+      TextField("Tense", text: $answerText, onCommit: {
+        let already = findIndex()
+        if already != nil {
+          print("already ",already)
+          self.answery.answerx.remove(at: (already as? Int)!)
+        }
+//        self.answery.answerx.remove(at: <#T##Int#>)
+        let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.answerText)
+        self.answery.answerx.append(newAnswer)
+      })
         .multilineTextAlignment(.center)
         .font(Fonts.avenirNextCondensedMedium(size: fsize))
         .labelsHidden()
@@ -884,8 +921,17 @@ struct ContentView: View {
 //          .frame(width: 256, height: 128, alignment: .center)
 //      }
     } // VStack
-    .onReceive(populatePublisher, perform: { (_) in
-      var dictSortByValue = self.verbs.sorted(by: {$0.value < $1.value} )
+    .onReceive(populatePublisher, perform: { ( seek ) in
+      self.display0 = false
+      self.display1 = false
+      self.display2 = false
+      
+      print("verbs ",verbs)
+      
+      self.verby.verbx.removeAll()
+      self.tensey.tensex.removeAll()
+      
+      var dictSortByValue = verbs.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
         //          self.verb.append(instance.value)
         let newVerb = verbBlob(id: instance.key, name: instance.value)
@@ -926,14 +972,21 @@ struct ContentView: View {
         let byteB = byteA[0].components(separatedBy: "-").map({Int($0)})
         let newAnswer = answerBlob(verbID: byteB[0], tenseID: byteB[1], personID: personID, name: byteA[1])
         self.answery.answerx.append(newAnswer)
-        print("inst ",instance,"X",byteA[1])
+//        print("inst ",instance,"X",byteA[1])
       }
       
-      self.display0 = true
-      self.display1 = true
-      self.display2 = true
-      DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
+      if seek != nil {
+        self.selectedVerb = self.verby.verbx.firstIndex(where: { ( data ) -> Bool in
+          seek == data.name
+        })!
+      }
+      
+
+      DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
         shaker = true
+        self.display0 = true
+        self.display1 = true
+        self.display2 = true
       }
     })
   }
@@ -951,7 +1004,7 @@ extension UIWindow {
   open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
     if motion == .motionShake {
       //      print("Device shaken")
-      populatePublisher.send()
+      populatePublisher.send(nil)
     }
   }
 }
