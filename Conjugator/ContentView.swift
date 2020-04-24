@@ -10,6 +10,7 @@ import SwiftUI
 import Combine
 
 let populatePublisher = PassthroughSubject<String?,Never>()
+let rulesPublisher = PassthroughSubject<Void,Never>()
 
 var shaker = false
 
@@ -37,6 +38,7 @@ final class verbDB: ObservableObject, Identifiable {
 
 struct tenseBlob {
   var id:Int!
+  var groupID:Int!
   var name:String!
 }
 
@@ -57,6 +59,19 @@ struct answerBlob {
 
 final class answerDB: ObservableObject, Identifiable {
   @Published var answerx:[answerBlob] = [] {
+    willSet {
+      objectWillChange.send()
+    }
+  }
+}
+
+struct groupBlob {
+  var groupID: Int!
+  var name:String!
+}
+
+final class groupDB: ObservableObject, Identifiable {
+  @Published var groupx:[groupBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -107,39 +122,51 @@ let asize:CGFloat = 32
 let fsize:CGFloat = 32
 let qsize:CGFloat = 20
 
-
+var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
 var verbs: [Int:String] = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
+var groups: [Int:String] = [
+1:"dérivé de l'infinitif complet",
+2:"dérivé du radical du nous du présent",
+3:"dérivé du radical du ils du présent",
+4:"dérivé du radical unique du passé simple",
+5:"formé avec les formes tu/nous/vous du présent",
+6:"dérivé du radical de l'infinitif",
+7:"à l'aide du participe passé",
+8:"sans rule"
+]
 
 struct ContentView: View {
   @ObservedObject var verby = verbDB()
   @ObservedObject var tensey = tenseDB()
   @ObservedObject var answery = answerDB()
+  @ObservedObject var groupy = groupDB()
 //  @State var verbs = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
-  @State var tenses = [1:"Présent de l'indicatif",
-                       2:"Futur Simple",
-                       3:"Imparfait de l'Indicatif",
-                       4:"Passé Simple",
-                       5:"Subjonctif Présent",
-                       6:"Subjonctif Imparfait",
-                       7:"Conditionnel Présent",
-                       8:"Impératif Présent",
-                       9:"Participe Présent",
-                       10:"Participe Passé",
-                       11:"Passé Composé",
-                       12:"Futur Antérieur",
-                       13:"Plus-Que-Parfait",
-                       14:"Passé Anterieur",
-                       15:"Subjonctif Passé",
-                       16:"Subjonctif Plus-Que-Parfait",
-                       17:"Conditionnel Passé 1",
-                       18:"Conditionnel Passé 2",
-                       19:"Impératif Passé",
-                       20:"Infinitif Présent",
-                       21:"Infinitif Passé",
-                       22:"Présent gérondif",
-                       23:"Passé gérondif"]
+  @State var tenses = ["1-1.Présent de l'indicatif",
+                       "2-2.Futur Simple",
+                       "3-2.Imparfait de l'Indicatif",
+                       "4-4.Passé Simple",
+                       "5-5.Subjonctif Présent",
+                       "6-6.Subjonctif Imparfait",
+                       "7-7.Conditionnel Présent",
+                       "8-4.Impératif Présent",
+                       "9-3.Participe Présent",
+                       "10-6.Participe Passé",
+                       "11-7.Passé Composé",
+                       "12-7.Futur Antérieur",
+                       "13-7.Plus-Que-Parfait",
+                       "14-7.Passé Anterieur",
+                       "15-7.Subjonctif Passé",
+                       "16-7.Subjonctif Plus-Que-Parfait",
+                       "17-7.Conditionnel Passé 1",
+                       "18-7.Conditionnel Passé 2",
+                       "19-8.Impératif Passé",
+                       "20-8.Infinitif Présent",
+                       "21-8.Infinitif Passé",
+                       "22-8.Présent gérondif",
+                       "23-8.Passé gérondif"]
   @State var verb:[String] = []
   @State var selectedVerb = 0
+  @State var selectedGroup = 0
   
   @State var selectedTense = 4
   @State var answers = [
@@ -658,6 +685,8 @@ struct ContentView: View {
   @State var display0 = false
   @State var display1 = false
   @State var display2 = false
+  @State var display3 = false
+  
   @State var showColor = false
   @State var verbID:Int!
   @State var tenseID:Int!
@@ -675,6 +704,12 @@ struct ContentView: View {
   
   @State var verbText:String = ""
   @State var answerText:String = ""
+  @State var ruleColor: Color = Color.clear
+  
+  @State var hintOne:String = ""
+  @State var hintTwo:String = ""
+  @State var hintOneVisible = false
+  @State var hintTwoVisible = false
   
   var body: some View {
   
@@ -701,12 +736,22 @@ struct ContentView: View {
       if bob.isEmpty {
         return("")
       } else {
-        return bob.first?.name
+        return bob.first?.name!
+      }
+    }
+    
+    func findHint1() -> String? {
+      let bob = self.tensey.tensex.filter({ tenseID == $0.id })
+      let sue = self.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
+      if bob.isEmpty {
+        return("")
+      } else {
+        return sue.first?.name!
       }
     }
     
     return VStack(alignment: .center) {
-      Spacer().frame(width: 50)
+      Spacer().frame(width: 40)
       if display0 {
         Picker("", selection: $selectedTense) {
           ForEach((0 ..< tensey.tensex.count), id: \.self) { column in
@@ -719,7 +764,7 @@ struct ContentView: View {
           .frame(width: 256, height: 128, alignment: .center)
           .onReceive([selectedTense].publisher) { ( value ) in
             self.tenseID = self.tensey.tensex[value].id
-            self.answerText = findAnswer()!
+//            self.answerText = findAnswer()!
             if value != self.lvalue {
               self.display2 = false
               var count = 0
@@ -748,18 +793,28 @@ struct ContentView: View {
         }.labelsHidden()
           .frame(width: 256, height: 128, alignment: .center)
       }
-      Spacer().frame(height: 64)
+//      Spacer().frame(height: 40)
+      VStack {
+      Text(hintOneVisible ? hintOne: hintOne)
+//        .transition(.asymmetric(insertion: AnyTransition.opacity, removal: .slide))
+        .opacity(hintOneVisible ? 1:0)
+        .animation(.easeIn(duration: 2.0))
+        .frame(width: 256, height: 24, alignment: .center)
+        .background(hintOneVisible ? Color.yellow: Color.clear)
+        .font(Fonts.avenirNextCondensedMedium(size: qsize))
+        .padding()
+      }
       HStack {
-        Text("1S").font(Fonts.avenirNextCondensedBold(size: qsize))
+        Text("Je").font(Fonts.avenirNextCondensedBold(size: qsize))
         .background(isSelect1S ? Color.yellow: Color.clear)
         .onTapGesture {
           resetButtons()
           self.isSelect1S = !self.isSelect1S
           self.personID = PersonClass.s1
-          self.answerText = findAnswer()!
+//          self.answerText = findAnswer()!
         }
         .frame(width: bsize, height: asize, alignment: .center)
-        Text("2S")
+        Text("Tu")
           .font(Fonts.avenirNextCondensedBold(size: qsize))
           .background(isSelect2S ? Color.yellow: Color.clear)
           .onTapGesture {
@@ -767,10 +822,10 @@ struct ContentView: View {
             self.isSelect2S = !self.isSelect2S
             
             self.personID = PersonClass.s2
-            self.answerText = findAnswer()!
+//            self.answerText = findAnswer()!
           }
           .frame(width: bsize, height: asize, alignment: .center)
-        Text("3S")
+        Text("Il")
           .font(Fonts.avenirNextCondensedBold(size: qsize))
           .background(isSelect3S ? Color.yellow: Color.clear)
           .onTapGesture {
@@ -778,48 +833,45 @@ struct ContentView: View {
           self.isSelect3S = !self.isSelect3S
           
           self.personID = PersonClass.s3
-          self.answerText = findAnswer()!
+//          self.answerText = findAnswer()!
         }
         .frame(width: bsize, height: asize, alignment: .center)
-      }
-      TextField("Verb", text: $verbText, onCommit: {
-        // new verb
-        self.display1 = false
-        let random = Int.random(in: 2020...3030)
-//        let newVerb = verbBlob(id: random, name: self.verbText)
-//        self.verby.verbx.append(newVerb)
         
-        let already = self.verby.verbx.filter { self.verbText.contains($0.name)}
-        if already.isEmpty {
-          verbs[random] = self.verbText
-          print("self.verby.verbx ",self.verby.verbx)
-          populatePublisher.send(self.verbText)
-        } else {
-          self.display1 = true
+      }
+      HStack (alignment: .center, spacing: 2, content: {
+      Text("H1")
+        .font(Fonts.avenirNextCondensedBold(size: qsize))
+        .onTapGesture {
+          self.hintOne = findHint1()!
+          self.hintOneVisible = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
+            self.hintOneVisible = false
+          }
         }
-      })
-        .multilineTextAlignment(.center)
-        .font(Fonts.avenirNextCondensedMedium(size: fsize))
-        .labelsHidden()
-        .border(Color.gray)
-        .frame(width: 256, height: 48, alignment: .center)
       TextField("Tense", text: $answerText, onCommit: {
         let already = findIndex()
         if already != nil {
           print("already ",already)
           self.answery.answerx.remove(at: (already as? Int)!)
         }
-//        self.answery.answerx.remove(at: <#T##Int#>)
         let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.answerText)
         self.answery.answerx.append(newAnswer)
       })
+        .background(ruleColor
+          .opacity(0.5))
         .multilineTextAlignment(.center)
         .font(Fonts.avenirNextCondensedMedium(size: fsize))
         .labelsHidden()
         .border(Color.gray)
         .frame(width: 256, height: 48, alignment: .center)
+      Text("H2")
+        .font(Fonts.avenirNextCondensedBold(size: qsize))
+        .onTapGesture {
+          self.hintOneVisible = false
+        }
+      })
       HStack {
-        Text("1P")
+        Text("Nous")
           .font(Fonts.avenirNextCondensedBold(size: qsize))
           .background(isSelect1P ? Color.yellow: Color.clear)
           .onTapGesture {
@@ -827,10 +879,10 @@ struct ContentView: View {
             self.isSelect1P = !self.isSelect1P
             
             self.personID = PersonClass.p1
-            self.answerText = findAnswer()!
+//            self.answerText = findAnswer()!
           }
           .frame(width: bsize, height: asize, alignment: .center)
-        Text("2P")
+        Text("Vous")
           .font(Fonts.avenirNextCondensedBold(size: qsize))
           .background(isSelect2P ? Color.yellow: Color.clear)
           .onTapGesture {
@@ -838,10 +890,10 @@ struct ContentView: View {
             self.isSelect2P = !self.isSelect2P
             
             self.personID = PersonClass.p2
-            self.answerText = findAnswer()!
+//            self.answerText = findAnswer()!
           }
           .frame(width: bsize, height: asize, alignment: .center)
-        Text("3P")
+        Text("Ils")
           .font(Fonts.avenirNextCondensedBold(size: qsize))
           .background(isSelect3P ? Color.yellow: Color.clear)
           .onTapGesture {
@@ -849,22 +901,21 @@ struct ContentView: View {
             self.isSelect3P = !self.isSelect3P
             
             self.personID = PersonClass.p3
-            self.answerText = findAnswer()!
+//            self.answerText = findAnswer()!
           }
           .frame(width: bsize, height: asize, alignment: .center)
       }
-      Spacer().frame(height: 64)
+      Spacer().frame(height: 40)
       if display1 {
         Picker("", selection: $selectedVerb) {
           ForEach((0 ..< verby.verbx.count), id: \.self) { column in
-            //        ForEach(0 ..< verb.count) {
             Text(self.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 16))
+              .font(Fonts.avenirNextCondensedBold(size: 24))
           }
         }.onReceive([selectedVerb].publisher.first()) { ( value ) in
           self.verbText = self.verby.verbx[value].name
           self.verbID = self.verby.verbx[value].id
-          self.answerText = findAnswer()!
+//          self.answerText = findAnswer()!
           if shaker {
             if value != self.pvalue {
               self.display2 = false
@@ -886,18 +937,41 @@ struct ContentView: View {
         }
         .labelsHidden()
         .frame(width: 256, height: 128, alignment: .center)
-        
-        
       } else {
-        Picker("", selection: $selectedAnswer) {
-          ForEach(0 ..< blanks.count) {
-            Text(self.blanks[$0])
-              .font(Fonts.avenirNextCondensedBold(size: 16))
+        Picker("", selection: $selectedGroup) {
+          ForEach((0 ..< groupy.groupx.count), id: \.self) { column in
+            Text(self.groupy.groupx[column].name)
+              .font(Fonts.avenirNextCondensedBold(size: 24))
           }
-        }.labelsHidden()
-          .frame(width: 256, height: 128, alignment: .center)
+        }.onReceive([selectedGroup].publisher.first()) { ( value ) in
+            print("selectedGroup ",self.selectedGroup)
+//            self.ruleColor = ruleColors[self.selectedGroup]
+//          self.verbText = self.verby.verbx[value].name
+//          self.verbID = self.verby.verbx[value].id
+//          self.answerText = findAnswer()!
+//          if shaker {
+//            if value != self.pvalue {
+//              self.display2 = false
+//              var count = 0
+//              self.answer.removeAll()
+//              for instance in self.answery.answerx {
+//                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+//                  self.answer.append(instance.name)
+//                  print("self.answer ",instance)
+//                  count += 1
+//                }
+//              }
+//              self.pvalue = value
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                self.display2 = true
+              }
+//            }
+//          }
+        }
+        .labelsHidden()
+        .frame(width: 256, height: 128, alignment: .center)
       }
-      Spacer().frame(height: 64)
+      Spacer().frame(height: 40)
 //      if display2 {
 //        Picker("", selection: $selectedAnswer) {
 //          ForEach(0 ..< answer.count) {
@@ -921,6 +995,15 @@ struct ContentView: View {
 //          .frame(width: 256, height: 128, alignment: .center)
 //      }
     } // VStack
+    .onReceive(rulesPublisher, perform: { ( _ ) in
+      self.display0 = false
+      self.verby.verbx.removeAll()
+      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+      for instance in dictSortByValue {
+        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+        self.groupy.groupx.append(newGroup)
+      }
+    })
     .onReceive(populatePublisher, perform: { ( seek ) in
       self.display0 = false
       self.display1 = false
@@ -930,17 +1013,25 @@ struct ContentView: View {
       
       self.verby.verbx.removeAll()
       self.tensey.tensex.removeAll()
+      self.verby.verbx.removeAll()
+      self.groupy.groupx.removeAll()
       
-      var dictSortByValue = verbs.sorted(by: {$0.value < $1.value} )
+      var dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+      for instance in dictSortByValue {
+        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+        self.groupy.groupx.append(newGroup)
+      }
+      
+      dictSortByValue = verbs.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
         //          self.verb.append(instance.value)
         let newVerb = verbBlob(id: instance.key, name: instance.value)
         self.verby.verbx.append(newVerb)
       }
-      dictSortByValue = self.tenses.sorted(by: {$0.value < $1.value} )
-      for instance in dictSortByValue {
-        //          self.verb.append(instance.value)
-        let newTense = tenseBlob(id: instance.key, name: instance.value)
+      for instance in self.tenses.sorted() {
+        let breakout = instance.split(separator: ".")
+        let breakdown = breakout[0].split(separator: "-")
+        let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]))
         self.tensey.tensex.append(newTense)
       }
       for instance in self.answers {
