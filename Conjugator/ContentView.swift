@@ -105,14 +105,18 @@ struct ListView: View {
 
 struct TextView: View {
   @State var textValue:String!
+  @State var textOK = true
   var body: some View {
+    if textValue.isEmpty {
+      textOK = false
+    }
     var twoText = textValue.split(separator: " ")
     if twoText.count == 1 {
       twoText.append(" ")
     }
     return HStack {
-      Text(twoText[0]).background(Color.yellow)
-      Text(twoText[1])
+        Text(textOK ? twoText[0] : "")
+        Text(textOK ? twoText[1] : "")
     }
   }
 }
@@ -125,48 +129,64 @@ let qsize:CGFloat = 20
 var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
 var verbs: [Int:String] = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
 var groups: [Int:String] = [
-1:"dérivé de l'infinitif complet",
-2:"dérivé du radical du nous du présent",
-3:"dérivé du radical du ils du présent",
-4:"dérivé du radical unique du passé simple",
-5:"formé avec les formes tu/nous/vous du présent",
-6:"dérivé du radical de l'infinitif",
-7:"à l'aide du participe passé",
-8:"sans rule"
+  1:"Dérivé du radical de l'infinitif",
+  2:"Dérivé de l'infinitif complet",
+  3:"Dérivé du radical du nous du présent",
+  4:"Dérivé du radical du nous du présent",
+  5:"Dérivé du radical du ils du présent",
+  6:"Dérivé du radical unique du passé simple",
+  7:"Dérivé de l'infinitif complet",
+  8:"Dérivé du radical du nous du présent",
+  9:"Dérivé du radical de l'infinitif",
+  10:"Rien"
 ]
+
+var rien = [String](repeating: " ", count: 6)
 
 struct ContentView: View {
   @ObservedObject var verby = verbDB()
   @ObservedObject var tensey = tenseDB()
   @ObservedObject var answery = answerDB()
   @ObservedObject var groupy = groupDB()
-//  @State var verbs = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
+//  @State var verbs = ["7-7.Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
   @State var tenses = ["1-1.Présent de l'indicatif",
-                       "2-2.Futur Simple",
-                       "3-2.Imparfait de l'Indicatif",
-                       "4-4.Passé Simple",
-                       "5-5.Subjonctif Présent",
-                       "6-6.Subjonctif Imparfait",
-                       "7-7.Conditionnel Présent",
-                       "8-4.Impératif Présent",
-                       "9-3.Participe Présent",
-                       "10-6.Participe Passé",
-                       "11-7.Passé Composé",
-                       "12-7.Futur Antérieur",
-                       "13-7.Plus-Que-Parfait",
-                       "14-7.Passé Anterieur",
-                       "15-7.Subjonctif Passé",
-                       "16-7.Subjonctif Plus-Que-Parfait",
-                       "17-7.Conditionnel Passé 1",
-                       "18-7.Conditionnel Passé 2",
-                       "19-8.Impératif Passé",
-                       "20-8.Infinitif Présent",
-                       "21-8.Infinitif Passé",
-                       "22-8.Présent gérondif",
-                       "23-8.Passé gérondif"]
+"2-2.Futur Simple",
+"3-3.Imparfait de l'Indicatif",
+"4-4.Passé Simple",
+"5-5.Subjonctif Présent",
+"6-6.Subjonctif Imparfait",
+"7-7.Conditionnel Présent",
+"9-8.Participe Présent",
+"10-9.Participe Passé",
+"20-10.Infinitif Présent"]
+//  @State var tenses = ["1-1.Présent de l'indicatif",
+//                       "2-2.Futur Simple",
+//                       "3-2.Imparfait de l'Indicatif",
+//                       "4-4.Passé Simple",
+//                       "5-5.Subjonctif Présent",
+//                       "6-6.Subjonctif Imparfait",
+//                       "7-7.Conditionnel Présent",
+//                       "8-4.Impératif Présent",
+//                       "9-3.Participe Présent",
+//                       "10-6.Participe Passé",
+//                       "11-7.Passé Composé",
+//                       "12-7.Futur Antérieur",
+//                       "13-7.Plus-Que-Parfait",
+//                       "14-7.Passé Anterieur",
+//                       "15-7.Subjonctif Passé",
+//                       "16-7.Subjonctif Plus-Que-Parfait",
+//                       "17-7.Conditionnel Passé 1",
+//                       "18-7.Conditionnel Passé 2",
+//                       "19-8.Impératif Passé",
+//                       "20-8.Infinitif Présent",
+//                       "21-8.Infinitif Passé",
+//                       "22-8.Présent gérondif",
+//                       "23-8.Passé gérondif"]
   @State var verb:[String] = []
   @State var selectedVerb = 0
   @State var selectedGroup = 0
+  
+  @State var groupName = ""
   
   @State var selectedTense = 4
   @State var answers = [
@@ -751,168 +771,15 @@ struct ContentView: View {
     }
     
     return VStack(alignment: .center) {
-      Spacer().frame(width: 40)
+      Spacer().frame(height:24)
       if display0 {
-        Picker("", selection: $selectedTense) {
-          ForEach((0 ..< tensey.tensex.count), id: \.self) { column in
-            //        ForEach(0 ..< tenses.count) {
-            Text(self.tensey.tensex[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 16))
-              .background(self.showColor ? Color.yellow: Color.clear)
-          }
-        }.labelsHidden()
-          .frame(width: 256, height: 128, alignment: .center)
-          .onReceive([selectedTense].publisher) { ( value ) in
-            self.tenseID = self.tensey.tensex[value].id
-//            self.answerText = findAnswer()!
-            if value != self.lvalue {
-              self.display2 = false
-              var count = 0
-              self.answer.removeAll()
-              for instance in self.answery.answerx {
-                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.answer.append(instance.name)
-                  print("self.answer ",instance)
-                  count += 1
-                }
-              }
-              self.lvalue = value
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                self.display2 = true
-              }
-            }
-        }
-      } else {
-        Picker("", selection: $selectedAnswer) {
-          ForEach(0 ..< blanks.count) {
-            Text(self.blanks[$0])
-              .font(Fonts.avenirNextCondensedBold(size: 16))
-          }
-          
-          
-        }.labelsHidden()
-          .frame(width: 256, height: 128, alignment: .center)
-      }
-//      Spacer().frame(height: 40)
-      VStack {
-      Text(hintOneVisible ? hintOne: hintOne)
-//        .transition(.asymmetric(insertion: AnyTransition.opacity, removal: .slide))
-        .opacity(hintOneVisible ? 1:0)
-        .animation(.easeIn(duration: 2.0))
-        .frame(width: 256, height: 24, alignment: .center)
-        .background(hintOneVisible ? Color.yellow: Color.clear)
-        .font(Fonts.avenirNextCondensedMedium(size: qsize))
-        .padding()
-      }
-      HStack {
-        Text("Je").font(Fonts.avenirNextCondensedBold(size: qsize))
-        .background(isSelect1S ? Color.yellow: Color.clear)
-        .onTapGesture {
-          resetButtons()
-          self.isSelect1S = !self.isSelect1S
-          self.personID = PersonClass.s1
-//          self.answerText = findAnswer()!
-        }
-        .frame(width: bsize, height: asize, alignment: .center)
-        Text("Tu")
-          .font(Fonts.avenirNextCondensedBold(size: qsize))
-          .background(isSelect2S ? Color.yellow: Color.clear)
-          .onTapGesture {
-            resetButtons()
-            self.isSelect2S = !self.isSelect2S
-            
-            self.personID = PersonClass.s2
-//            self.answerText = findAnswer()!
-          }
-          .frame(width: bsize, height: asize, alignment: .center)
-        Text("Il")
-          .font(Fonts.avenirNextCondensedBold(size: qsize))
-          .background(isSelect3S ? Color.yellow: Color.clear)
-          .onTapGesture {
-          resetButtons()
-          self.isSelect3S = !self.isSelect3S
-          
-          self.personID = PersonClass.s3
-//          self.answerText = findAnswer()!
-        }
-        .frame(width: bsize, height: asize, alignment: .center)
-        
-      }
-      HStack (alignment: .center, spacing: 2, content: {
-      Text("H1")
-        .font(Fonts.avenirNextCondensedBold(size: qsize))
-        .onTapGesture {
-          self.hintOne = findHint1()!
-          self.hintOneVisible = true
-          DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
-            self.hintOneVisible = false
-          }
-        }
-      TextField("Tense", text: $answerText, onCommit: {
-        let already = findIndex()
-        if already != nil {
-          print("already ",already)
-          self.answery.answerx.remove(at: (already as? Int)!)
-        }
-        let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.answerText)
-        self.answery.answerx.append(newAnswer)
-      })
-        .background(ruleColor
-          .opacity(0.5))
-        .multilineTextAlignment(.center)
-        .font(Fonts.avenirNextCondensedMedium(size: fsize))
-        .labelsHidden()
-        .border(Color.gray)
-        .frame(width: 256, height: 48, alignment: .center)
-      Text("H2")
-        .font(Fonts.avenirNextCondensedBold(size: qsize))
-        .onTapGesture {
-          self.hintOneVisible = false
-        }
-      })
-      HStack {
-        Text("Nous")
-          .font(Fonts.avenirNextCondensedBold(size: qsize))
-          .background(isSelect1P ? Color.yellow: Color.clear)
-          .onTapGesture {
-            resetButtons()
-            self.isSelect1P = !self.isSelect1P
-            
-            self.personID = PersonClass.p1
-//            self.answerText = findAnswer()!
-          }
-          .frame(width: bsize, height: asize, alignment: .center)
-        Text("Vous")
-          .font(Fonts.avenirNextCondensedBold(size: qsize))
-          .background(isSelect2P ? Color.yellow: Color.clear)
-          .onTapGesture {
-            resetButtons()
-            self.isSelect2P = !self.isSelect2P
-            
-            self.personID = PersonClass.p2
-//            self.answerText = findAnswer()!
-          }
-          .frame(width: bsize, height: asize, alignment: .center)
-        Text("Ils")
-          .font(Fonts.avenirNextCondensedBold(size: qsize))
-          .background(isSelect3P ? Color.yellow: Color.clear)
-          .onTapGesture {
-            resetButtons()
-            self.isSelect3P = !self.isSelect3P
-            
-            self.personID = PersonClass.p3
-//            self.answerText = findAnswer()!
-          }
-          .frame(width: bsize, height: asize, alignment: .center)
-      }
-      Spacer().frame(height: 40)
-      if display1 {
-        Picker("", selection: $selectedVerb) {
+           Picker("", selection: $selectedVerb) {
           ForEach((0 ..< verby.verbx.count), id: \.self) { column in
             Text(self.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 24))
+              .font(Fonts.avenirNextCondensedBold(size: 20))
           }
-        }.onReceive([selectedVerb].publisher.first()) { ( value ) in
+        }.frame(width: 256, height: 100, alignment: .center)
+        .onReceive([selectedVerb].publisher.first()) { ( value ) in
           self.verbText = self.verby.verbx[value].name
           self.verbID = self.verby.verbx[value].id
 //          self.answerText = findAnswer()!
@@ -936,12 +803,167 @@ struct ContentView: View {
           }
         }
         .labelsHidden()
-        .frame(width: 256, height: 128, alignment: .center)
+      } else {
+        Picker("", selection: $selectedAnswer) {
+          ForEach(0 ..< blanks.count) {
+            Text(self.blanks[$0])
+              .font(Fonts.avenirNextCondensedBold(size: 16))
+          }
+          
+          
+        }.labelsHidden()
+          .frame(width: 256, height: 100, alignment: .center)
+      }
+//      Spacer().frame(height: 40)
+//      VStack {
+//      Text(hintOneVisible ? hintOne: hintOne)
+////        .transition(.asymmetric(insertion: AnyTransition.opacity, removal: .slide))
+//        .opacity(hintOneVisible ? 1:0)
+//        .animation(.easeIn(duration: 2.0))
+//        .frame(width: 256, height: 24, alignment: .center)
+//        .background(hintOneVisible ? Color.yellow: Color.clear)
+//        .font(Fonts.avenirNextCondensedMedium(size: qsize))
+//        .padding()
+//      }
+//      HStack {
+//        Text("Je").font(Fonts.avenirNextCondensedBold(size: qsize))
+//        .background(isSelect1S ? Color.yellow: Color.clear)
+//        .onTapGesture {
+//          resetButtons()
+//          self.isSelect1S = !self.isSelect1S
+//          self.personID = PersonClass.s1
+////          self.answerText = findAnswer()!
+//        }
+//        .frame(width: bsize, height: asize, alignment: .center)
+//        Text("Tu")
+//          .font(Fonts.avenirNextCondensedBold(size: qsize))
+//          .background(isSelect2S ? Color.yellow: Color.clear)
+//          .onTapGesture {
+//            resetButtons()
+//            self.isSelect2S = !self.isSelect2S
+//
+//            self.personID = PersonClass.s2
+////            self.answerText = findAnswer()!
+//          }
+//          .frame(width: bsize, height: asize, alignment: .center)
+//        Text("Il")
+//          .font(Fonts.avenirNextCondensedBold(size: qsize))
+//          .background(isSelect3S ? Color.yellow: Color.clear)
+//          .onTapGesture {
+//          resetButtons()
+//          self.isSelect3S = !self.isSelect3S
+//
+//          self.personID = PersonClass.s3
+////          self.answerText = findAnswer()!
+//        }
+//        .frame(width: bsize, height: asize, alignment: .center)
+//
+//      }
+//      HStack (alignment: .center, spacing: 2, content: {
+//      Text("H1")
+//        .font(Fonts.avenirNextCondensedBold(size: qsize))
+//        .onTapGesture {
+//          self.hintOne = findHint1()!
+//          self.hintOneVisible = true
+//          DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
+//            self.hintOneVisible = false
+//          }
+//        }
+//      TextField("Tense", text: $answerText, onCommit: {
+//        let already = findIndex()
+//        if already != nil {
+//          print("already ",already)
+//          self.answery.answerx.remove(at: (already as? Int)!)
+//        }
+//        let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.answerText)
+//        self.answery.answerx.append(newAnswer)
+//      })
+//        .background(ruleColor
+//          .opacity(0.5))
+//        .multilineTextAlignment(.center)
+//        .font(Fonts.avenirNextCondensedMedium(size: fsize))
+//        .labelsHidden()
+//        .border(Color.gray)
+//        .frame(width: 256, height: 48, alignment: .center)
+//      Text("H2")
+//        .font(Fonts.avenirNextCondensedBold(size: qsize))
+//        .onTapGesture {
+//          self.hintOneVisible = false
+//        }
+//      })
+//      HStack {
+//        Text("Nous")
+//          .font(Fonts.avenirNextCondensedBold(size: qsize))
+//          .background(isSelect1P ? Color.yellow: Color.clear)
+//          .onTapGesture {
+//            resetButtons()
+//            self.isSelect1P = !self.isSelect1P
+//
+//            self.personID = PersonClass.p1
+////            self.answerText = findAnswer()!
+//          }
+//          .frame(width: bsize, height: asize, alignment: .center)
+//        Text("Vous")
+//          .font(Fonts.avenirNextCondensedBold(size: qsize))
+//          .background(isSelect2P ? Color.yellow: Color.clear)
+//          .onTapGesture {
+//            resetButtons()
+//            self.isSelect2P = !self.isSelect2P
+//
+//            self.personID = PersonClass.p2
+////            self.answerText = findAnswer()!
+//          }
+//          .frame(width: bsize, height: asize, alignment: .center)
+//        Text("Ils")
+//          .font(Fonts.avenirNextCondensedBold(size: qsize))
+//          .background(isSelect3P ? Color.yellow: Color.clear)
+//          .onTapGesture {
+//            resetButtons()
+//            self.isSelect3P = !self.isSelect3P
+//
+//            self.personID = PersonClass.p3
+////            self.answerText = findAnswer()!
+//          }
+//          .frame(width: bsize, height: asize, alignment: .center)
+//      }
+      Spacer().frame(height: 100)
+      
+      if display1 {
+        Picker("", selection: $selectedTense) {
+          ForEach((0 ..< tensey.tensex.count), id: \.self) { column in
+            //        ForEach(0 ..< tenses.count) {
+            Text(self.tensey.tensex[column].name)
+              .font(Fonts.avenirNextCondensedBold(size: 20))
+              .background(self.showColor ? Color.yellow: Color.clear)
+          }
+        }.labelsHidden()
+          .frame(width: 256, height: 100, alignment: .center)
+          .onReceive([selectedTense].publisher) { ( value ) in
+            self.tenseID = self.tensey.tensex[value].id
+            self.groupName = self.groupy.groupx[value].name
+//            self.answerText = findAnswer()!
+            if value != self.lvalue {
+              self.display2 = false
+              var count = 0
+              self.answer.removeAll()
+              for instance in self.answery.answerx {
+                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                  self.answer.append(instance.name)
+                  print("self.answer ",instance)
+                  count += 1
+                }
+              }
+              self.lvalue = value
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                self.display2 = true
+              }
+            }
+        }
       } else {
         Picker("", selection: $selectedGroup) {
           ForEach((0 ..< groupy.groupx.count), id: \.self) { column in
             Text(self.groupy.groupx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 24))
+              .font(Fonts.avenirNextCondensedBold(size: 20))
           }
         }.onReceive([selectedGroup].publisher.first()) { ( value ) in
             print("selectedGroup ",self.selectedGroup)
@@ -962,38 +984,44 @@ struct ContentView: View {
 //                }
 //              }
 //              self.pvalue = value
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                self.display2 = true
-              }
+//              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+//                self.display2 = true
+//              }
 //            }
 //          }
         }
         .labelsHidden()
-        .frame(width: 256, height: 128, alignment: .center)
+        .frame(width: 256, height: 90, alignment: .center)
       }
-      Spacer().frame(height: 40)
-//      if display2 {
-//        Picker("", selection: $selectedAnswer) {
-//          ForEach(0 ..< answer.count) {
-//            //        ForEach((0 ..< self.answery.answerx.count), id: \.self) { column in
-//
-//            TextView(textValue: self.answer[$0])
-//              //            Text(self.answer[column]).background(Color.yellow)
-//              .font(Fonts.avenirNextCondensedBold(size: 16))
-//
-//          }
-//        }.labelsHidden()
-//          .frame(width: 256, height: 128, alignment: .center)
-//
-//      } else {
-//        Picker("", selection: $selectedAnswer) {
-//          ForEach(0 ..< blanks.count) {
-//            Text(self.blanks[$0])
-//              .font(Fonts.avenirNextCondensedBold(size: 16))
-//          }
-//        }.labelsHidden()
-//          .frame(width: 256, height: 128, alignment: .center)
-//      }
+      Text(groupName)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .background(Color.yellow)
+        .padding(EdgeInsets(top: 40, leading: 0, bottom: 8, trailing: 0))
+//      Spacer()
+      if display2 {
+        List {
+          ForEach(0 ..< answer.count) {
+//                    ForEach((0 ..< self.answery.answerx.count), id: \.self) { column in
+            TextView(textValue: self.answer[$0])
+              .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
+//                          Text(self.answer[column])
+              .font(Fonts.avenirNextCondensedBold(size: 20))
+              
+
+          }
+        }.environment(\.defaultMinListRowHeight, 20)
+        .environment(\.defaultMinListHeaderHeight, 10)
+        .frame(width: 256, height: 180, alignment: .center)
+      } else {
+          List {
+            ForEach(0 ..< rien.count) {
+              Text(rien[$0])
+              .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
+              .font(Fonts.avenirNextCondensedBold(size: 20))
+            }
+        }
+      }
+      Spacer().frame(height: 24)
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0 = false
@@ -1080,6 +1108,7 @@ struct ContentView: View {
         self.display2 = true
       }
     })
+    
   }
 }
 
