@@ -4,7 +4,6 @@
 28,acquérir,avoir,acquis,acquér,-ir
 29,aller,être,allé,all,-er
 32,asseoir,avoir,assis,asse,-oir
-33,asseoir,avoir,assis,asse,-oir
 35,boire,avoir,bu,boi,-re
 37,choir,avoir,chu,ch,-oir
 38,clore,avoir,clos,clo,-re
