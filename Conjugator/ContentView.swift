@@ -36,6 +36,37 @@ final class verbDB: ObservableObject, Identifiable {
   }
 }
 
+func readVerb(fileName:String) -> String? {
+   let fileURL = Bundle.main.url(forResource:fileName, withExtension: "txt")
+   do {
+    if try fileURL!.checkResourceIsReachable() {
+           print("file exist")
+           return try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+//            print("contents ",contents)
+       } else {
+           print("file doesnt exist")
+       }
+   } catch {
+       print("an error happened while checking for the file")
+   }
+   return nil
+}
+
+func readConjugations() {
+  let fileURL = Bundle.main.url(forResource:"conjugationsFull", withExtension: "txt")
+   do {
+    if try fileURL!.checkResourceIsReachable() {
+           print("file exist")
+           let contents = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+//            print("contents ",contents)
+       } else {
+           print("file doesnt exist")
+       }
+   } catch {
+       print("an error happened while checking for the file")
+   }
+}
+
 struct tenseBlob {
   var id:Int!
   var groupID:Int!
@@ -127,7 +158,7 @@ let fsize:CGFloat = 32
 let qsize:CGFloat = 20
 
 var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
-var verbs: [Int:String] = [7:"Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
+var verbs: [Int:String] = [7:"Parler",2:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
 var groups: [Int:String] = [
   1:"Dérivé du radical de l'infinitif",
   2:"Dérivé de l'infinitif complet",
@@ -248,57 +279,58 @@ struct ContentView: View {
     "7-10.parlé(s) ",
     "7-10.parlée(s) ",
     
-    "7-11.J' ai",
-    "7-11.Tu as",
-    "7-11.Il a",
-    "7-11.Ils ont",
-    "7-11.Nous avons",
-    "7-11.Vous avez",
-    "7-12.J'aurai",
-    "7-12.Tu auras",
-    "7-12.Il aura",
-    "7-12.Ils auront",
-    "7-12.Nous aurons",
-    "7-12.Vous aurez",
-    "7-13.J' avais",
-    "7-13.Tu avais",
-    "7-13.Il avait",
-    "7-13.Ils avaient",
-    "7-13.Nous avions",
-    "7-13.Vous aviez",
-    "7-14.J' eus",
-    "7-14.Tu eus",
-    "7-14.Il eut",
-    "7-14.Ils eurent",
-    "7-14.Nous eûmes",
-    "7-14.Vous eûtes",
-    "7-15.J' aie",
-    "7-15.Tu aies",
-    "7-15.Il ait",
-    "7-15.Ils aient",
-    "7-15.Nous ayons",
-    "7-15.Vous ayez",
-    "7-16.J' eusse",
-    "7-16.Tu eusses",
-    "7-16.Il eût",
-    "7-16.Ils eussent",
-    "7-16.Nous eussions",
-    "7-16.Vous eussiez",
-    "7-17.J' aurais",
-    "7-17.Tu aurais",
-    "7-17.Il aurait",
-    "7-17.Ils auraient",
-    "7-17.Nous aurions",
-    "7-17.Vous auriez",
-    "7-18.J' eusse",
-    "7-18.Tu eusses",
-    "7-18.Il eût",
-    "7-18.Ils eussent",
-    "7-18.Nous eussions",
-    "7-18.Vous eussiez",
-    "7-19.Tu aie",
-    "7-19.Nous ayons",
-    "7-19.Vous ayez",
+    "2-11.J' ai",
+    "2-11.Tu as",
+    "2-11.Il a",
+    "2-11.Ils ont",
+    "2-11.Nous avons",
+    "2-11.Vous avez",
+    "2-12.J'aurai",
+    "2-12.Tu auras",
+    "2-12.Il aura",
+    "2-12.Ils auront",
+    "2-12.Nous aurons",
+    "2-12.Vous aurez",
+    "2-13.J' avais",
+    "2-13.Tu avais",
+    "2-13.Il avait",
+    "2-13.Ils avaient",
+    "2-13.Nous avions",
+    "2-13.Vous aviez",
+    "2-14.J' eus",
+    "2-14.Tu eus",
+    "2-14.Il eut",
+    "2-14.Ils eurent",
+    "2-14.Nous eûmes",
+    "2-14.Vous eûtes",
+    "2-15.J' aie",
+    "2-15.Tu aies",
+    "2-15.Il ait",
+    "2-15.Ils aient",
+    "2-15.Nous ayons",
+    "2-15.Vous ayez",
+    "2-16.J' eusse",
+    "2-16.Tu eusses",
+    "2-16.Il eût",
+    "2-16.Ils eussent",
+    "2-16.Nous eussions",
+    "2-16.Vous eussiez",
+    "2-17.J' aurais",
+    "2-17.Tu aurais",
+    "2-17.Il aurait",
+    "2-17.Ils auraient",
+    "2-17.Nous aurions",
+    "2-17.Vous auriez",
+    "2-18.J' eusse",
+    "2-18.Tu eusses",
+    "2-18.Il eût",
+    "2-18.Ils eussent",
+    "2-18.Nous eussions",
+    "2-18.Vous eussiez",
+    "2-19.Tu aie",
+    "2-19.Nous ayons",
+    "2-19.Vous ayez",
+    
     "25-1.Je finis",
     "25-1.Tu finis",
     "25-1.Il finit",
@@ -770,6 +802,9 @@ struct ContentView: View {
       }
     }
     
+    
+    readConjugations()
+    
     return VStack(alignment: .center) {
       Spacer().frame(height:24)
       if display0 {
@@ -1038,6 +1073,12 @@ struct ContentView: View {
       self.display2 = false
       
       print("verbs ",verbs)
+      
+      let content = readVerb(fileName: "hard")
+      
+      for verbs in content! {
+        print("verb ",verbs)
+      }
       
       self.verby.verbx.removeAll()
       self.tensey.tensex.removeAll()

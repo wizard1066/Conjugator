@@ -1,0 +1,17 @@
+8,acheter,avoir,acheté,achet,-er
+9,jeter,avoir,jeté,jet,-er
+10,appeler,avoir,appelé,appel,-er
+11,congeler,avoir,congelé,congel,-er
+12,arguer,avoir,argué,argu,-er
+13,assiéger,avoir,assiégé,assiég,-er
+14,commencer,avoir,commencé,commenc,-er
+16,employer,avoir,employé,employ,-er
+17,envoyer,avoir,envoyé,envoy,-er
+18,espérer,avoir,espéré,espér,-er
+19,essayer,avoir,essayé,essay,-er
+20,essuyer,avoir,essuyé,essuy,-er
+23,lever,avoir,levé,lev,-er
+24,manger,avoir,mangé,mang,-er
+30,apercevoir,avoir,aperçu,apercev,-oir
+46,croire,avoir,cru,croi,-re
+89,traire,avoir,trait,trai,-re
