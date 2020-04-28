@@ -12,7 +12,7 @@ import Combine
 let populatePublisher = PassthroughSubject<String?,Never>()
 let rulesPublisher = PassthroughSubject<Void,Never>()
 
-var shaker = false
+var shaker = true
 var once = true
 
 enum PersonClass {
@@ -206,7 +206,8 @@ var groups: [Int:String] = [
 
 var rien = [String](repeating: " ", count: 7)
 
-struct ContentView: View {
+struct PageTwo: View {
+  @EnvironmentObject var env : MyAppEnvironmentData
   @ObservedObject var verby = verbDB()
   @ObservedObject var tensey = tenseDB()
   @ObservedObject var answery = answerDB()
@@ -308,7 +309,11 @@ struct ContentView: View {
     
     
     return VStack(alignment: .center) {
-      Spacer().frame(height:40)
+      Spacer()
+        .navigationBarTitle(Text("Conjugator"), displayMode: .inline)
+        .onAppear {
+          populatePublisher.send(nil)
+        }
 //      Spacer()
       if display0 {
            Picker("", selection: $selectedVerb) {
@@ -316,12 +321,12 @@ struct ContentView: View {
             Text(self.verby.verbx[column].name)
               .font(Fonts.avenirNextCondensedBold(size: 20))
           }
-        }.frame(width: 256, height: 100, alignment: .center)
+        }.frame(width: 256, height: 162, alignment: .center)
         .onReceive([selectedVerb].publisher.first()) { ( value ) in
           self.verbText = self.verby.verbx[value].name
           self.verbID = self.verby.verbx[value].id
 //          self.answerText = findAnswer()!
-//          print("** value ** ",value)
+          print("** value ** ",value)
           if shaker {
             if value != self.pvalue {
               self.display2 = false
@@ -348,18 +353,19 @@ struct ContentView: View {
         }
         .labelsHidden()
       } else {
-        Picker("", selection: $selectedAnswer) {
-          ForEach(0 ..< blanks.count) {
-            Text(self.blanks[$0])
-              .font(Fonts.avenirNextCondensedBold(size: 16))
-          }
-          
-          
-        }.labelsHidden()
-          .frame(width: 256, height: 100, alignment: .center)
+        Spacer()
+//        Picker("", selection: $selectedAnswer) {
+//          ForEach(0 ..< blanks.count) {
+//            Text(self.blanks[$0])
+//              .font(Fonts.avenirNextCondensedBold(size: 16))
+//          }
+//
+//
+//        }.labelsHidden()
+//          .frame(width: 256, height: 100, alignment: .center)
       }
 
-      Spacer().frame(height: 100)
+      Spacer()
       
       if display1 {
         Picker("", selection: $selectedTense) {
@@ -370,7 +376,7 @@ struct ContentView: View {
               .background(self.showColor ? Color.yellow: Color.clear)
           }
         }.labelsHidden()
-          .frame(width: 256, height: 100, alignment: .center)
+          .frame(width: 256, height: 162, alignment: .center)
           .onReceive([selectedTense].publisher) { ( value ) in
             print("+++value+++",value)
 //            if value > 0 {
@@ -402,17 +408,18 @@ struct ContentView: View {
 //          }
         }
       } else {
-        Picker("", selection: $selectedGroup) {
-          ForEach((0 ..< groupy.groupx.count), id: \.self) { column in
-            Text(self.groupy.groupx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 20))
-          }
-        }.onReceive([selectedGroup].publisher.first()) { ( value ) in
-            print("selectedGroup ",self.selectedGroup)
-
-        }
-        .labelsHidden()
-        .frame(width: 256, height: 90, alignment: .center)
+        Spacer()
+//        Picker("", selection: $selectedGroup) {
+//          ForEach((0 ..< groupy.groupx.count), id: \.self) { column in
+//            Text(self.groupy.groupx[column].name)
+//              .font(Fonts.avenirNextCondensedBold(size: 20))
+//          }
+//        }.onReceive([selectedGroup].publisher.first()) { ( value ) in
+//            print("selectedGroup ",self.selectedGroup)
+//
+//        }
+//        .labelsHidden()
+//        .frame(width: 256, height: 90, alignment: .center)
       }
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -448,7 +455,7 @@ struct ContentView: View {
             }
         }
       }
-      Spacer().frame(height: 24)
+      Spacer()
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0 = false
@@ -463,33 +470,32 @@ struct ContentView: View {
       self.display0 = false
       self.display1 = false
       self.display2 = false
-      
-      
-      
-//      print("verbs ",verbs)
-      // fuck
-      if once {
-        once = false
         
       self.verby.verbx.removeAll()
-      self.tensey.tensex.removeAll()
-      self.verby.verbx.removeAll()
-      self.groupy.groupx.removeAll()
-        
-        let content = readVerb(fileName: "hard")
+      
+          
+        let content = readVerb(fileName: self.env.level)
       
         for lines in content! {
           if lines.count > 1 {
-            print("verb ",lines)
+            
             let verb = lines.split(separator: ",")
             let index = Int(String(verb[0]))
             let newVerb = verbBlob(id: index, name: String(verb[1]))
             self.verby.verbx.append(newVerb)
+            
           }
           self.verby.verbx.sort { (first, second) -> Bool in
             first.name < second.name
           }
         }
+        
+        if once {
+//          once = false
+          
+          self.tensey.tensex.removeAll()
+          self.groupy.groupx.removeAll()
+          self.answery.answerx.removeAll()
         
         let content2 = readConjugations()
         
@@ -608,7 +614,7 @@ func colorCode(gate:Int, no:Int) -> Bool {
 
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
-    ContentView()
+    PageTwo()
   }
 }
 
