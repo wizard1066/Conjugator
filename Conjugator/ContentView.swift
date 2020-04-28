@@ -201,22 +201,23 @@ var groups: [Int:String] = [
   7:"Dérivé de l'infinitif complet",
   8:"Dérivé du radical du nous du présent",
   9:"Dérivé du radical de l'infinitif",
-  10:"Rien"
+  10:"Dérivé du radical du ils du présent"
 ]
 
 var rien = [String](repeating: " ", count: 7)
 
 struct PageTwo: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-  @ObservedObject var verby = verbDB()
-  @ObservedObject var tensey = tenseDB()
-  @ObservedObject var answery = answerDB()
-  @ObservedObject var groupy = groupDB()
-//  @State var verbs = ["7-7.Parler",25:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
-  @State var tenses = ["1-1.Présent de l'indicatif",
-"2-2.Futur Simple",
-"3-3.Imparfait de l'Indicatif",
-"4-4.Passé Simple",
+//  @ObservedObject var verby = verbDB()
+//  @ObservedObject var tensey = tenseDB()
+//  @ObservedObject var answery = answerDB()
+//  @ObservedObject var groupy = groupDB()
+
+  @State var tenses = [
+"1-1.Indicatif présent",
+"2-2.Indicatif futur",
+"3-3.Indicatif imparfait",
+"4-4.Indicatif passé simple",
 "5-5.Subjonctif Présent",
 "6-6.Subjonctif Imparfait",
 "7-7.Conditionnel Présent",
@@ -279,14 +280,14 @@ struct PageTwo: View {
     
     func findIndex() -> Int? {
 //      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
-      let zak = answery.answerx.firstIndex { ( data ) -> Bool in
+      let zak = env.answery.answerx.firstIndex { ( data ) -> Bool in
           data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
         }
       return zak
     }
     
     func findAnswer() -> String? {
-      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
+      let bob = env.answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
       print("answer [\(bob)]")
       if bob.isEmpty {
         return("")
@@ -296,8 +297,8 @@ struct PageTwo: View {
     }
     
     func findHint1() -> String? {
-      let bob = self.tensey.tensex.filter({ tenseID == $0.id })
-      let sue = self.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
+      let bob = env.tensey.tensex.filter({ tenseID == $0.id })
+      let sue = env.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
       if bob.isEmpty {
         return("")
       } else {
@@ -310,6 +311,12 @@ struct PageTwo: View {
                        tag: .NavigationView,
                        selection: $env.currentPage,
                        label: { EmptyView() })
+                       
+    let design = UIFontDescriptor.SystemDesign.rounded
+    let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
+                                     .withDesign(design)!
+    let font = UIFont.init(descriptor: descriptor, size: 48)
+    UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
     
     return VStack(alignment: .center) {
       Spacer().frame(width: 256, height: 0, alignment: .center)
@@ -326,14 +333,14 @@ struct PageTwo: View {
 //      Spacer()
       if display0 {
         Picker("", selection: $selectedVerb) {
-          ForEach((0 ..< verby.verbx.count), id: \.self) { column in
-            Text(self.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 20))
+          ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
+            Text(self.env.verby.verbx[column].name)
+              .font(Fonts.avenirNextCondensedBold(size: 18))
           }
         }.frame(width: 256, height: 162, alignment: .center)
         .onReceive([selectedVerb].publisher.first()) { ( value ) in
-          self.verbText = self.verby.verbx[value].name
-          self.verbID = self.verby.verbx[value].id
+          self.verbText = self.env.verby.verbx[value].name
+          self.verbID = self.env.verby.verbx[value].id
 //          self.answerText = findAnswer()!
 //          print("** value ** ",value)
           if shaker {
@@ -341,7 +348,7 @@ struct PageTwo: View {
               self.display2 = false
               var count = 0
               self.answer.removeAll()
-              for instance in self.answery.answerx {
+              for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                   self.answer.append(instance.name)
                   if instance.redMask != nil {
@@ -378,10 +385,10 @@ struct PageTwo: View {
       
       if display1 {
         Picker("", selection: $selectedTense) {
-          ForEach((0 ..< tensey.tensex.count), id: \.self) { column in
+          ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
             //        ForEach(0 ..< tenses.count) {
-            Text(self.tensey.tensex[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 20))
+            Text(self.env.tensey.tensex[column].name)
+              .font(Fonts.avenirNextCondensedBold(size: 18))
               .background(self.showColor ? Color.yellow: Color.clear)
           }
         }.labelsHidden()
@@ -389,15 +396,15 @@ struct PageTwo: View {
           .onReceive([selectedTense].publisher) { ( value ) in
 //            print("+++value+++",value)
 //            if value > 0 {
-            self.tenseID = self.tensey.tensex[value].id
-            self.groupName = self.groupy.groupx[value].name
+            self.tenseID = self.env.tensey.tensex[value].id
+            self.groupName = self.env.groupy.groupx[value].name
 //            self.answerText = findAnswer()!
             if value != self.lvalue {
               self.display2 = false
               var count = 0
               self.answer.removeAll()
               self.colors.removeAll()
-              for instance in self.answery.answerx {
+              for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                   self.answer.append(instance.name)
                   if instance.redMask != nil {
@@ -469,11 +476,11 @@ struct PageTwo: View {
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0 = false
-      self.verby.verbx.removeAll()
+      self.env.verby.verbx.removeAll()
       let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
         let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-        self.groupy.groupx.append(newGroup)
+        self.env.groupy.groupx.append(newGroup)
       }
     })
     .onReceive(populatePublisher, perform: { ( seek ) in
@@ -481,7 +488,7 @@ struct PageTwo: View {
       self.display1 = false
       self.display2 = false
         
-      self.verby.verbx.removeAll()
+      self.env.verby.verbx.removeAll()
       
           
         let content = readVerb(fileName: self.env.level)
@@ -492,10 +499,10 @@ struct PageTwo: View {
             let verb = lines.split(separator: ",")
             let index = Int(String(verb[0]))
             let newVerb = verbBlob(id: index, name: String(verb[1]))
-            self.verby.verbx.append(newVerb)
+            self.env.verby.verbx.append(newVerb)
             
           }
-          self.verby.verbx.sort { (first, second) -> Bool in
+          self.env.verby.verbx.sort { (first, second) -> Bool in
             first.name < second.name
           }
         }
@@ -503,9 +510,9 @@ struct PageTwo: View {
         if once {
 //          once = false
           
-          self.tensey.tensex.removeAll()
-          self.groupy.groupx.removeAll()
-          self.answery.answerx.removeAll()
+          self.env.tensey.tensex.removeAll()
+          self.env.groupy.groupx.removeAll()
+          self.env.answery.answerx.removeAll()
         
         let content2 = readConjugations()
         
@@ -564,7 +571,7 @@ struct PageTwo: View {
             if verbID != nil {
 //              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation)
               let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
-              self.answery.answerx.append(newAnswer)
+              self.env.answery.answerx.append(newAnswer)
             }
           }
       }
@@ -574,23 +581,23 @@ struct PageTwo: View {
       var dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
         let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-        self.groupy.groupx.append(newGroup)
+        self.env.groupy.groupx.append(newGroup)
       }
       
       for instance in self.tenses {
         let breakout = instance.split(separator: ".")
         let breakdown = breakout[0].split(separator: "-")
         let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]))
-        self.tensey.tensex.append(newTense)
+        self.env.tensey.tensex.append(newTense)
       }
       
-      self.tensey.tensex.sort { (first, second) -> Bool in
+      self.env.tensey.tensex.sort { (first, second) -> Bool in
             first.name < second.name
           }
       }
       
       if seek != nil {
-        self.selectedVerb = self.verby.verbx.firstIndex(where: { ( data ) -> Bool in
+        self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in
           seek == data.name
         })!
       }

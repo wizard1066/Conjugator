@@ -19,6 +19,10 @@ enum MyAppPage {
 final class MyAppEnvironmentData: ObservableObject {
     @Published var currentPage : MyAppPage? = .Menu
     @Published var level:String = "easy"
+    @Published var verby = verbDB()
+    @Published var tensey = tenseDB()
+    @Published var answery = answerDB()
+    @Published var groupy = groupDB()
 }
 
 struct NavigationTest: View {
