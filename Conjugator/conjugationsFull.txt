@@ -3201,9 +3201,9 @@ colno,verb id,tense id,aux id,person no,person,conjugation,stem,end,irregularS,i
 7104,77,1,2,3P,Ils,prennent,prenn,ent,1,0,0,
 7105,77,1,2,1P,Nous,prenons,pren,ons,1,,0,
 7106,77,1,2,2P,Vous,prenez,pren,ez,1,0,0,
-7107,77,2,2,1S,Je,prendrai,prendr,ai,1,,0,
-7108,77,2,2,2S,Tu,prendras,prendr,as,1,,0,
-7109,77,2,2,3S,Il,prendra,prendr,a,1,,0,
+7107,77,2,2,1S,Je,prendrai,prendr,ai,504
+7108,77,2,2,2S,Tu,prendras,prendr,as,504
+7109,77,2,2,3S,Il,prendra,prendr,a,504
 7110,77,2,2,3P,Ils,prendront,prendr,ont,1,,0,
 7111,77,2,2,1P,Nous,prendrons,prendr,ons,1,,0,
 7112,77,2,2,2P,Vous,prendrez,prendr,ez,1,,0,
@@ -3229,8 +3229,8 @@ colno,verb id,tense id,aux id,person no,person,conjugation,stem,end,irregularS,i
 7126,77,5,2,2S,Tu,prennes,prenn,es,,,0,
 7127,77,5,2,3S,Il,prenne,prenn,e,,,0,
 7128,77,5,2,3P,Ils,prennent,prenn,ent,,,0,
-7129,77,5,2,1P,Nous,prenions,pren,ions,1,,0,
-7130,77,5,2,2P,Vous,preniez,pren,iez,1,,0,
+7129,77,5,2,1P,Nous,prenions,pren,ions,480,,,
+7130,77,5,2,2P,Vous,preniez,pren,iez,480,,,
 7131,77,6,2,1S,Je,prisse,pr,isse,,,0,
 7132,77,6,2,2S,Tu,prisses,pr,isses,,,0,
 7133,77,6,2,3S,Il,prît,pr,ît,,,0,

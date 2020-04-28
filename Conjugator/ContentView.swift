@@ -81,6 +81,7 @@ struct tenseBlob {
   var id:Int!
   var groupID:Int!
   var name:String!
+  
 }
 
 final class tenseDB: ObservableObject, Identifiable {
@@ -96,6 +97,9 @@ struct answerBlob {
   var tenseID: Int!
   var personID: PersonClass!
   var name:String!
+  var redMask:Int?
+  var stemMask:Int?
+  var termMask:Int?
 }
 
 final class answerDB: ObservableObject, Identifiable {
@@ -127,6 +131,24 @@ struct Fonts {
   static func avenirNextCondensedMedium (size:CGFloat) -> Font{
     return Font.custom("AvenirNextCondensed-Medium",size: size)
   }
+}
+
+struct newView: View {
+    @State var word:String
+    @State var gate:Int
+    var body: some View {
+    let letter = word.map( { String($0) } )
+    return VStack {
+      HStack(spacing:0) {
+            ForEach((0 ..< letter.count), id: \.self) { column in
+              Text(letter[column])
+                .foregroundColor(colorCode(gate: Int(self.gate), no: column) ? Color.red: Color.black)
+                
+
+            }
+          }
+        }
+      }
 }
 
 struct ListView: View {
@@ -209,10 +231,11 @@ struct ContentView: View {
   
   @State var selectedTense = 4
   
-  @State var answer = [String](repeating: "", count: 99)
+  @State var answer = [String](repeating: "", count: 7)
+  @State var colors = [Int](repeating: 0, count: 7)
   @State var selectedAnswer = 0
   
-  @State var blanks = [String](repeating: "", count: 99)
+  @State var blanks = [String](repeating: "", count: 7)
   @State var display0 = false
   @State var display1 = false
   @State var display2 = false
@@ -286,6 +309,7 @@ struct ContentView: View {
     
     return VStack(alignment: .center) {
       Spacer().frame(height:40)
+//      Spacer()
       if display0 {
            Picker("", selection: $selectedVerb) {
           ForEach((0 ..< verby.verbx.count), id: \.self) { column in
@@ -297,21 +321,27 @@ struct ContentView: View {
           self.verbText = self.verby.verbx[value].name
           self.verbID = self.verby.verbx[value].id
 //          self.answerText = findAnswer()!
+//          print("** value ** ",value)
           if shaker {
             if value != self.pvalue {
-//              self.display2 = false
+              self.display2 = false
               var count = 0
               self.answer.removeAll()
               for instance in self.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                   self.answer.append(instance.name)
+                  if instance.redMask != nil {
+                    self.colors.append(instance.redMask!)
+                  } else {
+                    self.colors.append(0)
+                  }
 //                  print("self.answer ",instance)
                   count += 1
                 }
               }
               self.pvalue = value
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-//                self.display2 = true
+                self.display2 = true
               }
             }
           }
@@ -328,118 +358,7 @@ struct ContentView: View {
         }.labelsHidden()
           .frame(width: 256, height: 100, alignment: .center)
       }
-//      Spacer().frame(height: 40)
-//      VStack {
-//      Text(hintOneVisible ? hintOne: hintOne)
-////        .transition(.asymmetric(insertion: AnyTransition.opacity, removal: .slide))
-//        .opacity(hintOneVisible ? 1:0)
-//        .animation(.easeIn(duration: 2.0))
-//        .frame(width: 256, height: 24, alignment: .center)
-//        .background(hintOneVisible ? Color.yellow: Color.clear)
-//        .font(Fonts.avenirNextCondensedMedium(size: qsize))
-//        .padding()
-//      }
-//      HStack {
-//        Text("Je").font(Fonts.avenirNextCondensedBold(size: qsize))
-//        .background(isSelect1S ? Color.yellow: Color.clear)
-//        .onTapGesture {
-//          resetButtons()
-//          self.isSelect1S = !self.isSelect1S
-//          self.personID = PersonClass.s1
-////          self.answerText = findAnswer()!
-//        }
-//        .frame(width: bsize, height: asize, alignment: .center)
-//        Text("Tu")
-//          .font(Fonts.avenirNextCondensedBold(size: qsize))
-//          .background(isSelect2S ? Color.yellow: Color.clear)
-//          .onTapGesture {
-//            resetButtons()
-//            self.isSelect2S = !self.isSelect2S
-//
-//            self.personID = PersonClass.s2
-////            self.answerText = findAnswer()!
-//          }
-//          .frame(width: bsize, height: asize, alignment: .center)
-//        Text("Il")
-//          .font(Fonts.avenirNextCondensedBold(size: qsize))
-//          .background(isSelect3S ? Color.yellow: Color.clear)
-//          .onTapGesture {
-//          resetButtons()
-//          self.isSelect3S = !self.isSelect3S
-//
-//          self.personID = PersonClass.s3
-////          self.answerText = findAnswer()!
-//        }
-//        .frame(width: bsize, height: asize, alignment: .center)
-//
-//      }
-//      HStack (alignment: .center, spacing: 2, content: {
-//      Text("H1")
-//        .font(Fonts.avenirNextCondensedBold(size: qsize))
-//        .onTapGesture {
-//          self.hintOne = findHint1()!
-//          self.hintOneVisible = true
-//          DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
-//            self.hintOneVisible = false
-//          }
-//        }
-//      TextField("Tense", text: $answerText, onCommit: {
-//        let already = findIndex()
-//        if already != nil {
-//          print("already ",already)
-//          self.answery.answerx.remove(at: (already as? Int)!)
-//        }
-//        let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.answerText)
-//        self.answery.answerx.append(newAnswer)
-//      })
-//        .background(ruleColor
-//          .opacity(0.5))
-//        .multilineTextAlignment(.center)
-//        .font(Fonts.avenirNextCondensedMedium(size: fsize))
-//        .labelsHidden()
-//        .border(Color.gray)
-//        .frame(width: 256, height: 48, alignment: .center)
-//      Text("H2")
-//        .font(Fonts.avenirNextCondensedBold(size: qsize))
-//        .onTapGesture {
-//          self.hintOneVisible = false
-//        }
-//      })
-//      HStack {
-//        Text("Nous")
-//          .font(Fonts.avenirNextCondensedBold(size: qsize))
-//          .background(isSelect1P ? Color.yellow: Color.clear)
-//          .onTapGesture {
-//            resetButtons()
-//            self.isSelect1P = !self.isSelect1P
-//
-//            self.personID = PersonClass.p1
-////            self.answerText = findAnswer()!
-//          }
-//          .frame(width: bsize, height: asize, alignment: .center)
-//        Text("Vous")
-//          .font(Fonts.avenirNextCondensedBold(size: qsize))
-//          .background(isSelect2P ? Color.yellow: Color.clear)
-//          .onTapGesture {
-//            resetButtons()
-//            self.isSelect2P = !self.isSelect2P
-//
-//            self.personID = PersonClass.p2
-////            self.answerText = findAnswer()!
-//          }
-//          .frame(width: bsize, height: asize, alignment: .center)
-//        Text("Ils")
-//          .font(Fonts.avenirNextCondensedBold(size: qsize))
-//          .background(isSelect3P ? Color.yellow: Color.clear)
-//          .onTapGesture {
-//            resetButtons()
-//            self.isSelect3P = !self.isSelect3P
-//
-//            self.personID = PersonClass.p3
-////            self.answerText = findAnswer()!
-//          }
-//          .frame(width: bsize, height: asize, alignment: .center)
-//      }
+
       Spacer().frame(height: 100)
       
       if display1 {
@@ -453,7 +372,8 @@ struct ContentView: View {
         }.labelsHidden()
           .frame(width: 256, height: 100, alignment: .center)
           .onReceive([selectedTense].publisher) { ( value ) in
-            if value > 0 {
+            print("+++value+++",value)
+//            if value > 0 {
             self.tenseID = self.tensey.tensex[value].id
             self.groupName = self.groupy.groupx[value].name
 //            self.answerText = findAnswer()!
@@ -461,10 +381,16 @@ struct ContentView: View {
               self.display2 = false
               var count = 0
               self.answer.removeAll()
+              self.colors.removeAll()
               for instance in self.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                   self.answer.append(instance.name)
-//                  print("self.answer ",instance)
+                  if instance.redMask != nil {
+                    self.colors.append(instance.redMask!)
+                  } else {
+                    self.colors.append(0)
+                  }
+                  print("self.answer ",instance)
                   count += 1
                 }
               }
@@ -473,7 +399,7 @@ struct ContentView: View {
                 self.display2 = true
               }
             }
-          }
+//          }
         }
       } else {
         Picker("", selection: $selectedGroup) {
@@ -483,28 +409,7 @@ struct ContentView: View {
           }
         }.onReceive([selectedGroup].publisher.first()) { ( value ) in
             print("selectedGroup ",self.selectedGroup)
-//            self.ruleColor = ruleColors[self.selectedGroup]
-//          self.verbText = self.verby.verbx[value].name
-//          self.verbID = self.verby.verbx[value].id
-//          self.answerText = findAnswer()!
-//          if shaker {
-//            if value != self.pvalue {
-//              self.display2 = false
-//              var count = 0
-//              self.answer.removeAll()
-//              for instance in self.answery.answerx {
-//                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-//                  self.answer.append(instance.name)
-//                  print("self.answer ",instance)
-//                  count += 1
-//                }
-//              }
-//              self.pvalue = value
-//              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-//                self.display2 = true
-//              }
-//            }
-//          }
+
         }
         .labelsHidden()
         .frame(width: 256, height: 90, alignment: .center)
@@ -517,10 +422,14 @@ struct ContentView: View {
       if display2 {
         List {
 //          ForEach(0 ..< answer.count) {
-        ForEach((0 ..< self.answer.count), id: \.self) { column in
-          Text(self.answer[column])
+            ForEach((0 ..< self.answer.count), id: \.self) { column in
+              newView(word: self.answer[column], gate: self.colors[column])
+//          Text(self.answer[column]).onAppear(perform: {
+//            print("colors ",self.colors[column],column)
+//          })
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
               .font(Fonts.avenirNextCondensedBold(size: 20))
+             
 //            TextView(textValue: self.answer[$0])
 //              .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
 //              .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -555,10 +464,18 @@ struct ContentView: View {
       self.display1 = false
       self.display2 = false
       
+      
+      
 //      print("verbs ",verbs)
       // fuck
       if once {
         once = false
+        
+      self.verby.verbx.removeAll()
+      self.tensey.tensex.removeAll()
+      self.verby.verbx.removeAll()
+      self.groupy.groupx.removeAll()
+        
         let content = readVerb(fileName: "hard")
       
         for lines in content! {
@@ -585,41 +502,58 @@ struct ContentView: View {
             let conjugation = String(tense[5] + " " + tense[6])
 //            for instance in self.answers {
         var personID:PersonClass!
-        if conjugation.contains("Ils") {
-          personID = PersonClass.p3
-        } else {
-          if conjugation.contains("Je") || conjugation.contains("J'") {
+        print("conjugation ",conjugation)
+        switch tense[5] {
+          case "Je":
             personID = PersonClass.s1
-          } else {
-            if conjugation.contains("Tu") {
-              personID = PersonClass.s2
-            } else {
-              if conjugation.contains("Il") {
-                personID = PersonClass.s3
-              } else {
-                if conjugation.contains("Nous") {
-                  personID = PersonClass.p1
-                } else {
-                  if conjugation.contains("Vous") {
-                    personID = PersonClass.p2
-                  }
-                }
-              }
-//            }
-          }
+            break
+          case "J'":
+            personID = PersonClass.s1
+            break
+          case "Tu":
+            personID = PersonClass.s2
+            break
+          case "il":
+            personID = PersonClass.s3
+            break
+          case "Nous":
+            personID = PersonClass.p1
+            break
+          case "Vous":
+            personID = PersonClass.p2
+            break
+          case "Ils":
+            personID = PersonClass.p3
+            break
+          default:
+            break
         }
+
+        
+
+      
+        var redMask:Int!
+        if tense.count > 9 {
+          redMask = Int(tense[9])
+        }
+        if tense.count > 10 {
+          redMask = Int(tense[9] + tense[10])
+        }
+        if tense.count > 11 {
+          redMask = Int(tense[9] + tense[10] + tense[11])
+        }
+        print("redMask ",redMask)
+        
+
             if verbID != nil {
-              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation)
+//              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation)
+              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
               self.answery.answerx.append(newAnswer)
             }
           }
-        }
       }
       
-//      self.verby.verbx.removeAll()
-      self.tensey.tensex.removeAll()
-//      self.verby.verbx.removeAll()
-      self.groupy.groupx.removeAll()
+
       
       var dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
@@ -627,12 +561,6 @@ struct ContentView: View {
         self.groupy.groupx.append(newGroup)
       }
       
-//      dictSortByValue = verbs.sorted(by: {$0.value < $1.value} )
-//      for instance in dictSortByValue {
-//        //          self.verb.append(instance.value)
-//        let newVerb = verbBlob(id: instance.key, name: instance.value)
-//        self.verby.verbx.append(newVerb)
-//      }
       for instance in self.tenses {
         let breakout = instance.split(separator: ".")
         let breakdown = breakout[0].split(separator: "-")
@@ -643,36 +571,6 @@ struct ContentView: View {
       self.tensey.tensex.sort { (first, second) -> Bool in
             first.name < second.name
           }
-//      for instance in self.answers {
-//        var personID:PersonClass!
-//        if instance.contains("Ils") {
-//          personID = PersonClass.p3
-//        } else {
-//          if instance.contains("Je") || instance.contains("J'") {
-//            personID = PersonClass.s1
-//          } else {
-//            if instance.contains("Tu") {
-//              personID = PersonClass.s2
-//            } else {
-//              if instance.contains("Il") {
-//                personID = PersonClass.s3
-//              } else {
-//                if instance.contains("Nous") {
-//                  personID = PersonClass.p1
-//                } else {
-//                  if instance.contains("Vous") {
-//                    personID = PersonClass.p2
-//                  }
-//                }
-//              }
-//            }
-//          }
-//        }
-//        let byteA = instance.components(separatedBy: ".")
-//        let byteB = byteA[0].components(separatedBy: "-").map({Int($0)})
-//        let newAnswer = answerBlob(verbID: byteB[0], tenseID: byteB[1], personID: personID, name: byteA[1])
-//        self.answery.answerx.append(newAnswer)
-////        print("inst ",instance,"X",byteA[1])
       }
       
       if seek != nil {
@@ -690,9 +588,22 @@ struct ContentView: View {
       }
     })
     
+    
   }
 }
 
+func colorCode(gate:Int, no:Int) -> Bool {
+
+    let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
+    let bcr = String(no, radix:2).pad(with: "0", toLength: 16)
+    let binaryColumn = 1 << no
+    
+    let value = UInt64(gate) & UInt64(binaryColumn)
+    let vr = String(value, radix:2).pad(with: "0", toLength: 16)
+    
+//    print("bg ",bgr," bc ",bcr,vr)
+    return value > 0 ? true:false
+  }
 
 
 struct ContentView_Previews: PreviewProvider {
@@ -708,4 +619,13 @@ extension UIWindow {
       populatePublisher.send(nil)
     }
   }
+}
+
+extension String {
+    func pad(with character: String, toLength length: Int) -> String {
+        let padCount = length - self.count
+        guard padCount > 0 else { return self }
+
+        return String(repeating: character, count: padCount) + self
+    }
 }
