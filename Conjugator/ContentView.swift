@@ -306,17 +306,26 @@ struct PageTwo: View {
     }
     
     
-    
+    let navlink2 = NavigationLink(destination: AdminView(),
+                       tag: .NavigationView,
+                       selection: $env.currentPage,
+                       label: { EmptyView() })
     
     return VStack(alignment: .center) {
-      Spacer()
-        .navigationBarTitle(Text("Conjugator"), displayMode: .inline)
+      Spacer().frame(width: 256, height: 0, alignment: .center)
+        .navigationBarTitle(Text("Conjugator"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
+        .navigationBarItems(trailing: Text("Admin").onTapGesture {
+          print("page3")
+          
+          self.env.currentPage = .NavigationView
+        })
         .onAppear {
           populatePublisher.send(nil)
         }
+        navlink2.frame(width:0, height:0)
 //      Spacer()
       if display0 {
-           Picker("", selection: $selectedVerb) {
+        Picker("", selection: $selectedVerb) {
           ForEach((0 ..< verby.verbx.count), id: \.self) { column in
             Text(self.verby.verbx[column].name)
               .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -326,7 +335,7 @@ struct PageTwo: View {
           self.verbText = self.verby.verbx[value].name
           self.verbID = self.verby.verbx[value].id
 //          self.answerText = findAnswer()!
-          print("** value ** ",value)
+//          print("** value ** ",value)
           if shaker {
             if value != self.pvalue {
               self.display2 = false
@@ -352,6 +361,7 @@ struct PageTwo: View {
           }
         }
         .labelsHidden()
+        .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       } else {
         Spacer()
 //        Picker("", selection: $selectedAnswer) {
@@ -365,7 +375,6 @@ struct PageTwo: View {
 //          .frame(width: 256, height: 100, alignment: .center)
       }
 
-      Spacer()
       
       if display1 {
         Picker("", selection: $selectedTense) {
@@ -378,7 +387,7 @@ struct PageTwo: View {
         }.labelsHidden()
           .frame(width: 256, height: 162, alignment: .center)
           .onReceive([selectedTense].publisher) { ( value ) in
-            print("+++value+++",value)
+//            print("+++value+++",value)
 //            if value > 0 {
             self.tenseID = self.tensey.tensex[value].id
             self.groupName = self.groupy.groupx[value].name
@@ -406,7 +415,7 @@ struct PageTwo: View {
               }
             }
 //          }
-        }
+        }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       } else {
         Spacer()
 //        Picker("", selection: $selectedGroup) {
@@ -424,7 +433,7 @@ struct PageTwo: View {
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .background(Color.yellow)
-        .padding(EdgeInsets(top: 40, leading: 0, bottom: 8, trailing: 0))
+        .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
 //      Spacer()
       if display2 {
         List {
@@ -444,8 +453,9 @@ struct PageTwo: View {
 
           }
         }.environment(\.defaultMinListRowHeight, 20)
-        .environment(\.defaultMinListHeaderHeight, 10)
-        .frame(width: 256, height: 180, alignment: .center)
+        .environment(\.defaultMinListHeaderHeight, 0)
+        .frame(width: 256, height: 160, alignment: .center)
+        
       } else {
           List {
             ForEach(0 ..< rien.count) {
@@ -453,9 +463,9 @@ struct PageTwo: View {
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
               .font(Fonts.avenirNextCondensedBold(size: 20))
             }
-        }
+        }.frame(width: 256, height: 160, alignment: .center)
       }
-      Spacer()
+      
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0 = false

@@ -13,6 +13,7 @@ import Combine
 enum MyAppPage {
     case Menu
     case SecondPage
+    case NavigationView
 }
 
 final class MyAppEnvironmentData: ObservableObject {
