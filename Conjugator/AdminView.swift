@@ -8,6 +8,10 @@
 
 import Foundation
 import SwiftUI
+import Combine
+
+let nextPublisher = PassthroughSubject<Void,Never>()
+let resetPublisher = PassthroughSubject<Void,Never>()
 
 struct AdminView: View {
   @State private var firstname = ""
@@ -59,54 +63,17 @@ struct AdminView: View {
       
       VStack(){
         
-        Picker("", selection: $selectedVerb) {
-          ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
-            Text(self.env.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 18))
-          }
-        }.labelsHidden()
-          .onReceive([selectedVerb].publisher.first()) { ( value ) in
-            self.verbText = self.env.verby.verbx[value].name
-            self.verbID = self.env.verby.verbx[value].id
-            if shaker {
-              if value != self.pvalue {
-                self.display9 = false
-                self.selections.removeAll()
-                for instance in self.env.answery.answerx {
-                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                    self.selections.append(instance)
-                  }
-                }
-                self.pvalue = value
-                self.selections.sort { (first, second) -> Bool in
-                  first.personID.debugDescription < second.personID.debugDescription
-                }
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                  self.display9 = true
-//                  count = 0
-                }
-              }
-            }
-        }
-        if display9 {
-          ForEach((0 ..< self.selections.count), id: \.self) { column in
-            newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
-                .font(Fonts.avenirNextCondensedMedium(size: 20))
-                .onTapGesture {
-                  self.tag = column
-                  self.select[column].toggle()
-                  self.selectedText = self.selections[column].name
-                  self.word = self.selections[column].name
-                }
-              .background(self.select[column] ? Color.yellow: Color.clear)
-          }
-        }
-        SpotView(word: $word, sumsum: $sumsum)
+        
+        
+        SpotView(word: $word, sumsum: $sumsum, display9: $display9)
+          
           .navigationBarTitle(Text("Admin Page"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
           .navigationBarItems(trailing: Text("Do Update").onTapGesture {
             print("Updating ...")
             writeFile(answers: self.env.answery.answerx)
-        })
+        }).onReceive(nextPublisher) { (_) in
+          self.display9 = false
+        }
         TextField("Change ...", text: $selectedText, onCommit: {
           self.display9 = false
           self.personID = self.selections[self.tag].personID
@@ -140,43 +107,90 @@ struct AdminView: View {
         })
           .labelsHidden()
           .frame(width: 256, height: 32, alignment: .center)
-          .font(Fonts.avenirNextCondensedMedium(size: 20))
-        
+          .font(Fonts.avenirNextCondensedBold(size: 30))
+          .multilineTextAlignment(.center)
+      if !display9 {
+        Picker("", selection: $selectedVerb) {
+          ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
+            Text(self.env.verby.verbx[column].name)
+              .font(Fonts.avenirNextCondensedBold(size: 24))
+          }
+        }.labelsHidden()
+          .onReceive([selectedVerb].publisher.first()) { ( value ) in
+            self.verbText = self.env.verby.verbx[value].name
+            self.verbID = self.env.verby.verbx[value].id
+            if shaker {
+              if value != self.pvalue {
+                self.display9 = false
+                self.selections.removeAll()
+                for instance in self.env.answery.answerx {
+                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                    self.selections.append(instance)
+                  }
+                }
+                self.pvalue = value
+                self.selections.sort { (first, second) -> Bool in
+                  first.personID.debugDescription < second.personID.debugDescription
+                }
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                  self.display9 = true
+//                  count = 0
+                }
+              }
+            }
+        }
+        }
+        if display9 {
+          ForEach((0 ..< self.selections.count), id: \.self) { column in
+            newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
+                .font(Fonts.avenirNextCondensedMedium(size: 24))
+                .onTapGesture {
+//                  resetPublisher.send()
+                  for select in 0 ..< self.select.count {
+                    self.select[select] = false
+                  }
+                  self.tag = column
+                  self.select[column].toggle()
+                  self.selectedText = self.selections[column].name
+                  self.word = self.selections[column].name
+                }
+              .background(self.select[column] ? Color.yellow: Color.clear)
+              .onReceive(resetPublisher) { (_) in
+                for select in 0 ..< self.select.count {
+                  self.select[select] = false
+                }
+              }
+          }
+        }
         Picker("", selection: $selectedTense) {
           ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
             Text(self.env.tensey.tensex[column].name)
-              .font(Fonts.avenirNextCondensedMedium(size: 16))
+              .font(Fonts.avenirNextCondensedMedium(size: 24))
           }
         }.labelsHidden()
           .onReceive([selectedTense].publisher) { ( value ) in
-            //            print("+++value+++",value)
-            //            if value > 0 {
             self.tenseID = self.env.tensey.tensex[value].id
             self.groupName = self.env.groupy.groupx[value].name
-            //            self.answerText = findAnswer()!
             if value != self.lvalue {
               self.display9 = false
-              
-              self.answer.removeAll()
-              self.colors.removeAll()
+              self.selections.removeAll()
               for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.answer.append(instance.name)
-                  if instance.redMask != nil {
-                    self.colors.append(instance.redMask!)
-                  } else {
-                    self.colors.append(0)
-                  }
-                  print("self.answer ",instance)
-                  
+                    self.selections.append(instance)
+
                 }
               }
               self.lvalue = value
+               self.selections.sort { (first, second) -> Bool in
+                  first.personID.debugDescription < second.personID.debugDescription
+                }
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
                 self.display9 = true
               }
             }
-        }
+        }.onTapGesture {
+      UIApplication.shared.endEditing()
+      }
     }
   }
   
@@ -186,25 +200,23 @@ struct AdminView: View {
     @State var gate:Int = 0
     @State var isReady = false
     @State var code:String = ""
-//    @State private var name: String = "Tim"
+    @Binding var display9:Bool
     
     @State var colors = [Bool](repeating: false, count: 24)
     
     var body: some View {
-      let letter = word.map( { String($0) } )
+    let letter = word.map( { String($0) } )
     return VStack {
-//      VStack {
-//            TextField("RedRed", text: $name, onCommit: {
-//              self.gate = Int(self.name)!
-//            }).padding()
-//        }
       HStack(spacing:0) {
             ForEach((0 ..< letter.count), id: \.self) { column in
               Text(letter[column])
                 .foregroundColor(colorCodex(gate: Int(self.gate), no: column) ? Color.red: Color.black)
-                .font(Fonts.avenirNextCondensedBold(size: 24))
+                .font(Fonts.avenirNextCondensedBold(size: 30))
                 .background(self.colors[column] ? Color.yellow : Color.clear)
                 .foregroundColor(self.colors[column] ? Color.red : Color.clear)
+                .onLongPressGesture {
+                  self.display9.toggle()
+                }
                 .onTapGesture {
                     let code = 1 << column
                     print("code ",code)
@@ -284,4 +296,13 @@ func writeFile(answers:[answerBlob]) {
       print("Read from the file: \(inString) ")
     }
     }
+}
+
+extension UIWindow {
+  open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
+    if motion == .motionShake {
+      //      print("Device shaken")
+      nextPublisher.send()
+    }
+  }
 }

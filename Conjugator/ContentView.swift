@@ -233,6 +233,7 @@ struct PageTwo: View {
   @State var groupName = ""
   
   @State var selectedTense = 4
+  @State var verbSelected = "Conjugator"
   
 //  @State var answer = [String](repeating: "", count: 7)
   @State var colors = [Int](repeating: 0, count: 7)
@@ -338,11 +339,12 @@ struct PageTwo: View {
         Picker("", selection: $selectedVerb) {
           ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
             Text(self.env.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 18))
+              .font(Fonts.avenirNextCondensedBold(size: 24))
           }
         }.frame(width: 256, height: 162, alignment: .center)
         .onReceive([selectedVerb].publisher.first()) { ( value ) in
           self.verbText = self.env.verby.verbx[value].name
+          self.verbSelected = self.env.verby.verbx[value].name
           self.verbID = self.env.verby.verbx[value].id
           if shaker {
             if value != self.pvalue {
@@ -356,6 +358,8 @@ struct PageTwo: View {
               self.pvalue = value
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
                 self.display2 = true
+                self.display1 = true
+                self.display0 = false
               }
             }
           }
@@ -363,7 +367,12 @@ struct PageTwo: View {
         .labelsHidden()
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       } else {
-        Spacer()
+        Text(verbSelected)
+          .font(Fonts.avenirNextCondensedBold(size: 24))
+          .onLongPressGesture {
+            self.display0.toggle()
+            self.display1.toggle()
+          }
       }
 
       
@@ -372,7 +381,7 @@ struct PageTwo: View {
           ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
             //        ForEach(0 ..< tenses.count) {
             Text(self.env.tensey.tensex[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 18))
+              .font(Fonts.avenirNextCondensedBold(size: 24))
               .background(self.showColor ? Color.yellow: Color.clear)
           }
         }.labelsHidden()
@@ -412,20 +421,20 @@ struct PageTwo: View {
             ForEach((0 ..< self.selections.count), id: \.self) { column in
               newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
-              .font(Fonts.avenirNextCondensedBold(size: 20))
+              .font(Fonts.avenirNextCondensedBold(size: 22))
           }
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
-        .frame(width: 256, height: 160, alignment: .center)
+        .frame(width: 256, height: 180, alignment: .center)
         
       } else {
           List {
             ForEach(0 ..< rien.count) {
               Text(rien[$0])
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
-              .font(Fonts.avenirNextCondensedBold(size: 20))
+              .font(Fonts.avenirNextCondensedBold(size: 22))
             }
-        }.frame(width: 256, height: 160, alignment: .center)
+        }.frame(width: 256, height: 180, alignment: .center)
       }
       
     } // VStack
@@ -565,7 +574,7 @@ struct PageTwo: View {
       DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
         shaker = true
         self.display0 = true
-        self.display1 = true
+//        self.display1 = true
         self.display2 = true
       }
     })
@@ -594,14 +603,7 @@ struct ContentView_Previews: PreviewProvider {
   }
 }
 
-extension UIWindow {
-  open override func motionEnded(_ motion: UIEvent.EventSubtype, with event: UIEvent?) {
-    if motion == .motionShake {
-      //      print("Device shaken")
-      populatePublisher.send(nil)
-    }
-  }
-}
+
 
 extension String {
     func pad(with character: String, toLength length: Int) -> String {
@@ -610,4 +612,10 @@ extension String {
 
         return String(repeating: character, count: padCount) + self
     }
+}
+
+extension UIApplication {
+  func endEditing() {
+    sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
 }
