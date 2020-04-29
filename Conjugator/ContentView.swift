@@ -22,6 +22,7 @@ enum PersonClass {
   case p1
   case p2
   case p3
+  case px
 }
 
 struct verbBlob {
@@ -488,28 +489,29 @@ struct PageTwo: View {
       self.display1 = false
       self.display2 = false
         
-      self.env.verby.verbx.removeAll()
       
-          
-        let content = readVerb(fileName: self.env.level)
       
-        for lines in content! {
-          if lines.count > 1 {
-            
-            let verb = lines.split(separator: ",")
-            let index = Int(String(verb[0]))
-            let newVerb = verbBlob(id: index, name: String(verb[1]))
-            self.env.verby.verbx.append(newVerb)
-            
-          }
-          self.env.verby.verbx.sort { (first, second) -> Bool in
-            first.name < second.name
-          }
-        }
-        
         if once {
-//          once = false
+          once = false
           
+          self.env.verby.verbx.removeAll()
+          
+          let content = readVerb(fileName: self.env.level)
+        
+          for lines in content! {
+            if lines.count > 1 {
+              
+              let verb = lines.split(separator: ",")
+              let index = Int(String(verb[0]))
+              let newVerb = verbBlob(id: index, name: String(verb[1]))
+              self.env.verby.verbx.append(newVerb)
+              
+            }
+            self.env.verby.verbx.sort { (first, second) -> Bool in
+              first.name < second.name
+            }
+          }
+        
           self.env.tensey.tensex.removeAll()
           self.env.groupy.groupx.removeAll()
           self.env.answery.answerx.removeAll()
@@ -525,7 +527,7 @@ struct PageTwo: View {
             let conjugation = String(tense[5] + " " + tense[6])
 //            for instance in self.answers {
         var personID:PersonClass!
-        print("conjugation ",conjugation)
+//        print("conjugation ",conjugation)
         switch tense[5] {
           case "Je":
             personID = PersonClass.s1
@@ -536,7 +538,7 @@ struct PageTwo: View {
           case "Tu":
             personID = PersonClass.s2
             break
-          case "il":
+          case "Il":
             personID = PersonClass.s3
             break
           case "Nous":
@@ -553,7 +555,7 @@ struct PageTwo: View {
         }
 
         
-
+       
       
         var redMask:Int!
         if tense.count > 9 {
