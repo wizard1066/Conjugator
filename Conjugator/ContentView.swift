@@ -270,6 +270,7 @@ struct PageTwo: View {
   @State var hintTwoVisible = false
   
   @State var selections:[answerBlob] = []
+  @State private var action: Int? = 0
   
   var body: some View {
   
@@ -311,10 +312,10 @@ struct PageTwo: View {
     }
     
     
-    let navlink2 = NavigationLink(destination: AdminView(),
-                       tag: .NavigationView,
-                       selection: $env.currentPage,
-                       label: { EmptyView() })
+//    let navlink2 = NavigationLink(destination: AdminView(),
+//                       tag: .NavigationView,
+//                       selection: $env.currentPage,
+//                       label: { EmptyView() })
                        
     let design = UIFontDescriptor.SystemDesign.rounded
     let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
@@ -323,17 +324,21 @@ struct PageTwo: View {
     UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
     
     return VStack(alignment: .center) {
+      // Tried using $env.currentPage, but it seemed to be too slow setting this up
+      NavigationLink(destination: AdminView(), tag: 1, selection: $action) {
+                            EmptyView()
+                        }
       Spacer().frame(width: 256, height: 0, alignment: .center)
         .navigationBarTitle(Text("Conjugator"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           print("page3")
-          
+          self.action = 1
           self.env.currentPage = .NavigationView
         })
         .onAppear {
           populatePublisher.send(nil)
         }
-        navlink2.frame(width:0, height:0)
+//        navlink2.frame(width:0, height:0)
 //      Spacer()
       if display0 {
         Picker("", selection: $selectedVerb) {
