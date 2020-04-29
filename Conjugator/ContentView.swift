@@ -409,9 +409,10 @@ struct PageTwo: View {
             }
 //          }
         }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-      } else {
-        Spacer()
       }
+//      else {
+//        Spacer()
+//      }
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .background(Color.yellow)
