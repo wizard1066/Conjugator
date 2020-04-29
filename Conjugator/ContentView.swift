@@ -16,9 +16,9 @@ var shaker = true
 var once = true
 
 enum PersonClass {
-  case s1
-  case s2
-  case s3
+  case a1
+  case a2
+  case a3
   case p1
   case p2
   case p3
@@ -136,14 +136,14 @@ struct Fonts {
 
 struct newView: View {
     @State var word:String
-    @State var gate:Int
+    @State var gate:Int?
     var body: some View {
     let letter = word.map( { String($0) } )
     return VStack {
       HStack(spacing:0) {
             ForEach((0 ..< letter.count), id: \.self) { column in
               Text(letter[column])
-                .foregroundColor(colorCode(gate: Int(self.gate), no: column) ? Color.red: Color.black)
+                .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
                 
 
             }
@@ -234,7 +234,7 @@ struct PageTwo: View {
   
   @State var selectedTense = 4
   
-  @State var answer = [String](repeating: "", count: 7)
+//  @State var answer = [String](repeating: "", count: 7)
   @State var colors = [Int](repeating: 0, count: 7)
   @State var selectedAnswer = 0
   
@@ -267,6 +267,8 @@ struct PageTwo: View {
   @State var hintTwo:String = ""
   @State var hintOneVisible = false
   @State var hintTwoVisible = false
+  
+  @State var selections:[answerBlob] = []
   
   var body: some View {
   
@@ -342,23 +344,13 @@ struct PageTwo: View {
         .onReceive([selectedVerb].publisher.first()) { ( value ) in
           self.verbText = self.env.verby.verbx[value].name
           self.verbID = self.env.verby.verbx[value].id
-//          self.answerText = findAnswer()!
-//          print("** value ** ",value)
           if shaker {
             if value != self.pvalue {
               self.display2 = false
-              var count = 0
-              self.answer.removeAll()
+              self.selections.removeAll()
               for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.answer.append(instance.name)
-                  if instance.redMask != nil {
-                    self.colors.append(instance.redMask!)
-                  } else {
-                    self.colors.append(0)
-                  }
-//                  print("self.answer ",instance)
-                  count += 1
+                  self.selections.append(instance)
                 }
               }
               self.pvalue = value
@@ -372,15 +364,6 @@ struct PageTwo: View {
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       } else {
         Spacer()
-//        Picker("", selection: $selectedAnswer) {
-//          ForEach(0 ..< blanks.count) {
-//            Text(self.blanks[$0])
-//              .font(Fonts.avenirNextCondensedBold(size: 16))
-//          }
-//
-//
-//        }.labelsHidden()
-//          .frame(width: 256, height: 100, alignment: .center)
       }
 
       
@@ -395,28 +378,21 @@ struct PageTwo: View {
         }.labelsHidden()
           .frame(width: 256, height: 162, alignment: .center)
           .onReceive([selectedTense].publisher) { ( value ) in
-//            print("+++value+++",value)
-//            if value > 0 {
+
             self.tenseID = self.env.tensey.tensex[value].id
             self.groupName = self.env.groupy.groupx[value].name
-//            self.answerText = findAnswer()!
             if value != self.lvalue {
               self.display2 = false
-              var count = 0
-              self.answer.removeAll()
-              self.colors.removeAll()
+              self.selections.removeAll()
               for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.answer.append(instance.name)
-                  if instance.redMask != nil {
-                    self.colors.append(instance.redMask!)
-                  } else {
-                    self.colors.append(0)
-                  }
-                  print("self.answer ",instance)
-                  count += 1
+                  self.selections.append(instance)
                 }
               }
+              self.selections.sort { (first, second) -> Bool in
+                  first.personID.debugDescription < second.personID.debugDescription
+                }
+              
               self.lvalue = value
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
                 self.display2 = true
@@ -426,39 +402,17 @@ struct PageTwo: View {
         }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       } else {
         Spacer()
-//        Picker("", selection: $selectedGroup) {
-//          ForEach((0 ..< groupy.groupx.count), id: \.self) { column in
-//            Text(self.groupy.groupx[column].name)
-//              .font(Fonts.avenirNextCondensedBold(size: 20))
-//          }
-//        }.onReceive([selectedGroup].publisher.first()) { ( value ) in
-//            print("selectedGroup ",self.selectedGroup)
-//
-//        }
-//        .labelsHidden()
-//        .frame(width: 256, height: 90, alignment: .center)
       }
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .background(Color.yellow)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-//      Spacer()
       if display2 {
         List {
-//          ForEach(0 ..< answer.count) {
-            ForEach((0 ..< self.answer.count), id: \.self) { column in
-              newView(word: self.answer[column], gate: self.colors[column])
-//          Text(self.answer[column]).onAppear(perform: {
-//            print("colors ",self.colors[column],column)
-//          })
+            ForEach((0 ..< self.selections.count), id: \.self) { column in
+              newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
               .font(Fonts.avenirNextCondensedBold(size: 20))
-             
-//            TextView(textValue: self.answer[$0])
-//              .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
-//              .font(Fonts.avenirNextCondensedBold(size: 20))
-              
-
           }
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
@@ -530,16 +484,16 @@ struct PageTwo: View {
 //        print("conjugation ",conjugation)
         switch tense[5] {
           case "Je":
-            personID = PersonClass.s1
+            personID = PersonClass.a1
             break
           case "J'":
-            personID = PersonClass.s1
+            personID = PersonClass.a1
             break
           case "Tu":
-            personID = PersonClass.s2
+            personID = PersonClass.a2
             break
           case "Il":
-            personID = PersonClass.s3
+            personID = PersonClass.a3
             break
           case "Nous":
             personID = PersonClass.p1
@@ -567,7 +521,10 @@ struct PageTwo: View {
         if tense.count > 11 {
           redMask = Int(tense[9] + tense[10] + tense[11])
         }
-        print("redMask ",redMask)
+        
+        if redMask == nil {
+          redMask = 0
+        }
         
 
             if verbID != nil {

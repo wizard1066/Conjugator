@@ -50,11 +50,14 @@ struct AdminView: View {
   
   @EnvironmentObject var env : MyAppEnvironmentData
   
+  
+  
   var body: some View {
-    print("self.env.answery.answerx A",self.env.answery.answerx.count)
+    
+
     return
       
-      VStack() {
+      VStack(){
         
         Picker("", selection: $selectedVerb) {
           ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
@@ -65,33 +68,19 @@ struct AdminView: View {
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
             self.verbText = self.env.verby.verbx[value].name
             self.verbID = self.env.verby.verbx[value].id
-            //          self.answerText = findAnswer()!
-            //          print("** value ** ",value)
             if shaker {
               if value != self.pvalue {
                 self.display9 = false
-//                var count = 0
-//                self.answer.removeAll()
-//                self.colors.removeAll()
-//                self.persons.removeAll()
                 self.selections.removeAll()
                 for instance in self.env.answery.answerx {
                   if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                     self.selections.append(instance)
-                    print("instanceX ",instance)
-//                    self.selectAnswer = count
-//                    self.answer.append(instance.name)
-//                    self.persons.append(instance.personID)
-//                    if instance.redMask != nil {
-//                      self.colors.append(instance.redMask!)
-//                    } else {
-//                      self.colors.append(0)
-//                    }
-//                    //                  print("self.answer ",instance)
-//                    count += 1
                   }
                 }
                 self.pvalue = value
+                self.selections.sort { (first, second) -> Bool in
+                  first.personID.debugDescription < second.personID.debugDescription
+                }
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
                   self.display9 = true
 //                  count = 0
@@ -102,7 +91,6 @@ struct AdminView: View {
         if display9 {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
             newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
-  //            Text(self.display9 ? self.answer[column]:"")
                 .font(Fonts.avenirNextCondensedMedium(size: 20))
                 .onTapGesture {
                   self.tag = column
@@ -114,17 +102,11 @@ struct AdminView: View {
           }
         }
         SpotView(word: $word, sumsum: $sumsum)
-//        HStack {
-//          ForEach((0 ..< 16), id: \.self) { column in
-//            Text("O")
-//              .font(Fonts.avenirNextCondensedBold(size: 20))
-//              .onTapGesture {
-//                print("tag ",self.tag,self.tag2)
-//                self.choice[self.tag].toggle()
-//            }
-//            .border(Color.gray)
-//          }
-//        }
+          .navigationBarTitle(Text("Admin Page"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
+          .navigationBarItems(trailing: Text("Do Update").onTapGesture {
+            print("Updating ...")
+            writeFile(answers: self.env.answery.answerx)
+        })
         TextField("Change ...", text: $selectedText, onCommit: {
           self.display9 = false
           self.personID = self.selections[self.tag].personID
@@ -235,6 +217,20 @@ struct AdminView: View {
                     }
                     print("sumsum ",self.sumsum)
                 }
+                .gesture(DragGesture(minimumDistance: 0)
+                  .onEnded({ ( value ) in
+                    let code = 1 << column
+                    print("code ",code)
+                    if self.colors[column] {
+                      self.colors[column] = false
+                      self.sumsum = (self.sumsum - Int(code))
+                    } else {
+                      self.colors[column] = true
+                      self.sumsum = (self.sumsum + Int(code))
+                    }
+                    print("sumsum ",self.sumsum)
+                  })
+                )
             }
           }
         }
@@ -255,3 +251,37 @@ func colorCodex(gate:Int, no:Int) -> Bool {
 //    print("bg ",bgr," bc ",bcr,vr)
     return value > 0 ? true:false
   }
+
+func writeFile(answers:[answerBlob]) {
+  print("amswerBlob ",answers.count)
+  let fileName = "Conjugations"
+  let dir = try? FileManager.default.url(for: .documentDirectory,
+                                         in: .userDomainMask, appropriateFor: nil, create: true)
+  
+  // If the directory was found, we write a file to it and read it back
+  print("Saved ",dir)
+  if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension("txt") {
+    var lines:String = ""
+      for line in answers {
+        lines = lines + "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
+      }
+      do {
+        try lines.write(to: fileURL, atomically: true, encoding: .utf8)
+      } catch {
+        print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
+      }
+    
+   
+    //reading
+    DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
+      var inString = ""
+      do {
+        inString = try String(contentsOf: fileURL)
+        
+      } catch {
+        print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
+      }
+      print("Read from the file: \(inString) ")
+    }
+    }
+}
