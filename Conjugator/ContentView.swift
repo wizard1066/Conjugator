@@ -198,11 +198,11 @@ var groups: [Int:String] = [
   3:"Dérivé du radical du nous du présent",
   4:"Dérivé du radical du nous du présent",
   5:"Dérivé du radical du ils du présent",
-  6:"Dérivé du radical unique du passé simple",
+  6:"Dérivé du radical du passé simple",
   7:"Dérivé de l'infinitif complet",
   8:"Dérivé du radical du nous du présent",
   9:"Dérivé du radical de l'infinitif",
-  10:"Dérivé du radical du ils du présent"
+  10:"Forme de base"
 ]
 
 var rien = [String](repeating: " ", count: 7)
@@ -232,7 +232,7 @@ struct PageTwo: View {
   
   @State var groupName = ""
   
-  @State var selectedTense = 4
+  @State var selectedTense = 9
   @State var verbSelected = "Conjugator"
   @State var preVerbSelected = ""
   @State var postVerbSelected = ""
@@ -359,8 +359,10 @@ struct PageTwo: View {
               self.verbText = self.env.verby.verbx[value].name
               self.verbID = self.env.verby.verbx[value].id
               self.display0Tense = false
+              self.display1Tense = true
+              self.display2Conjugations = false
               self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[value - 1].name : ""
-              self.postVerbSelected = self.selectedVerb < self.env.verby.verbx.count ? self.env.verby.verbx[value + 1].name : ""
+              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[value + 1].name : ""
               self.verbSelected = self.env.verby.verbx[value].name
               if value != self.pvalue {
                 self.display2Conjugations = true
@@ -413,10 +415,10 @@ struct PageTwo: View {
             self.groupName = self.env.groupy.groupx[value].name
             
             self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[value - 1].name : ""
-            self.postTenseSelected = self.selectedTense < self.env.tensey.tensex.count ? self.env.verby.verbx[value + 1].name : ""
+            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[value + 1].name : ""
             self.tenseSelected = self.env.tensey.tensex[value].name
             if value != self.lvalue {
-//              self.display2Conjugations = false
+              self.display2Conjugations = false
               self.display0Conjugations = false
               self.selections.removeAll()
               for instance in self.env.answery.answerx {
@@ -430,12 +432,13 @@ struct PageTwo: View {
               self.lvalue = value
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
               
-                self.display0Conjugations = true
+                
                 self.display0Tense = false
                 self.display1Tense = true
                 self.display0Verb = false
                 self.display1Verb = true
                 self.display0Conjugations = true
+                self.display2Conjugations = true
               }
             }
         }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
@@ -448,7 +451,7 @@ struct PageTwo: View {
       
     } // ZStack
       Text(groupName)
-        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .font(Fonts.avenirNextCondensedBold(size: 24))
         .background(Color.yellow)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         .offset(x: 0, y: -64)
@@ -464,6 +467,10 @@ struct PageTwo: View {
         .environment(\.defaultMinListHeaderHeight, 0)
         .frame(width: 256, height: 180, alignment: .center)
         .offset(x: 0, y: -64)
+      } else {
+        Spacer()
+          .frame(width: 256, height: 200, alignment: .center)
+          .offset(x: 0, y: -64)
       }
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
@@ -551,7 +558,7 @@ struct TenseView: View {
               self.display0Tense = true
           }
           .opacity(0.1)
-          .rotation3DEffect(.degrees(20), axis: (x: 1, y: 0, z: 0))
+          .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
           Text(tenseSelected)
             .font(Fonts.avenirNextCondensedBold(size: 24))
             .onLongPressGesture {
@@ -565,7 +572,7 @@ struct TenseView: View {
               self.display0Tense = true
           }
           .opacity(0.1)
-          .rotation3DEffect(.degrees(20), axis: (x: -1, y: 0, z: 0))
+          .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
         }
         }
 }
@@ -589,7 +596,7 @@ struct VerbView: View {
           //            self.display0Tense.toggle()
       }
       .opacity(0.1)
-      .rotation3DEffect(.degrees(20), axis: (x: 1, y: 0, z: 0))
+      .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
       Text(verbSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
@@ -605,7 +612,7 @@ struct VerbView: View {
           //            self.display0Tense.toggle()
       }
       .opacity(0.1)
-      .rotation3DEffect(.degrees(20), axis: (x: -1, y: 0, z: 0))
+      .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
     }
   }
 }
