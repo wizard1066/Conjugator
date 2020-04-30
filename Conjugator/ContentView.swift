@@ -463,96 +463,96 @@ struct PageTwo: View {
         if once {
           once = false
           
-          self.env.verby.verbx.removeAll()
-          
-          let content = readVerb(fileName: self.env.level)
+//          self.env.verby.verbx.removeAll()
+//
+//          let content = readVerb(fileName: self.env.level)
+//
+//          for lines in content! {
+//            if lines.count > 1 {
+//
+//              let verb = lines.split(separator: ",")
+//              let index = Int(String(verb[0]))
+//              let newVerb = verbBlob(id: index, name: String(verb[1]))
+//              self.env.verby.verbx.append(newVerb)
+//
+//            }
+//            self.env.verby.verbx.sort { (first, second) -> Bool in
+//              first.name < second.name
+//            }
+//          }
         
-          for lines in content! {
-            if lines.count > 1 {
-              
-              let verb = lines.split(separator: ",")
-              let index = Int(String(verb[0]))
-              let newVerb = verbBlob(id: index, name: String(verb[1]))
-              self.env.verby.verbx.append(newVerb)
-              
-            }
-            self.env.verby.verbx.sort { (first, second) -> Bool in
-              first.name < second.name
-            }
-          }
-        
-          self.env.tensey.tensex.removeAll()
-          self.env.groupy.groupx.removeAll()
-          self.env.answery.answerx.removeAll()
-        
-        let content2 = readConjugations()
-        
-        for lines in content2! {
-          if lines.count > 1 {
-            print("verb ",lines)
-            let tense = lines.split(separator: ",")
-            let verbID = Int(String(tense[1]))
-            let tenseID = Int(String(tense[2]))
-            let conjugation = String(tense[5] + " " + tense[6])
-//            for instance in self.answers {
-        var personID:PersonClass!
-//        print("conjugation ",conjugation)
-        switch tense[5] {
-          case "Je":
-            personID = PersonClass.a1
-            break
-          case "J'":
-            personID = PersonClass.a1
-            break
-          case "Tu":
-            personID = PersonClass.a2
-            break
-          case "Il":
-            personID = PersonClass.a3
-            break
-          case "Nous":
-            personID = PersonClass.p1
-            break
-          case "Vous":
-            personID = PersonClass.p2
-            break
-          case "Ils":
-            personID = PersonClass.p3
-            break
-          default:
-            break
-        }
-
-        
-       
+//          self.env.tensey.tensex.removeAll()
+//          self.env.groupy.groupx.removeAll()
+//          self.env.answery.answerx.removeAll()
+//
+//        let content2 = readConjugations()
+//
+//        for lines in content2! {
+//          if lines.count > 1 {
+//            print("verb ",lines)
+//            let tense = lines.split(separator: ",")
+//            let verbID = Int(String(tense[1]))
+//            let tenseID = Int(String(tense[2]))
+//            let conjugation = String(tense[5] + " " + tense[6])
+////            for instance in self.answers {
+//        var personID:PersonClass!
+////        print("conjugation ",conjugation)
+//        switch tense[5] {
+//          case "Je":
+//            personID = PersonClass.a1
+//            break
+//          case "J'":
+//            personID = PersonClass.a1
+//            break
+//          case "Tu":
+//            personID = PersonClass.a2
+//            break
+//          case "Il":
+//            personID = PersonClass.a3
+//            break
+//          case "Nous":
+//            personID = PersonClass.p1
+//            break
+//          case "Vous":
+//            personID = PersonClass.p2
+//            break
+//          case "Ils":
+//            personID = PersonClass.p3
+//            break
+//          default:
+//            break
+//        }
+//
+//
+//
+//
+//        var redMask:Int!
+//        if tense.count > 9 {
+//          redMask = Int(tense[9])
+//        }
+//        if tense.count > 10 {
+//          redMask = Int(tense[9] + tense[10])
+//        }
+//        if tense.count > 11 {
+//          redMask = Int(tense[9] + tense[10] + tense[11])
+//        }
+//
+//        if redMask == nil {
+//          redMask = 0
+//        }
+//
+//
+//            if verbID != nil {
+////              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation)
+//              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
+//              self.env.answery.answerx.append(newAnswer)
+//            }
+//          }
+//      }
       
-        var redMask:Int!
-        if tense.count > 9 {
-          redMask = Int(tense[9])
-        }
-        if tense.count > 10 {
-          redMask = Int(tense[9] + tense[10])
-        }
-        if tense.count > 11 {
-          redMask = Int(tense[9] + tense[10] + tense[11])
-        }
-        
-        if redMask == nil {
-          redMask = 0
-        }
-        
-
-            if verbID != nil {
-//              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation)
-              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
-              self.env.answery.answerx.append(newAnswer)
-            }
-          }
-      }
-      
 
       
-      var dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
       for instance in dictSortByValue {
         let newGroup = groupBlob(groupID: instance.key, name: instance.value)
         self.env.groupy.groupx.append(newGroup)

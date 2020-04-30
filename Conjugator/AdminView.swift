@@ -49,7 +49,7 @@ struct AdminView: View {
   @State private var tag = 0
   @State private var tag2 = 0
   @State private var count = 0
-  @State var word = "123456789ABCDEF"
+  @State var word = "PRESSME"
   @State var sumsum = 0
   
   @EnvironmentObject var env : MyAppEnvironmentData
@@ -74,7 +74,7 @@ struct AdminView: View {
         }).onReceive(nextPublisher) { (_) in
           self.display9 = false
         }
-        TextField("Change ...", text: $selectedText, onCommit: {
+        TextField("Modify ...", text: $selectedText, onCommit: {
           self.display9 = false
           self.personID = self.selections[self.tag].personID
           self.verbID = self.selections[self.tag].verbID
@@ -177,8 +177,18 @@ struct AdminView: View {
               for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
                     self.selections.append(instance)
-
+                    
                 }
+                for select in 0 ..< self.select.count {
+                    self.select[select] = false
+                  }
+                  
+                  if self.word != "PRESSME" {
+                    self.selectedText = ""
+                    self.word = "1234567890abcedf"
+                  }
+                 
+                
               }
               self.lvalue = value
                self.selections.sort { (first, second) -> Bool in
