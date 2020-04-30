@@ -248,6 +248,7 @@ struct PageTwo: View {
   @State var display0Verb = false
   @State var display0Tense = false
   @State var display2Conjugations = false
+  @State var display0Conjugations = false
   
   @State var display1Verb = true
   @State var display1Tense = true
@@ -335,61 +336,65 @@ struct PageTwo: View {
       NavigationLink(destination: AdminView(), tag: 1, selection: $action) {
                             EmptyView()
                         }
-      Spacer().frame(width: 256, height: 0, alignment: .center)
+      Text("fooBar").frame(width: 256, height: 0, alignment: .center)
         .navigationBarTitle(Text("Conjugator"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           self.action = 1
           self.env.currentPage = .NavigationView
         })
+        .opacity(0)
         .onAppear {
           populatePublisher.send(nil)
-        }
-//        navlink2.frame(width:0, height:0)
-//      Spacer()
-      if display0Verb {
-        Picker("", selection: $selectedVerb) {
-          ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
-            Text(self.env.verby.verbx[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 24))
-          }
-        }.frame(width: 256, height: 162, alignment: .center)
-        .onReceive([selectedVerb].publisher.first()) { ( value ) in
-          self.verbText = self.env.verby.verbx[value].name
-          self.verbID = self.env.verby.verbx[value].id
-          self.display0Tense = true
-          self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[value - 1].name : ""
-          self.postVerbSelected = self.selectedVerb < self.env.verby.verbx.count ? self.env.verby.verbx[value + 1].name : ""
-          self.verbSelected = self.env.verby.verbx[value].name
-          
-          
-            if value != self.pvalue {
-              self.display2Conjugations = false
-              self.selections.removeAll()
-              for instance in self.env.answery.answerx {
-                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.selections.append(instance)
+      }
+      ZStack {
+        if display0Verb {
+          Picker("", selection: $selectedVerb) {
+            ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
+              Text(self.display0Verb ? self.env.verby.verbx[column].name : "")
+                .font(Fonts.avenirNextCondensedBold(size: 24))
+            }
+          }.frame(width: 256, height: 162, alignment: .center)
+          .offset(x: 0, y: -32)
+            .onReceive([selectedVerb].publisher.first()) { ( value ) in
+              self.verbText = self.env.verby.verbx[value].name
+              self.verbID = self.env.verby.verbx[value].id
+              self.display0Tense = false
+              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[value - 1].name : ""
+              self.postVerbSelected = self.selectedVerb < self.env.verby.verbx.count ? self.env.verby.verbx[value + 1].name : ""
+              self.verbSelected = self.env.verby.verbx[value].name
+              if value != self.pvalue {
+                self.display2Conjugations = true
+                self.display0Conjugations = false
+                self.selections.removeAll()
+                for instance in self.env.answery.answerx {
+                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                    self.selections.append(instance)
+                  }
+                }
+                self.pvalue = value
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+                  self.display2Conjugations = true
+                  self.display0Tense = true
+                  self.display1Tense = false
+                  self.display0Verb = false
+                  self.display1Verb = true
+                  self.display0Conjugations = true
                 }
               }
-              self.pvalue = value
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-                self.display2Conjugations = true
-                self.display0Tense = true
-                self.display0Verb = false
-              }
-            }
-          
-        }
-        .labelsHidden()
-        .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-      } else {
-        if display1Verb {
-          VStack(spacing: 0) {
-            VerbView(display0Verb: $display0Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
+          }
+          .labelsHidden()
+          .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+        } else {
+          if display1Verb {
+            VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
+            .frame(width: 256, height: 162, alignment: .center)
+            .offset(x: 0, y: -32)
           }
         }
       }
 
-      
+
+    ZStack {
       if display0Tense {
         Picker("", selection: $selectedTense) {
           ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
@@ -400,8 +405,10 @@ struct PageTwo: View {
           }
         }.labelsHidden()
           .frame(width: 256, height: 162, alignment: .center)
+          .offset(x: 0, y: -64)
           .onReceive([selectedTense].publisher) { ( value ) in
-            self.display1Verb = false
+            self.display1Verb = true
+            
             self.tenseID = self.env.tensey.tensex[value].id
             self.groupName = self.env.groupy.groupx[value].name
             
@@ -409,8 +416,8 @@ struct PageTwo: View {
             self.postTenseSelected = self.selectedTense < self.env.tensey.tensex.count ? self.env.verby.verbx[value + 1].name : ""
             self.tenseSelected = self.env.tensey.tensex[value].name
             if value != self.lvalue {
-              self.display2Conjugations = false
-              self.display1Verb = false
+//              self.display2Conjugations = false
+              self.display0Conjugations = false
               self.selections.removeAll()
               for instance in self.env.answery.answerx {
                 if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
@@ -420,40 +427,43 @@ struct PageTwo: View {
               self.selections.sort { (first, second) -> Bool in
                   first.personID.debugDescription < second.personID.debugDescription
                 }
-              
               self.lvalue = value
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                self.display2Conjugations = true
+              
+                self.display0Conjugations = true
                 self.display0Tense = false
+                self.display1Tense = true
                 self.display0Verb = false
                 self.display1Verb = true
+                self.display0Conjugations = true
               }
             }
-//          }
         }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
       }
-      else {
         if display1Tense {
-          VStack(spacing: 0) {
-            TenseView(display0Tense: $display0Tense, preTenseSelected: $preTenseSelected, tenseSelected: $tenseSelected, postTenseSelected: $postTenseSelected)
-          }
+          TenseView(display0Tense: $display0Tense, display1Tense: $display1Tense, preTenseSelected: $preTenseSelected, tenseSelected: $tenseSelected, postTenseSelected: $postTenseSelected)
+            .frame(width: 256, height: 162, alignment: .center)
+            .offset(x: 0, y: -64)
         }
-      }
+      
+    } // ZStack
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .background(Color.yellow)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+        .offset(x: 0, y: -64)
       if display2Conjugations {
         List {
             ForEach((0 ..< self.selections.count), id: \.self) { column in
-              newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
+              newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
               .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
               .font(Fonts.avenirNextCondensedBold(size: 22))
+              .opacity(self.display0Conjugations ? 1:0)
           }
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
         .frame(width: 256, height: 180, alignment: .center)
-        
+        .offset(x: 0, y: -64)
       }
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
@@ -527,6 +537,7 @@ func colorCode(gate:Int, no:Int) -> Bool {
   
 struct TenseView: View {
   @Binding var display0Tense:Bool
+  @Binding var display1Tense:Bool
   @Binding var preTenseSelected:String
   @Binding var tenseSelected:String
   @Binding var postTenseSelected:String
@@ -536,31 +547,34 @@ struct TenseView: View {
             Text(preTenseSelected)
             .font(Fonts.avenirNextCondensedBold(size: 24))
             .onLongPressGesture {
-              self.display0Tense.toggle()
-              //            self.display0Tense.toggle()
+              self.display1Tense = false
+              self.display0Tense = true
           }
           .opacity(0.1)
           .rotation3DEffect(.degrees(20), axis: (x: 1, y: 0, z: 0))
           Text(tenseSelected)
             .font(Fonts.avenirNextCondensedBold(size: 24))
             .onLongPressGesture {
-              self.display0Tense.toggle()
-              //            self.display0Tense.toggle()
+              self.display1Tense = false
+              self.display0Tense = true
           }
           Text(postTenseSelected)
             .font(Fonts.avenirNextCondensedBold(size: 24))
             .onLongPressGesture {
-              self.display0Tense.toggle()
-              //            self.display0Tense.toggle()
+              self.display1Tense = false
+              self.display0Tense = true
           }
           .opacity(0.1)
           .rotation3DEffect(.degrees(20), axis: (x: -1, y: 0, z: 0))
         }
         }
 }
+
+
   
 struct VerbView: View {
   @Binding var display0Verb:Bool
+  @Binding var display1Verb:Bool
   @Binding var preVerbSelected:String
   @Binding var verbSelected:String
   @Binding var postVerbSelected:String
@@ -570,7 +584,8 @@ struct VerbView: View {
       Text(preVerbSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
-          self.display0Verb.toggle()
+          self.display1Verb = false
+          self.display0Verb = true
           //            self.display0Tense.toggle()
       }
       .opacity(0.1)
@@ -578,13 +593,15 @@ struct VerbView: View {
       Text(verbSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
-          self.display0Verb.toggle()
+          self.display1Verb = false
+          self.display0Verb = true
           //            self.display0Tense.toggle()
       }
       Text(postVerbSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
-          self.display0Verb.toggle()
+          self.display1Verb = false
+          self.display0Verb = true
           //            self.display0Tense.toggle()
       }
       .opacity(0.1)
