@@ -41,43 +41,43 @@ final class verbDB: ObservableObject, Identifiable {
 }
 
 func readVerb(fileName:String) -> [String]? {
-   let fileURL = Bundle.main.url(forResource:fileName, withExtension: "txt")
-   do {
+  let fileURL = Bundle.main.url(forResource:fileName, withExtension: "txt")
+  do {
     if try fileURL!.checkResourceIsReachable() {
-           print("file exist")
-//           let data = try String(contentsOfFile: fileURL!.absoluteString, encoding: .utf8)
-           let data = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-//           let myStrings = data.components(separatedBy: .controlCharacters)
-           let myStrings = data.components(separatedBy: .newlines)
-           return myStrings
-           
-//           return try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-//            print("contents ",contents)
-       } else {
-           print("file doesnt exist")
-       }
-   } catch {
-       print("an error happened while checking for the file")
-   }
-   return nil
+      print("file exist")
+      //           let data = try String(contentsOfFile: fileURL!.absoluteString, encoding: .utf8)
+      let data = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+      //           let myStrings = data.components(separatedBy: .controlCharacters)
+      let myStrings = data.components(separatedBy: .newlines)
+      return myStrings
+      
+      //           return try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+      //            print("contents ",contents)
+    } else {
+      print("file doesnt exist")
+    }
+  } catch {
+    print("an error happened while checking for the file")
+  }
+  return nil
 }
 
 func readConjugations() -> [String]? {
   let fileURL = Bundle.main.url(forResource:"conjugationsFull", withExtension: "txt")
-   do {
+  do {
     if try fileURL!.checkResourceIsReachable() {
-           print("file exist")
-           let data = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-//           let myStrings = data.components(separatedBy: .controlCharacters)
-           let myStrings = data.components(separatedBy: .newlines)
-           return myStrings
-       } else {
-           print("file doesnt exist")
-       }
-   } catch {
-       print("an error happened while checking for the file")
-   }
-   return nil
+      print("file exist")
+      let data = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
+      //           let myStrings = data.components(separatedBy: .controlCharacters)
+      let myStrings = data.components(separatedBy: .newlines)
+      return myStrings
+    } else {
+      print("file doesnt exist")
+    }
+  } catch {
+    print("an error happened while checking for the file")
+  }
+  return nil
 }
 
 struct tenseBlob {
@@ -138,44 +138,45 @@ struct Fonts {
 }
 
 struct newView: View {
-    @EnvironmentObject var env : MyAppEnvironmentData
-    @State var word:String
-    @State var gate:Int?
-    @Binding var selections:[answerBlob]
-    @Binding var display0Conjugations:Bool
-    
-    var body: some View {
+  @EnvironmentObject var env : MyAppEnvironmentData
+  @State var word:String
+  @State var gate:Int?
+  @Binding var selections:[answerBlob]
+  @Binding var display2Conjugations:Bool
+  
+  var body: some View {
     let letter = word.map( { String($0) } )
     return VStack {
       HStack(spacing:0) {
-            ForEach((0 ..< letter.count), id: \.self) { column in
-              Text(letter[column])
-                .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
-                
-
+        ForEach((0 ..< letter.count), id: \.self) { column in
+          Text(letter[column])
+            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
+          
+          
+        }
+      }.onTapGesture {
+        if linkID != 0 {
+          //            self.display0Conjugations = false
+          self.selections.removeAll()
+          //            self.display0Conjugations = true
+          DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+            for instance in self.env.answery.answerx {
+              if instance.tenseID == tenseID && instance.verbID == linkID {
+                self.selections.append(instance)
+              }
             }
-          }.onTapGesture {
-//            self.display0Conjugations = false
-            self.selections.removeAll()
-//            self.display0Conjugations = true
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-              for instance in self.env.answery.answerx {
-                      if instance.tenseID == tenseID && instance.verbID == linkID {
-                        self.selections.append(instance)
-                      }
-                    }
-                    self.selections.sort { (first, second) -> Bool in
-                      first.personID.debugDescription < second.personID.debugDescription
-                    }
-                    // fooBar
-                  let zee =
-                  doDivertPublisher.send(linkID)
-                  self.display0Conjugations = true
-                }
-                
+            self.selections.sort { (first, second) -> Bool in
+              first.personID.debugDescription < second.personID.debugDescription
+            }
+            // fooBar
+            //                  let zee =
+            doDivertPublisher.send(linkID)
+            self.display2Conjugations = true
           }
         }
       }
+    }
+  }
 }
 
 struct ListView: View {
@@ -205,8 +206,8 @@ struct TextView: View {
       twoText.append(" ")
     }
     return HStack {
-        Text(textOK ? twoText[0] : "")
-        Text(textOK ? twoText[1] : "")
+      Text(textOK ? twoText[0] : "")
+      Text(textOK ? twoText[1] : "")
     }
   }
 }
@@ -228,33 +229,33 @@ var personID: PersonClass!
 
 struct PageTwo: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-
-//Indicatif présent	dérivé du radical de l’infinitif
-//Indicatif futur	dérivé de l’infinitif complet
-//Indicatif imparfait	dérivé du radical nous du présent
-//Indicatif passé simple	dérivé du radical nous du présent
-
-//Subjonctif présent	dérivé du radical du ils du présent
-//Subjonctif imparfait	dérivé du radical du passé simple
-
-//Conditionnel présent	dérivé de l’infinitif complet
-//Participe passé	dérivé du radical de l’infinitif
-//Participe présent	dérivé du radical du nous du présent
-//Infinitif présent	forme de base
-
-
+  
+  //Indicatif présent	dérivé du radical de l’infinitif
+  //Indicatif futur	dérivé de l’infinitif complet
+  //Indicatif imparfait	dérivé du radical nous du présent
+  //Indicatif passé simple	dérivé du radical nous du présent
+  
+  //Subjonctif présent	dérivé du radical du ils du présent
+  //Subjonctif imparfait	dérivé du radical du passé simple
+  
+  //Conditionnel présent	dérivé de l’infinitif complet
+  //Participe passé	dérivé du radical de l’infinitif
+  //Participe présent	dérivé du radical du nous du présent
+  //Infinitif présent	forme de base
+  
+  
   @State var tenses = [
-"1-1.Indicatif présent.Dérivé du radical de l'infinitif.1",
-"2-2.Indicatif futur.Dérivé de l'infinitif complet.1",
-"3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1",
-"4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1",
-"5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1",
-"6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1",
-"7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1",
-"9-8.Participe Présent.Dérivé du radical du nous du présent.1",
-"10-9.Participe Passé.Dérivé du radical de l'infinitif.1",
-"20-10.Infinitif Présent.Forme de base.0"]
-
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1",
+    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1",
+    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1",
+    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1",
+    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1",
+    "9-8.Participe Présent.Dérivé du radical du nous du présent.1",
+    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1",
+    "20-10.Infinitif Présent.Forme de base.0"]
+  
   @State var verb:[String] = []
   @State var selectedVerb = 0
   @State var selectedGroup = 0
@@ -270,7 +271,7 @@ struct PageTwo: View {
   @State var preTenseSelected = ""
   @State var postTenseSelected = ""
   
-//  @State var answer = [String](repeating: "", count: 7)
+  //  @State var answer = [String](repeating: "", count: 7)
   @State var colors = [Int](repeating: 0, count: 7)
   @State var selectedAnswer = 0
   
@@ -284,10 +285,10 @@ struct PageTwo: View {
   @State var display1Tense = true
   
   @State var showColor = false
-//  @State var verbID:Int!
-//  @State var verbLink:Int!
-//  @State var tenseID:Int!
-//  @State var personID: PersonClass!
+  //  @State var verbID:Int!
+  //  @State var verbLink:Int!
+  //  @State var tenseID:Int!
+  //  @State var personID: PersonClass!
   @State var utiliser:String!
   
   @State var lvalue:Int = 99
@@ -300,7 +301,6 @@ struct PageTwo: View {
   @State var isSelect2P = false
   @State var isSelect3P = false
   
-  @State var verbText:String = ""
   @State var answerText:String = ""
   @State var ruleColor: Color = Color.clear
   
@@ -315,8 +315,8 @@ struct PageTwo: View {
   @State private var action: Int? = 0
   
   var body: some View {
-  
-  func resetButtons() {
+    
+    func resetButtons() {
       self.isSelect1P = false
       self.isSelect2P = false
       self.isSelect3P = false
@@ -326,10 +326,10 @@ struct PageTwo: View {
     }
     
     func findIndex() -> Int? {
-//      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
+      //      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
       let zak = env.answery.answerx.firstIndex { ( data ) -> Bool in
-          data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
-        }
+        data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
+      }
       return zak
     }
     
@@ -366,22 +366,22 @@ struct PageTwo: View {
     }
     
     
-//    let navlink2 = NavigationLink(destination: AdminView(),
-//                       tag: .NavigationView,
-//                       selection: $env.currentPage,
-//                       label: { EmptyView() })
-                       
+    //    let navlink2 = NavigationLink(destination: AdminView(),
+    //                       tag: .NavigationView,
+    //                       selection: $env.currentPage,
+    //                       label: { EmptyView() })
+    
     let design = UIFontDescriptor.SystemDesign.rounded
     let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
-                                     .withDesign(design)!
+      .withDesign(design)!
     let font = UIFont.init(descriptor: descriptor, size: 48)
     UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
     
     return VStack(alignment: .center) {
       // Tried using $env.currentPage, but it seemed to be too slow setting this up
       NavigationLink(destination: AdminView(), tag: 1, selection: $action) {
-                            EmptyView()
-                        }
+        EmptyView()
+      }
       Text("fooBar").frame(width: 256, height: 0, alignment: .center)
         .navigationBarTitle(Text("Conjugator"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
@@ -398,102 +398,116 @@ struct PageTwo: View {
             ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
               Text(self.display0Verb ? self.env.verby.verbx[column].name : "")
                 .font(Fonts.avenirNextCondensedBold(size: 24))
-                .onTapGesture {
-                  print("selected ",self.$selectedVerb)
-                }
             }
           }
           .frame(width: 256, height: 162, alignment: .center)
           .offset(x: 0, y: -32)
+          .onReceive([selectedVerb].publisher.first()) { ( value ) in
+            self.selectedVerb = value
+          }
           .onTapGesture {
-//            .onReceive([selectedVerb].publisher.first()) { ( value ) in
-              self.verbText = self.env.verby.verbx[self.selectedVerb].name
-              verbID = self.env.verby.verbx[self.selectedVerb].id
-              linkID = self.env.verby.verbx[self.selectedVerb].link
-              
-              if linkID != 0 {
-                self.utiliser = "Même règle que " + findVerb(searchID: linkID)
-              }
-              
-              self.display0Tense = false
-              self.display1Tense = true
-              self.display2Conjugations = false
-              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
-              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
-              self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
-              
-              if self.selectedVerb != self.pvalue {
-                self.display2Conjugations = true
-                self.display0Conjugations = false
-                self.selections.removeAll()
-                if linkID! == 0 {
-                  for instance in self.env.answery.answerx {
-                    if instance.tenseID == tenseID && instance.verbID == verbID {
-                      self.selections.append(instance)
-                    }
-                  }
-                  self.selections.sort { (first, second) -> Bool in
-                    first.personID.debugDescription < second.personID.debugDescription
-                  }
-                } else {
-                  if self.noDivert {
-                    let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
-                    self.selections.append(spc)
-                  }
-                }
-                
-                self.pvalue = self.selectedVerb
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-                  self.display2Conjugations = true
-                  self.display0Tense = true
-                  self.display1Tense = false
-                  self.display0Verb = false
-                  self.display1Verb = true
-                  self.display0Conjugations = true
+            self.selections.removeAll()
+            self.display2Conjugations = false
+
+            verbID = self.env.verby.verbx[self.selectedVerb].id
+            linkID = self.env.verby.verbx[self.selectedVerb].link
+            
+            print("bug alert ",self.selectedVerb,linkID)
+            
+            if linkID != 0 {
+              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+            }
+            
+            self.display0Tense = false
+            self.display1Tense = true
+            self.display2Conjugations = false
+            self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
+            self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
+            self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
+            
+            //              if self.selectedVerb != self.pvalue {
+            self.display2Conjugations = true
+            //                self.display2Conjugations = false
+            self.selections.removeAll()
+            if linkID! == 0 {
+              for instance in self.env.answery.answerx {
+                if instance.tenseID == tenseID && instance.verbID == verbID {
+                  self.selections.append(instance)
                 }
               }
+              self.selections.sort { (first, second) -> Bool in
+                first.personID.debugDescription < second.personID.debugDescription
+              }
+            } else {
+              if self.noDivert {
+                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                self.selections.append(spc)
+              }
+            }
+            
+            //                self.pvalue = self.selectedVerb
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+              self.display2Conjugations = true
+              self.display0Tense = true
+              self.display1Tense = false
+              self.display0Verb = false
+              self.display1Verb = true
+              self.display2Conjugations = true
+            }
+            //              }
           }
           .labelsHidden()
           .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         } else {
           if display1Verb {
             VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
-            .frame(width: 256, height: 162, alignment: .center)
-            .offset(x: 0, y: -32)
-            .onReceive(doDivertPublisher, perform: { ( row ) in
-              
-              self.display1Verb = false
-              self.display0Verb = true
-              self.noDivert = false
-              print("verb ",findVerbIndex(searchID: row))
-              self.selectedVerb = findVerbIndex(searchID: row)
-              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
-              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
-              self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                self.display1Verb = true
-                self.display0Verb = false
-              }
-            })
+              .frame(width: 256, height: 162, alignment: .center)
+              .offset(x: 0, y: -32)
+              .onReceive(doDivertPublisher, perform: { ( row ) in
+                
+                
+                self.display1Verb = false
+                self.display0Verb = true
+                self.noDivert = false
+                print("verb ",findVerbIndex(searchID: row))
+                self.selectedVerb = findVerbIndex(searchID: row)
+                verbID = self.env.verby.verbx[self.selectedVerb].id
+                linkID = self.env.verby.verbx[self.selectedVerb].link
+                
+                self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
+                self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
+                self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
+                
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                  self.display1Verb = true
+                  self.display0Verb = false
+                  self.noDivert = true
+                }
+              })
           }
         }
       }
-
-
-    ZStack {
-      if display0Tense {
-        Picker("", selection: $selectedTense) {
-          ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
-            //        ForEach(0 ..< tenses.count) {
-            Text(self.env.tensey.tensex[column].name)
-              .font(Fonts.avenirNextCondensedBold(size: 24))
-              .background(self.showColor ? Color.yellow: Color.clear)
+      
+      
+      ZStack {
+        if display0Tense {
+          Picker("", selection: $selectedTense) {
+            ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
+              //        ForEach(0 ..< tenses.count) {
+              Text(self.env.tensey.tensex[column].name)
+                .font(Fonts.avenirNextCondensedBold(size: 24))
+                .background(self.showColor ? Color.yellow: Color.clear)
+            }
+          }.labelsHidden()
+            .frame(width: 256, height: 162, alignment: .center)
+            .offset(x: 0, y: -64)
+            .onReceive([selectedTense].publisher) { ( value ) in
+              self.selectedTense = value
           }
-        }.labelsHidden()
-          .frame(width: 256, height: 162, alignment: .center)
-          .offset(x: 0, y: -64)
-//          .onReceive([selectedTense].publisher) { ( value ) in
-            .onTapGesture {
+          .onTapGesture {
+            self.selections.removeAll()
+            self.display2Conjugations = false
+            
             self.display1Verb = true
             
             tenseID = self.env.tensey.tensex[self.selectedTense].id
@@ -505,54 +519,45 @@ struct PageTwo: View {
             self.tenseSelected = self.env.tensey.tensex[self.selectedTense].name
             
             if linkID != 0 {
-                self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
             }
-              
-            if self.selectedTense != self.lvalue {
-              self.display2Conjugations = false
-              self.display0Conjugations = false
+            self.display2Conjugations = false
+            self.selections.removeAll()
+            if linkID! == 0 {
+              for instance in self.env.answery.answerx {
+                if instance.tenseID == tenseID && instance.verbID == verbID {
+                  self.selections.append(instance)
+                }
+              }
+              self.selections.sort { (first, second) -> Bool in
+                first.personID.debugDescription < second.personID.debugDescription
+              }
+            } else {
+              if self.noDivert {
+                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                self.selections.append(spc)
+              }
+            }
+            if !self.groupColor {
               self.selections.removeAll()
-              if linkID! == 0 {
-                for instance in self.env.answery.answerx {
-                  if instance.tenseID == tenseID && instance.verbID == verbID {
-                    self.selections.append(instance)
-                  }
-                }
-                self.selections.sort { (first, second) -> Bool in
-                    first.personID.debugDescription < second.personID.debugDescription
-                  }
-              } else {
-                if self.noDivert {
-                  let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
-                  self.selections.append(spc)
-                }
-              }
-              self.lvalue = self.selectedTense
-              // exception
-              
-              if !self.groupColor {
-                 self.selections.removeAll()
-              }
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-              
-                
-                self.display0Tense = false
-                self.display1Tense = true
-                self.display0Verb = false
-                self.display1Verb = true
-                self.display0Conjugations = true
-                self.display2Conjugations = true
-              }
             }
-        }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-      }
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+              self.display0Tense = false
+              self.display1Tense = true
+              self.display0Verb = false
+              self.display1Verb = true
+              self.display2Conjugations = true
+            }
+            //            }
+          }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+        }
         if display1Tense {
           TenseView(display0Tense: $display0Tense, display1Tense: $display1Tense, preTenseSelected: $preTenseSelected, tenseSelected: $tenseSelected, postTenseSelected: $postTenseSelected)
             .frame(width: 256, height: 162, alignment: .center)
             .offset(x: 0, y: -64)
         }
-      
-    } // ZStack
+        
+      } // ZStack
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .background(groupColor ? Color.yellow: Color.clear)
@@ -560,26 +565,26 @@ struct PageTwo: View {
         .offset(x: 0, y: -64)
       if display2Conjugations {
         List {
-            ForEach((0 ..< self.selections.count), id: \.self) { column in
-              HStack(spacing:0) {
-                Spacer()
-//                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
-//                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
-                newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display0Conjugations: self.$display0Conjugations)
+          ForEach((0 ..< self.selections.count), id: \.self) { column in
+            HStack(spacing:0) {
+              Spacer()
+              //                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
+              //                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
+              newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
                 
                 // fooBar
                 
                 .font(Fonts.avenirNextCondensedBold(size: 22))
-                
-//                .opacity(self.display0Conjugations ? 1:0)
-                Spacer()
-              }
+              
+              //                .opacity(self.display0Conjugations ? 1:0)
+              Spacer()
+            }
           }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }.environment(\.defaultMinListRowHeight, 20)
-        .environment(\.defaultMinListHeaderHeight, 0)
-        .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
-        .offset(x: 0, y: -64)
-//        .background(InsideView())
+          .environment(\.defaultMinListHeaderHeight, 0)
+          .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
+          .offset(x: 0, y: -64)
+        //        .background(InsideView())
         
       } else {
         Spacer()
@@ -588,76 +593,76 @@ struct PageTwo: View {
       }
       Spacer()
     } // VStack
-    .onReceive(rulesPublisher, perform: { ( _ ) in
-      self.display0Verb = false
-      self.env.verby.verbx.removeAll()
-//      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-//      for instance in groups {
-//        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-//        self.env.groupy.groupx.append(newGroup)
-//      }
-    })
-    .onReceive(populatePublisher, perform: { ( seek ) in
-      self.display0Verb = false
-      self.display0Tense = false
-      self.display2Conjugations = false
+      .onReceive(rulesPublisher, perform: { ( _ ) in
+        self.display0Verb = false
+        self.env.verby.verbx.removeAll()
+        //      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+        //      for instance in groups {
+        //        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+        //        self.env.groupy.groupx.append(newGroup)
+        //      }
+      })
+      .onReceive(populatePublisher, perform: { ( seek ) in
+        self.display0Verb = false
+        self.display0Tense = false
+        self.display2Conjugations = false
         
-      
-      
+        
+        
         if once {
           once = false
-               
-//      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-//      for instance in dictSortByValue {
-//        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-//        self.env.groupy.groupx.append(newGroup)
-//      }
-      
-      for instance in self.tenses {
-        let breakout = instance.split(separator: ".")
-        let breakdown = breakout[0].split(separator: "-")
-        let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]))
-//        print("newTense ",newTense)
-        self.env.tensey.tensex.append(newTense)
-      }
-      
-      self.env.tensey.tensex.sort { (first, second) -> Bool in
+          
+          //      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+          //      for instance in dictSortByValue {
+          //        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+          //        self.env.groupy.groupx.append(newGroup)
+          //      }
+          
+          for instance in self.tenses {
+            let breakout = instance.split(separator: ".")
+            let breakdown = breakout[0].split(separator: "-")
+            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]))
+            //        print("newTense ",newTense)
+            self.env.tensey.tensex.append(newTense)
+          }
+          
+          self.env.tensey.tensex.sort { (first, second) -> Bool in
             first.name < second.name
           }
-      }
-      
-      if seek != nil {
-        self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in
-          seek == data.name
-        })!
-      }
-      
-
-      DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
-        shaker = true
-        self.display0Verb = true
-//        self.display0Tense = true
-        self.display2Conjugations = true
-      }
-    })
+        }
+        
+        if seek != nil {
+          self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in
+            seek == data.name
+          })!
+        }
+        
+        
+        DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
+          shaker = true
+          self.display0Verb = true
+          //        self.display0Tense = true
+          self.display2Conjugations = true
+        }
+      })
     
     
   }
 }
 
 func colorCode(gate:Int, no:Int) -> Bool {
-
-    let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
-    let bcr = String(no, radix:2).pad(with: "0", toLength: 16)
-    let binaryColumn = 1 << no
-    
-    let value = UInt64(gate) & UInt64(binaryColumn)
-    let vr = String(value, radix:2).pad(with: "0", toLength: 16)
-    
-//    print("bg ",bgr," bc ",bcr,vr)
-    return value > 0 ? true:false
-  }
   
+  let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
+  let bcr = String(no, radix:2).pad(with: "0", toLength: 16)
+  let binaryColumn = 1 << no
+  
+  let value = UInt64(gate) & UInt64(binaryColumn)
+  let vr = String(value, radix:2).pad(with: "0", toLength: 16)
+  
+  //    print("bg ",bgr," bc ",bcr,vr)
+  return value > 0 ? true:false
+}
+
 struct TenseView: View {
   @Binding var display0Tense:Bool
   @Binding var display1Tense:Bool
@@ -667,34 +672,34 @@ struct TenseView: View {
   
   var body: some View {
     VStack {
-            Text(preTenseSelected)
-            .font(Fonts.avenirNextCondensedBold(size: 24))
-            .onLongPressGesture {
-              self.display1Tense = false
-              self.display0Tense = true
-          }
-          .opacity(0.1)
-          .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
-          Text(tenseSelected)
-            .font(Fonts.avenirNextCondensedBold(size: 24))
-            .onLongPressGesture {
-              self.display1Tense = false
-              self.display0Tense = true
-          }
-          Text(postTenseSelected)
-            .font(Fonts.avenirNextCondensedBold(size: 24))
-            .onLongPressGesture {
-              self.display1Tense = false
-              self.display0Tense = true
-          }
-          .opacity(0.1)
-          .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
-        }
-        }
+      Text(preTenseSelected)
+        .font(Fonts.avenirNextCondensedBold(size: 24))
+        .onLongPressGesture {
+          self.display1Tense = false
+          self.display0Tense = true
+      }
+      .opacity(0.1)
+      .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
+      Text(tenseSelected)
+        .font(Fonts.avenirNextCondensedBold(size: 24))
+        .onLongPressGesture {
+          self.display1Tense = false
+          self.display0Tense = true
+      }
+      Text(postTenseSelected)
+        .font(Fonts.avenirNextCondensedBold(size: 24))
+        .onLongPressGesture {
+          self.display1Tense = false
+          self.display0Tense = true
+      }
+      .opacity(0.1)
+      .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
+    }
+  }
 }
 
 
-  
+
 struct VerbView: View {
   @Binding var display0Verb:Bool
   @Binding var display1Verb:Bool
@@ -738,15 +743,15 @@ struct VerbView: View {
 struct InsideView: View {
   var body: some View {
     
-      return VStack {
-         GeometryReader { geometry in
-          Rectangle()
-            .fill(Color.green)
-            .opacity(0.2)
-            .onAppear {
-              print("geo ",geometry.frame(in: .global))
-          }
+    return VStack {
+      GeometryReader { geometry in
+        Rectangle()
+          .fill(Color.green)
+          .opacity(0.2)
+          .onAppear {
+            print("geo ",geometry.frame(in: .global))
         }
+      }
       
     }
   }
@@ -763,12 +768,12 @@ struct ContentView_Previews: PreviewProvider {
 
 
 extension String {
-    func pad(with character: String, toLength length: Int) -> String {
-        let padCount = length - self.count
-        guard padCount > 0 else { return self }
-
-        return String(repeating: character, count: padCount) + self
-    }
+  func pad(with character: String, toLength length: Int) -> String {
+    let padCount = length - self.count
+    guard padCount > 0 else { return self }
+    
+    return String(repeating: character, count: padCount) + self
+  }
 }
 
 extension UIApplication {

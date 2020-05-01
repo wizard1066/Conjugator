@@ -148,7 +148,7 @@ struct AdminView: View {
         if display9 {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
 //            newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
-            newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display0Conjugations: self.$display9)
+            newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display9)
                 .font(Fonts.avenirNextCondensedMedium(size: 24))
                 .onTapGesture {
 //                  resetPublisher.send()
