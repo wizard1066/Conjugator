@@ -11,6 +11,7 @@ import Combine
 
 let populatePublisher = PassthroughSubject<String?,Never>()
 let rulesPublisher = PassthroughSubject<Void,Never>()
+let doDivertPublisher = PassthroughSubject<Int,Never>()
 
 var shaker = true
 var once = true
@@ -140,10 +141,8 @@ struct newView: View {
     @EnvironmentObject var env : MyAppEnvironmentData
     @State var word:String
     @State var gate:Int?
-//    @Binding var selections:[answerBlob]
-//    @Binding var tenseID:Int
-//    @Binding var verbLink:Int
-//    @Binding var display0Conjugations:Bool
+    @Binding var selections:[answerBlob]
+    @Binding var display0Conjugations:Bool
     
     var body: some View {
     let letter = word.map( { String($0) } )
@@ -157,18 +156,23 @@ struct newView: View {
             }
           }.onTapGesture {
 //            self.display0Conjugations = false
-//            self.selections.removeAll()
-//            for instance in self.env.answery.answerx {
-//                    if instance.tenseID == self.tenseID && instance.verbID == self.verbLink {
-//                      self.selections.append(instance)
-//                    }
-//                  }
-//                  self.selections.sort { (first, second) -> Bool in
-//                    first.personID.debugDescription < second.personID.debugDescription
-//                  }
-//                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-//                  self.display0Conjugations = false
-//                }
+            self.selections.removeAll()
+//            self.display0Conjugations = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+              for instance in self.env.answery.answerx {
+                      if instance.tenseID == tenseID && instance.verbID == linkID {
+                        self.selections.append(instance)
+                      }
+                    }
+                    self.selections.sort { (first, second) -> Bool in
+                      first.personID.debugDescription < second.personID.debugDescription
+                    }
+                    // fooBar
+                  let zee =
+                  doDivertPublisher.send(linkID)
+                  self.display0Conjugations = true
+                }
+                
           }
         }
       }
@@ -217,6 +221,10 @@ var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Colo
 
 
 var rien = [String](repeating: " ", count: 7)
+var linkID: Int!
+var verbID: Int!
+var tenseID: Int!
+var personID: PersonClass!
 
 struct PageTwo: View {
   @EnvironmentObject var env : MyAppEnvironmentData
@@ -276,10 +284,10 @@ struct PageTwo: View {
   @State var display1Tense = true
   
   @State var showColor = false
-  @State var verbID:Int!
-  @State var verbLink:Int!
-  @State var tenseID:Int!
-  @State var personID: PersonClass!
+//  @State var verbID:Int!
+//  @State var verbLink:Int!
+//  @State var tenseID:Int!
+//  @State var personID: PersonClass!
   @State var utiliser:String!
   
   @State var lvalue:Int = 99
@@ -301,6 +309,8 @@ struct PageTwo: View {
   @State var hintOneVisible = false
   @State var hintTwoVisible = false
   
+  @State var noDivert = true
+  
   @State var selections:[answerBlob] = []
   @State private var action: Int? = 0
   
@@ -321,6 +331,13 @@ struct PageTwo: View {
           data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
         }
       return zak
+    }
+    
+    func findVerbIndex(searchID: Int) -> Int {
+      let zak = env.verby.verbx.firstIndex { (data ) -> Bool in
+        data.id == searchID
+      }
+      return zak!
     }
     
     func findVerb(searchID: Int) -> String {
@@ -381,32 +398,37 @@ struct PageTwo: View {
             ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
               Text(self.display0Verb ? self.env.verby.verbx[column].name : "")
                 .font(Fonts.avenirNextCondensedBold(size: 24))
+                .onTapGesture {
+                  print("selected ",self.$selectedVerb)
+                }
             }
-          }.frame(width: 256, height: 162, alignment: .center)
+          }
+          .frame(width: 256, height: 162, alignment: .center)
           .offset(x: 0, y: -32)
-            .onReceive([selectedVerb].publisher.first()) { ( value ) in
-              self.verbText = self.env.verby.verbx[value].name
-              self.verbID = self.env.verby.verbx[value].id
-              self.verbLink = self.env.verby.verbx[value].link
+          .onTapGesture {
+//            .onReceive([selectedVerb].publisher.first()) { ( value ) in
+              self.verbText = self.env.verby.verbx[self.selectedVerb].name
+              verbID = self.env.verby.verbx[self.selectedVerb].id
+              linkID = self.env.verby.verbx[self.selectedVerb].link
               
-              if self.verbLink != 0 {
-                self.utiliser = "Même règle que " + findVerb(searchID: self.verbLink)
+              if linkID != 0 {
+                self.utiliser = "Même règle que " + findVerb(searchID: linkID)
               }
               
               self.display0Tense = false
               self.display1Tense = true
               self.display2Conjugations = false
-              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[value - 1].name : ""
-              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[value + 1].name : ""
-              self.verbSelected = self.env.verby.verbx[value].name
+              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
+              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
+              self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
               
-              if value != self.pvalue {
+              if self.selectedVerb != self.pvalue {
                 self.display2Conjugations = true
                 self.display0Conjugations = false
                 self.selections.removeAll()
-                if self.verbLink! == 0 {
+                if linkID! == 0 {
                   for instance in self.env.answery.answerx {
-                    if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                    if instance.tenseID == tenseID && instance.verbID == verbID {
                       self.selections.append(instance)
                     }
                   }
@@ -414,11 +436,13 @@ struct PageTwo: View {
                     first.personID.debugDescription < second.personID.debugDescription
                   }
                 } else {
-                  let spc = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
-                  self.selections.append(spc)
+                  if self.noDivert {
+                    let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                    self.selections.append(spc)
+                  }
                 }
                 
-                self.pvalue = value
+                self.pvalue = self.selectedVerb
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
                   self.display2Conjugations = true
                   self.display0Tense = true
@@ -436,6 +460,21 @@ struct PageTwo: View {
             VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
             .frame(width: 256, height: 162, alignment: .center)
             .offset(x: 0, y: -32)
+            .onReceive(doDivertPublisher, perform: { ( row ) in
+              
+              self.display1Verb = false
+              self.display0Verb = true
+              self.noDivert = false
+              print("verb ",findVerbIndex(searchID: row))
+              self.selectedVerb = findVerbIndex(searchID: row)
+              self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
+              self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
+              self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                self.display1Verb = true
+                self.display0Verb = false
+              }
+            })
           }
         }
       }
@@ -453,28 +492,29 @@ struct PageTwo: View {
         }.labelsHidden()
           .frame(width: 256, height: 162, alignment: .center)
           .offset(x: 0, y: -64)
-          .onReceive([selectedTense].publisher) { ( value ) in
+//          .onReceive([selectedTense].publisher) { ( value ) in
+            .onTapGesture {
             self.display1Verb = true
             
-            self.tenseID = self.env.tensey.tensex[value].id
-            self.groupName = self.env.tensey.tensex[value].derive
-            self.groupColor = self.env.tensey.tensex[value].color == "1" ? true:false
+            tenseID = self.env.tensey.tensex[self.selectedTense].id
+            self.groupName = self.env.tensey.tensex[self.selectedTense].derive
+            self.groupColor = self.env.tensey.tensex[self.selectedTense].color == "1" ? true:false
             
-            self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[value - 1].name : ""
-            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[value + 1].name : ""
-            self.tenseSelected = self.env.tensey.tensex[value].name
+            self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[self.selectedTense - 1].name : ""
+            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[self.selectedTense + 1].name : ""
+            self.tenseSelected = self.env.tensey.tensex[self.selectedTense].name
             
-            if self.verbLink != 0 {
-                self.utiliser = "Même règle que " + findVerb(searchID: self.verbLink)
+            if linkID != 0 {
+                self.utiliser = "Même règle que " + findVerb(searchID: linkID)
             }
               
-            if value != self.lvalue {
+            if self.selectedTense != self.lvalue {
               self.display2Conjugations = false
               self.display0Conjugations = false
               self.selections.removeAll()
-              if self.verbLink! == 0 {
+              if linkID! == 0 {
                 for instance in self.env.answery.answerx {
-                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                  if instance.tenseID == tenseID && instance.verbID == verbID {
                     self.selections.append(instance)
                   }
                 }
@@ -482,10 +522,12 @@ struct PageTwo: View {
                     first.personID.debugDescription < second.personID.debugDescription
                   }
               } else {
-                let spc = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
-                self.selections.append(spc)
+                if self.noDivert {
+                  let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                  self.selections.append(spc)
+                }
               }
-              self.lvalue = value
+              self.lvalue = self.selectedTense
               // exception
               
               if !self.groupColor {
@@ -519,26 +561,32 @@ struct PageTwo: View {
       if display2Conjugations {
         List {
             ForEach((0 ..< self.selections.count), id: \.self) { column in
-              HStack {
+              HStack(spacing:0) {
                 Spacer()
 //                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
-                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
+//                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
+                newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display0Conjugations: self.$display0Conjugations)
                 
-                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                // fooBar
+                
                 .font(Fonts.avenirNextCondensedBold(size: 22))
-                .opacity(self.display0Conjugations ? 1:0)
+                
+//                .opacity(self.display0Conjugations ? 1:0)
                 Spacer()
               }
-          }
+          }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
         .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
         .offset(x: 0, y: -64)
+//        .background(InsideView())
+        
       } else {
         Spacer()
           .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
           .offset(x: 0, y: -64)
       }
+      Spacer()
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0Verb = false
@@ -693,8 +741,8 @@ struct InsideView: View {
       return VStack {
          GeometryReader { geometry in
           Rectangle()
-            .fill(Color.yellow)
-            .opacity(0.5)
+            .fill(Color.green)
+            .opacity(0.2)
             .onAppear {
               print("geo ",geometry.frame(in: .global))
           }
