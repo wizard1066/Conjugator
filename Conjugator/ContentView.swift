@@ -28,6 +28,7 @@ enum PersonClass {
 struct verbBlob {
   var id:Int!
   var name:String!
+  var link:Int?
 }
 
 final class verbDB: ObservableObject, Identifiable {
@@ -136,8 +137,14 @@ struct Fonts {
 }
 
 struct newView: View {
+    @EnvironmentObject var env : MyAppEnvironmentData
     @State var word:String
     @State var gate:Int?
+//    @Binding var selections:[answerBlob]
+//    @Binding var tenseID:Int
+//    @Binding var verbLink:Int
+//    @Binding var display0Conjugations:Bool
+    
     var body: some View {
     let letter = word.map( { String($0) } )
     return VStack {
@@ -148,6 +155,20 @@ struct newView: View {
                 
 
             }
+          }.onTapGesture {
+//            self.display0Conjugations = false
+//            self.selections.removeAll()
+//            for instance in self.env.answery.answerx {
+//                    if instance.tenseID == self.tenseID && instance.verbID == self.verbLink {
+//                      self.selections.append(instance)
+//                    }
+//                  }
+//                  self.selections.sort { (first, second) -> Bool in
+//                    first.personID.debugDescription < second.personID.debugDescription
+//                  }
+//                DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+//                  self.display0Conjugations = false
+//                }
           }
         }
       }
@@ -256,8 +277,10 @@ struct PageTwo: View {
   
   @State var showColor = false
   @State var verbID:Int!
+  @State var verbLink:Int!
   @State var tenseID:Int!
   @State var personID: PersonClass!
+  @State var utiliser:String!
   
   @State var lvalue:Int = 99
   @State var pvalue:Int = 99
@@ -298,6 +321,11 @@ struct PageTwo: View {
           data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
         }
       return zak
+    }
+    
+    func findVerb(searchID: Int) -> String {
+      let bob = env.verby.verbx.filter({ searchID == $0.id })
+      return (bob.first?.name)!
     }
     
     func findAnswer() -> String? {
@@ -359,21 +387,37 @@ struct PageTwo: View {
             .onReceive([selectedVerb].publisher.first()) { ( value ) in
               self.verbText = self.env.verby.verbx[value].name
               self.verbID = self.env.verby.verbx[value].id
+              self.verbLink = self.env.verby.verbx[value].link
+              
+              if self.verbLink != 0 {
+                self.utiliser = "Même règle que " + findVerb(searchID: self.verbLink)
+              }
+              
               self.display0Tense = false
               self.display1Tense = true
               self.display2Conjugations = false
               self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[value - 1].name : ""
               self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[value + 1].name : ""
               self.verbSelected = self.env.verby.verbx[value].name
+              
               if value != self.pvalue {
                 self.display2Conjugations = true
                 self.display0Conjugations = false
                 self.selections.removeAll()
-                for instance in self.env.answery.answerx {
-                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                    self.selections.append(instance)
+                if self.verbLink! == 0 {
+                  for instance in self.env.answery.answerx {
+                    if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                      self.selections.append(instance)
+                    }
                   }
+                  self.selections.sort { (first, second) -> Bool in
+                    first.personID.debugDescription < second.personID.debugDescription
+                  }
+                } else {
+                  let spc = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                  self.selections.append(spc)
                 }
+                
                 self.pvalue = value
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
                   self.display2Conjugations = true
@@ -419,19 +463,34 @@ struct PageTwo: View {
             self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[value - 1].name : ""
             self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[value + 1].name : ""
             self.tenseSelected = self.env.tensey.tensex[value].name
+            
+            if self.verbLink != 0 {
+                self.utiliser = "Même règle que " + findVerb(searchID: self.verbLink)
+            }
+              
             if value != self.lvalue {
               self.display2Conjugations = false
               self.display0Conjugations = false
               self.selections.removeAll()
-              for instance in self.env.answery.answerx {
-                if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
-                  self.selections.append(instance)
+              if self.verbLink! == 0 {
+                for instance in self.env.answery.answerx {
+                  if instance.tenseID == self.tenseID && instance.verbID == self.verbID {
+                    self.selections.append(instance)
+                  }
                 }
+                self.selections.sort { (first, second) -> Bool in
+                    first.personID.debugDescription < second.personID.debugDescription
+                  }
+              } else {
+                let spc = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                self.selections.append(spc)
               }
-              self.selections.sort { (first, second) -> Bool in
-                  first.personID.debugDescription < second.personID.debugDescription
-                }
               self.lvalue = value
+              // exception
+              
+              if !self.groupColor {
+                 self.selections.removeAll()
+              }
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
               
                 
@@ -460,19 +519,24 @@ struct PageTwo: View {
       if display2Conjugations {
         List {
             ForEach((0 ..< self.selections.count), id: \.self) { column in
-              newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
-              .listRowInsets(EdgeInsets(top: 0, leading: 24, bottom: 0, trailing: 0))
-              .font(Fonts.avenirNextCondensedBold(size: 22))
-              .opacity(self.display0Conjugations ? 1:0)
+              HStack {
+                Spacer()
+//                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
+                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
+                
+                .listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
+                .font(Fonts.avenirNextCondensedBold(size: 22))
+                .opacity(self.display0Conjugations ? 1:0)
+                Spacer()
+              }
           }
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
-        .background(InsideView())
-        .frame(width: 256, height: 180.5, alignment: .center)
+        .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
         .offset(x: 0, y: -64)
       } else {
         Spacer()
-          .frame(width: 256, height: 180.5, alignment: .center)
+          .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
           .offset(x: 0, y: -64)
       }
     } // VStack

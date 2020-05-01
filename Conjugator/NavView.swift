@@ -56,8 +56,8 @@ struct PageOne: View {
         .frame(width:0, height:0)
       }
       Spacer()
-      Button("Random") {
-        DownLoadVerbs(levels:["easy","medium","hard"], environment: self.env)
+      Button("Supérieur") {
+        DownLoadVerbs(levels:["easy","medium","hard","dynamic"], environment: self.env)
         self.env.level = "hard"
         self.env.currentPage = .SecondPage
       }
@@ -68,9 +68,9 @@ struct PageOne: View {
       
       
       Spacer()
-      Button("Hard") {
-        DownLoadVerbs(levels:["hard"], environment: self.env)
+      Button("Avancé") {
         self.env.level = "hard"
+        DownLoadVerbs(levels:["hard"], environment: self.env)
         self.env.currentPage = .SecondPage
       }
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -80,9 +80,10 @@ struct PageOne: View {
       
       Spacer()
         .frame(width: 1, height: 10, alignment: .center)
-      Button("Medium") {
-        DownLoadVerbs(levels:["medium"], environment: self.env)
+      Button("Intermédiaire") {
         self.env.level = "medium"
+        DownLoadVerbs(levels:["medium"], environment: self.env)
+        
         self.env.currentPage = .SecondPage
       }
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -93,9 +94,9 @@ struct PageOne: View {
       
       Spacer()
         .frame(width: 1, height: 10, alignment: .center)
-      Button("Easy") {
-        DownLoadVerbs(levels:["easy"], environment: self.env)
+      Button("Débutant") {
         self.env.level = "easy"
+        DownLoadVerbs(levels:["easy"], environment: self.env)
         self.env.currentPage = .SecondPage
       }
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -115,16 +116,19 @@ func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
   
   print("downloading ... ",environment.level)
   
-  for level in levels {
-    
-    let content = readVerb(fileName: level)
+    let content = readVerb(fileName: "verb")
     
     for lines in content! {
       if lines.count > 1 {
-        let verb = lines.split(separator: ",")
-        let index = Int(String(verb[0]))
-        let newVerb = verbBlob(id: index, name: String(verb[1]))
-        environment.verby.verbx.append(newVerb)
+        for level in levels {
+          let verb = lines.split(separator: ",")
+          let index = Int(String(verb[0]))
+          let link = Int(String(verb[2]))
+          let stage = String(verb[3])
+          if level == stage {
+            let newVerb = verbBlob(id: index, name: String(verb[1]), link: link)
+            environment.verby.verbx.append(newVerb)
+          }
       }
     }
   }
