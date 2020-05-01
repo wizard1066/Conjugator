@@ -75,7 +75,12 @@ struct AdminView: View {
           self.display9 = false
         }
         TextField("Modify ...", text: $selectedText, onCommit: {
+        
+          print("tenseID ",self.tenseID)
+        
           self.display9 = false
+          // personID needs to be personClass.px if Infinitif present no 20. tense
+          
           self.personID = self.selections[self.tag].personID
           self.verbID = self.selections[self.tag].verbID
           self.tenseID = self.selections[self.tag].tenseID
@@ -102,7 +107,6 @@ struct AdminView: View {
               for bobs in bob {
                   print("bob ",bobs)
               }
-//            print("self.env.answery.answerx ",self.env.answery.answerx.count)
           }
         })
           .labelsHidden()

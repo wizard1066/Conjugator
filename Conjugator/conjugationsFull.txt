@@ -4182,3 +4182,16 @@ colno,verb id,tense id,aux id,person no,person,conjugation,stem,end,irregularS,i
 9309,99,9,3,,,restant,rest,ant,0,0,0,
 9310,99,10,3,,,resté(s),rest,é(s),0,0,0,
 9311,99,10,3,,,restée(s),rest,ée(s),0,0,0,
+9000,100,9,0,2P,Use acheter as a,model,,,,0,0,0,
+9000,100,20,0,3P,Use acheter as a,model,,,,0,0,0,
+9000,100,7,0,1P,Use acheter as a,model,,,,0,0,0,
+9000,100,6,0,1S,Use acheter as a,model,,,,,0,0,0,
+9000,100,5,0,2S,Use acheter as a,model,,,,,0,0,0,
+9000,100,4,0,3S,Use acheter as a,model,,,,,0,0,0,
+9000,100,3,0,1P,Use acheter as a,model,,,,,0,0,0,
+9000,100,2,0,1P,Use acheter as a,model,,,,,0,0,0,
+9000,100,1,0,1P,Use acheter as a,model,,,,,0,0,0,
+9000,100,10,0,1P,Use acheter as a,model,,,,,0,0,0,
+
+
+

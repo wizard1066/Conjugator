@@ -82,7 +82,8 @@ struct tenseBlob {
   var id:Int!
   var groupID:Int!
   var name:String!
-  
+  var derive:String!
+  var color:String!
 }
 
 final class tenseDB: ObservableObject, Identifiable {
@@ -192,45 +193,45 @@ let qsize:CGFloat = 20
 
 var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
 //var verbs: [Int:String] = [7:"Parler",2:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
-var groups: [Int:String] = [
-  1:"Dérivé du radical de l'infinitif",
-  2:"Dérivé de l'infinitif complet",
-  3:"Dérivé du radical du nous du présent",
-  4:"Dérivé du radical du nous du présent",
-  5:"Dérivé du radical du ils du présent",
-  6:"Dérivé du radical du passé simple",
-  7:"Dérivé de l'infinitif complet",
-  8:"Dérivé du radical du nous du présent",
-  9:"Dérivé du radical de l'infinitif",
-  10:"Forme de base"
-]
+
 
 var rien = [String](repeating: " ", count: 7)
 
 struct PageTwo: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-//  @ObservedObject var verby = verbDB()
-//  @ObservedObject var tensey = tenseDB()
-//  @ObservedObject var answery = answerDB()
-//  @ObservedObject var groupy = groupDB()
+
+//Indicatif présent	dérivé du radical de l’infinitif
+//Indicatif futur	dérivé de l’infinitif complet
+//Indicatif imparfait	dérivé du radical nous du présent
+//Indicatif passé simple	dérivé du radical nous du présent
+
+//Subjonctif présent	dérivé du radical du ils du présent
+//Subjonctif imparfait	dérivé du radical du passé simple
+
+//Conditionnel présent	dérivé de l’infinitif complet
+//Participe passé	dérivé du radical de l’infinitif
+//Participe présent	dérivé du radical du nous du présent
+//Infinitif présent	forme de base
+
 
   @State var tenses = [
-"1-1.Indicatif présent",
-"2-2.Indicatif futur",
-"3-3.Indicatif imparfait",
-"4-4.Indicatif passé simple",
-"5-5.Subjonctif Présent",
-"6-6.Subjonctif Imparfait",
-"7-7.Conditionnel Présent",
-"9-8.Participe Présent",
-"10-9.Participe Passé",
-"20-10.Infinitif Présent"]
+"1-1.Indicatif présent.Dérivé du radical de l'infinitif.1",
+"2-2.Indicatif futur.Dérivé de l'infinitif complet.1",
+"3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1",
+"4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1",
+"5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1",
+"6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1",
+"7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1",
+"9-8.Participe Présent.Dérivé du radical du nous du présent.1",
+"10-9.Participe Passé.Dérivé du radical de l'infinitif.1",
+"20-10.Infinitif Présent.Forme de base.0"]
 
   @State var verb:[String] = []
   @State var selectedVerb = 0
   @State var selectedGroup = 0
   
   @State var groupName = ""
+  @State var groupColor = true
   
   @State var selectedTense = 9
   @State var verbSelected = "Conjugator"
@@ -412,7 +413,8 @@ struct PageTwo: View {
             self.display1Verb = true
             
             self.tenseID = self.env.tensey.tensex[value].id
-            self.groupName = self.env.groupy.groupx[value].name
+            self.groupName = self.env.tensey.tensex[value].derive
+            self.groupColor = self.env.tensey.tensex[value].color == "1" ? true:false
             
             self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[value - 1].name : ""
             self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[value + 1].name : ""
@@ -452,7 +454,7 @@ struct PageTwo: View {
     } // ZStack
       Text(groupName)
         .font(Fonts.avenirNextCondensedBold(size: 24))
-        .background(Color.yellow)
+        .background(groupColor ? Color.yellow: Color.clear)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         .offset(x: 0, y: -64)
       if display2Conjugations {
@@ -465,22 +467,23 @@ struct PageTwo: View {
           }
         }.environment(\.defaultMinListRowHeight, 20)
         .environment(\.defaultMinListHeaderHeight, 0)
-        .frame(width: 256, height: 180, alignment: .center)
+        .background(InsideView())
+        .frame(width: 256, height: 180.5, alignment: .center)
         .offset(x: 0, y: -64)
       } else {
         Spacer()
-          .frame(width: 256, height: 200, alignment: .center)
+          .frame(width: 256, height: 180.5, alignment: .center)
           .offset(x: 0, y: -64)
       }
     } // VStack
     .onReceive(rulesPublisher, perform: { ( _ ) in
       self.display0Verb = false
       self.env.verby.verbx.removeAll()
-      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-      for instance in dictSortByValue {
-        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-        self.env.groupy.groupx.append(newGroup)
-      }
+//      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+//      for instance in groups {
+//        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+//        self.env.groupy.groupx.append(newGroup)
+//      }
     })
     .onReceive(populatePublisher, perform: { ( seek ) in
       self.display0Verb = false
@@ -492,16 +495,17 @@ struct PageTwo: View {
         if once {
           once = false
                
-      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-      for instance in dictSortByValue {
-        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-        self.env.groupy.groupx.append(newGroup)
-      }
+//      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
+//      for instance in dictSortByValue {
+//        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
+//        self.env.groupy.groupx.append(newGroup)
+//      }
       
       for instance in self.tenses {
         let breakout = instance.split(separator: ".")
         let breakdown = breakout[0].split(separator: "-")
-        let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]))
+        let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]))
+//        print("newTense ",newTense)
         self.env.tensey.tensex.append(newTense)
       }
       
@@ -614,8 +618,28 @@ struct VerbView: View {
       .opacity(0.1)
       .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
     }
+    
+    
   }
 }
+
+struct InsideView: View {
+  var body: some View {
+    
+      return VStack {
+         GeometryReader { geometry in
+          Rectangle()
+            .fill(Color.yellow)
+            .opacity(0.5)
+            .onAppear {
+              print("geo ",geometry.frame(in: .global))
+          }
+        }
+      
+    }
+  }
+}
+
 
 
 struct ContentView_Previews: PreviewProvider {
