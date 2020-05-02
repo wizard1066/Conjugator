@@ -1,4 +1,3 @@
-colno,verb id,tense id,aux id,person no,person,conjugation,stem,end,irregularS,irregularE,specialCalc,specialCase
 1,2,1,2,1S,J',ai,ai,,1,,0,
 2,2,1,2,2S,Tu,as,as,,1,,0,
 3,2,1,2,3S,Il,a,a,,1,,0,

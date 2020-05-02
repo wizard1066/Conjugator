@@ -25,6 +25,8 @@ final class MyAppEnvironmentData: ObservableObject {
   @Published var groupy = groupDB()
 }
 
+var prime = true
+
 struct NavigationTest: View {
   
   var body: some View {
@@ -33,6 +35,7 @@ struct NavigationTest: View {
     }
   }
 }
+
 
 
 struct PageOne: View {
@@ -132,8 +135,9 @@ func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
       }
     }
   }
+  let french = Locale(identifier: "fr-CH")
   environment.verby.verbx.sort { (first, second) -> Bool in
-    first.name < second.name
+    (first.name!.compare(second.name!, locale: french)) == .orderedAscending
   }
 }
 
@@ -142,6 +146,8 @@ struct DownLoadConjugations: ViewModifier {
   func body(content: Content) -> some View {
     content
       .onAppear {
+        if prime {
+          prime = false
         self.env.tensey.tensex.removeAll()
         self.env.groupy.groupx.removeAll()
         self.env.answery.answerx.removeAll()
@@ -156,33 +162,33 @@ struct DownLoadConjugations: ViewModifier {
             let tenseID = Int(String(tense[2]))
             let conjugation = String(tense[5] + " " + tense[6])
             //            for instance in self.answers {
-            var personID:PersonClass!
-            //        print("conjugation ",conjugation)
-            switch tense[5] {
-            case "Je":
-              personID = PersonClass.a1
-              break
-            case "J'":
-              personID = PersonClass.a1
-              break
-            case "Tu":
-              personID = PersonClass.a2
-              break
-            case "Il":
-              personID = PersonClass.a3
-              break
-            case "Nous":
-              personID = PersonClass.p1
-              break
-            case "Vous":
-              personID = PersonClass.p2
-              break
-            case "Ils":
-              personID = PersonClass.p3
-              break
-            default:
-              break
-            }
+            let personID = returnClass(class2C: String(tense[5]))
+//            //        print("conjugation ",conjugation)
+//            switch tense[5] {
+//            case "Je":
+//              personID = PersonClass.a1
+//              break
+//            case "J'":
+//              personID = PersonClass.a1
+//              break
+//            case "Tu":
+//              personID = PersonClass.a2
+//              break
+//            case "Il":
+//              personID = PersonClass.a3
+//              break
+//            case "Nous":
+//              personID = PersonClass.b1
+//              break
+//            case "Vous":
+//              personID = PersonClass.b2
+//              break
+//            case "Ils":
+//              personID = PersonClass.a4
+//              break
+//            default:
+//              break
+//            }
             
             var redMask:Int!
             if tense.count > 9 {
@@ -206,6 +212,38 @@ struct DownLoadConjugations: ViewModifier {
         }
     }
   }
+  }
+}
+
+func returnClass(class2C:String) -> PersonClass {
+   var personID:PersonClass!
+            //        print("conjugation ",conjugation)
+            switch class2C {
+            case "Je":
+              personID = PersonClass.a1
+              break
+            case "J'":
+              personID = PersonClass.a1
+              break
+            case "Tu":
+              personID = PersonClass.a2
+              break
+            case "Il":
+              personID = PersonClass.a3
+              break
+            case "Nous":
+              personID = PersonClass.b1
+              break
+            case "Vous":
+              personID = PersonClass.b2
+              break
+            case "Ils":
+              personID = PersonClass.a4
+              break
+            default:
+              personID = PersonClass.cx
+            }
+    return personID
 }
 
 #if DEBUG

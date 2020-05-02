@@ -20,10 +20,10 @@ enum PersonClass {
   case a1
   case a2
   case a3
-  case p1
-  case p2
-  case p3
-  case px
+  case b1
+  case b2
+  case a4
+  case cx
 }
 
 struct verbBlob {
@@ -44,15 +44,12 @@ func readVerb(fileName:String) -> [String]? {
   let fileURL = Bundle.main.url(forResource:fileName, withExtension: "txt")
   do {
     if try fileURL!.checkResourceIsReachable() {
-      print("file exist")
-      //           let data = try String(contentsOfFile: fileURL!.absoluteString, encoding: .utf8)
+      
       let data = try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-      //           let myStrings = data.components(separatedBy: .controlCharacters)
+      
       let myStrings = data.components(separatedBy: .newlines)
       return myStrings
       
-      //           return try String(contentsOf: fileURL!, encoding: String.Encoding.utf8)
-      //            print("contents ",contents)
     } else {
       print("file doesnt exist")
     }
@@ -154,7 +151,7 @@ struct newView: View {
           
           
         }
-      }.onTapGesture {
+      }.onTapGesture() {
         if linkID != 0 {
           //            self.display0Conjugations = false
           self.selections.removeAll()
@@ -179,38 +176,38 @@ struct newView: View {
   }
 }
 
-struct ListView: View {
-  @Binding var name:String
-  @State var device: String
-  @State var isSelected: Bool
-  
-  var body: some View {
-    Text(device)
-      .listRowBackground(self.isSelected ? Color.yellow: Color.clear)
-      .onTapGesture {
-        self.name = self.device
-        self.isSelected = !self.isSelected
-    }
-  }
-}
-
-struct TextView: View {
-  @State var textValue:String!
-  @State var textOK = true
-  var body: some View {
-    if textValue.isEmpty {
-      textOK = false
-    }
-    var twoText = textValue.split(separator: " ")
-    if twoText.count == 1 {
-      twoText.append(" ")
-    }
-    return HStack {
-      Text(textOK ? twoText[0] : "")
-      Text(textOK ? twoText[1] : "")
-    }
-  }
-}
+//struct ListView: View {
+//  @Binding var name:String
+//  @State var device: String
+//  @State var isSelected: Bool
+//
+//  var body: some View {
+//    Text(device)
+//      .listRowBackground(self.isSelected ? Color.yellow: Color.clear)
+//      .onTapGesture {
+//        self.name = self.device
+//        self.isSelected = !self.isSelected
+//    }
+//  }
+//}
+//
+//struct TextView: View {
+//  @State var textValue:String!
+//  @State var textOK = true
+//  var body: some View {
+//    if textValue.isEmpty {
+//      textOK = false
+//    }
+//    var twoText = textValue.split(separator: " ")
+//    if twoText.count == 1 {
+//      twoText.append(" ")
+//    }
+//    return HStack {
+//      Text(textOK ? twoText[0] : "")
+//      Text(textOK ? twoText[1] : "")
+//    }
+//  }
+//}
 
 let bsize:CGFloat = 48
 let asize:CGFloat = 32
@@ -405,7 +402,7 @@ struct PageTwo: View {
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
             self.selectedVerb = value
           }
-          .onTapGesture {
+          .onTapGesture() {
             self.selections.removeAll()
             self.display2Conjugations = false
 
@@ -440,7 +437,7 @@ struct PageTwo: View {
               }
             } else {
               if self.noDivert {
-                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
               }
             }
@@ -504,7 +501,7 @@ struct PageTwo: View {
             .onReceive([selectedTense].publisher) { ( value ) in
               self.selectedTense = value
           }
-          .onTapGesture {
+          .onTapGesture() {
             self.selections.removeAll()
             self.display2Conjugations = false
             
@@ -534,7 +531,7 @@ struct PageTwo: View {
               }
             } else {
               if self.noDivert {
-                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.px, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
               }
             }

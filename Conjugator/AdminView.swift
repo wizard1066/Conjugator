@@ -30,7 +30,7 @@ struct AdminView: View {
   
   @State var answer = [String](repeating: "", count: 7)
   @State var colors = [Int](repeating: 0, count: 7)
-  @State var persons = [PersonClass](repeating: PersonClass.px, count: 7)
+  @State var persons = [PersonClass](repeating: PersonClass.cx, count: 7)
   @State var select = [Bool](repeating: false, count: 7)
   @State var choice = [Bool](repeating: false, count: 99)
   @State var selections:[answerBlob] = []
