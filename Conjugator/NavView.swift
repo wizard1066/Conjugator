@@ -157,7 +157,13 @@ struct DownLoadConjugations: ViewModifier {
         for lines in content2! {
           if lines.count > 1 {
 //            print("verb ",lines)
+            
             let tense = lines.split(separator: ",")
+            
+            if lines.contains("abso") {
+              print("tense ",tense)
+            }
+            
             let verbID = Int(String(tense[1]))
             let tenseID = Int(String(tense[2]))
             let conjugation = String(tense[5] + " " + tense[6])

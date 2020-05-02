@@ -1,48 +1,3 @@
-1,2,1,2,1S,J',ai,ai,,1,,0,
-2,2,1,2,2S,Tu,as,as,,1,,0,
-3,2,1,2,3S,Il,a,a,,1,,0,
-4,2,1,2,3P,Ils,ont,ont,,1,,0,
-5,2,1,2,1P,Nous,avons,av,ons,,0,0,
-6,2,1,2,2P,Vous,avez,av,ez,,,0,
-14,2,3,2,1S,J',avais,av,ais,,,0,
-15,2,3,2,2S,Tu,avais,av,ais,,,0,
-16,2,3,2,3S,Il,avait,av,ait,,,0,
-17,2,3,2,3P,Ils,avaient,av,aient,,,0,
-18,2,3,2,1P,Nous,avions,av,ions,,,0,
-19,2,3,2,2P,Vous,aviez,av,iez,,,0,
-20,2,4,2,1S,J',eus,e,us,1,,0,
-21,2,4,2,2S,Tu,eus,e,us,1,,0,
-22,2,4,2,3S,Il,eut,e,ut,1,,0,
-23,2,4,2,3P,Ils,eurent,e,urent,1,,0,
-24,2,4,2,1P,Nous,eûmes,e,ûmes,1,,0,
-25,2,4,2,2P,Vous,eûtes,e,ûtes,1,,0,
-8,2,2,2,1S,J',aurai,aur,ai,1,0,0,
-9,2,2,2,2S,Tu,auras,aur,as,1,,0,
-10,2,2,2,3S,Il,aura,aur,a,1,,0,
-11,2,2,2,3P,Ils,auront,aur,ont,1,,0,
-12,2,2,2,1P,Nous,aurons,aur,ons,1,,0,
-13,2,2,2,2P,Vous,aurez,aur,ez,1,,0,
-38,2,7,2,1S,J',aurais,aur,ais,1,,0,
-39,2,7,2,2S,Tu,aurais,aur,ais,1,,0,
-40,2,7,2,3S,Il,aurait,aur,ait,1,,0,
-41,2,7,2,3P,Ils,auraient,aur,aient,1,,0,
-42,2,7,2,1P,Nous,aurions,aur,ions,1,,0,
-43,2,7,2,2P,Vous,auriez,aur,iez,1,,0,
-47,2,9,2,,,ayant,ay,ant,1,,0,
-48,2,10,2,,,eu(s),eu,(s),1,,0,
-49,2,10,2,,,eue(s),eu,e(s),1,,0,
-26,2,5,2,1S,J',aie,ai,e,1,,0,
-27,2,5,2,2S,Tu,aies,ai,es,1,,0,
-28,2,5,2,3S,Il,ait,ai,t,1,1,0,
-29,2,5,2,3P,Ils,aient,ai,ent,1,,0,
-30,2,5,2,1P,Nous,ayons,ay,ons,1,1,0,
-31,2,5,2,2P,Vous,ayez,ay,ez,1,1,0,
-32,2,6,2,1S,J',eusse,e,usse,,,0,
-33,2,6,2,2S,Tu,eusses,e,usses,,,0,
-34,2,6,2,3S,Il,eût,e,ût,,,0,
-35,2,6,2,3P,Ils,eussent,e,ussent,,,0,
-36,2,6,2,1P,Nous,eussions,e,ussions,,,0,
-37,2,6,2,2P,Vous,eussiez,e,ussiez,,,0,
 7,2,1,2,,,en ayant eu,en, ayant eu,,,0,
 102,3,1,2,1S,Je,suis,suis,,1,,0,
 103,3,1,2,2S,Tu,es,es,,1,,0,
@@ -1124,141 +1079,6 @@
 2464,26,9,2,,,haïssant,ha,ïssant,,,0,
 2465,26,10,2,,,haï(s),ha,ï(s),,,0,
 2466,26,10,2,,,haïe(s),ha,ïe(s),,,0,
-2520,27,1,2,1S,J',absous,absou,s,1,,0,
-2521,27,1,2,2S,Tu,absous,absou,s,1,,0,
-2522,27,1,2,3S,Il,absout,absou,t,1,,0,
-2523,27,1,2,3P,Ils,absolvent,absolv,ent,1,,0,
-2524,27,1,2,1P,Nous,absolvons,absolv,ons,1,,0,
-2525,27,1,2,2P,Vous,absolvez,absolv,ez,1,,0,
-2526,27,2,2,1S,J',absoudrai,absoudr,ai,1,,0,
-2527,27,2,2,2S,Tu,absoudras,absoudr,as,1,,0,
-2528,27,2,2,3S,Il,absoudra,absoudr,a,1,,0,
-2529,27,2,2,3P,Ils,absoudront,absoudr,ont,1,,0,
-2530,27,2,2,1P,Nous,absoudrons,absoudr,ons,1,,0,
-2531,27,2,2,2P,Vous,absoudrez,absoudr,ez,1,,0,
-2532,27,3,2,1S,J',absolvais,absolv,ais,,,0,
-2533,27,3,2,2S,Tu,absolvais,absolv,ais,,,0,
-2534,27,3,2,3S,Il,absolvait,absolv,ait,,,0,
-2535,27,3,2,3P,Ils,absolvaient,absolv,aient,,,0,
-2536,27,3,2,1P,Nous,absolvions,absolv,ions,,,0,
-2537,27,3,2,2P,Vous,absolviez,absolv,iez,,,0,
-2538,27,4,2,1S,J',absolus,absol,us,1,,0,
-2539,27,4,2,2S,Tu,absolus,absol,us,1,,0,
-2540,27,4,2,3S,Il,absolut,absol,ut,1,,0,
-2541,27,4,2,3P,Ils,absolurent,absol,urent,1,,0,
-2542,27,4,2,1P,Nous,absolûmes,absol,ûmes,1,,0,
-2543,27,4,2,2P,Vous,absolûtes,absol,ûtes,1,,0,
-2544,27,5,2,1S,J',absolve,absolv,e,,,0,
-2545,27,5,2,2S,Tu,absolves,absolv,es,,,0,
-2546,27,5,2,3S,Il,absolve,absolv,e,,,0,
-2547,27,5,2,3P,Ils,absolvent,absolv,ent,,,0,
-2548,27,5,2,1P,Nous,absolvions,absolv,ions,,,0,
-2549,27,5,2,2P,Vous,absolviez,absolv,iez,,,0,
-2550,27,6,2,1S,J',absolusse,absolu,sse,,,0,
-2551,27,6,2,2S,Tu,absolusses,absolu,sses,,,0,
-2552,27,6,2,3S,Il,absolut,absolu,t,,,0,
-2553,27,6,2,3P,Ils,absolussent,absolu,ssent,,,0,
-2554,27,6,2,1P,Nous,absolussions,absolu,ssions,,,0,
-2555,27,6,2,2P,Vous,absolussiez,absolu,ssiez,,,0,
-2556,27,7,2,1S,J',absoudrais,absoudr,ais,1,,0,
-2557,27,7,2,2S,Tu,absoudrais,absoudr,ais,1,,0,
-2558,27,7,2,3S,Il,absoudrait,absoudr,ait,1,,0,
-2559,27,7,2,3P,Ils,absoudraient,absoudr,aient,1,,0,
-2560,27,7,2,1P,Nous,absoudrions,absoudr,ions,1,,0,
-2561,27,7,2,2P,Vous,absoudriez,absoudr,iez,1,,0,
-2565,27,9,2,,,absolvant,absolv,ant,,,0,
-2566,27,10,2,,,absous,absous,,,,0,
-2567,27,10,2,,,absoute(s),absout,e(s),,,0,
-2621,28,1,2,1S,J',acquiers,acquier,s,1,,0,
-2622,28,1,2,2S,Tu,acquiers,acquier,s,1,,0,
-2623,28,1,2,3S,Il,acquiert,acquier,t,1,,0,
-2624,28,1,2,3P,Ils,acquièrent,acquièr,ent,1,,0,
-2625,28,1,2,1P,Nous,acquérons,acquér,ons,0,,0,
-2626,28,1,2,2P,Vous,acquérez,acquér,ez,,,0,
-2627,28,2,2,1S,J',acquerrai,acquerr,ai,1,,0,
-2628,28,2,2,2S,Tu,acquerras,acquerr,as,1,,0,
-2629,28,2,2,3S,Il,acquerra,acquerr,a,1,,0,
-2630,28,2,2,3P,Ils,acquerront,acquerr,ont,1,,0,
-2631,28,2,2,1P,Nous,acquerrons,acquerr,ons,1,,0,
-2632,28,2,2,2P,Vous,acquerrez,acquerr,ez,1,,0,
-2633,28,3,2,1S,J',acquérais,acquér,ais,,,0,
-2634,28,3,2,2S,Tu,acquérais,acquér,ais,,,0,
-2635,28,3,2,3S,Il,acquérait,acquér,ait,,,0,
-2636,28,3,2,3P,Ils,acquéraient,acquér,aient,,,0,
-2637,28,3,2,1P,Nous,acquérions,acquér,ions,,,0,
-2638,28,3,2,2P,Vous,acquériez,acquér,iez,,,0,
-2639,28,4,2,1S,J',acquis,acqu,is,1,,0,
-2640,28,4,2,2S,Tu,acquis,acqu,is,1,,0,
-2641,28,4,2,3S,Il,acquit,acqu,it,1,,0,
-2642,28,4,2,3P,Ils,acquirent,acqu,irent,1,,0,
-2643,28,4,2,1P,Nous,acquîmes,acqu,îmes,1,,0,
-2644,28,4,2,2P,Vous,acquîtes,acqu,îtes,1,,0,
-2645,28,5,2,1S,J',acquière,acquièr,e,,,0,
-2646,28,5,2,2S,Tu,acquières,acquièr,es,,,0,
-2647,28,5,2,3S,Il,acquière,acquièr,e,,,0,
-2648,28,5,2,3P,Ils,acquièrent,acquièr,ent,,,0,
-2649,28,5,2,1P,Nous,acquérions,acquér,ions,1,,0,
-2650,28,5,2,2P,Vous,acquérriez,acquér,riez,1,,0,
-2651,28,6,2,1S,J',acquisse,acqu,isse,,,0,
-2652,28,6,2,2S,Tu,acquisses,acqu,isses,,,0,
-2653,28,6,2,3S,Il,acquît,acqu,ît,,,0,
-2654,28,6,2,3P,Ils,acquissent,acqu,issent,,,0,
-2655,28,6,2,1P,Nous,acquissions,acqu,issions,,,0,
-2656,28,6,2,2P,Vous,acquisseiez,acqu,isseiez,0,,0,
-2657,28,7,2,1S,J',acquerrais,acquerr,ais,1,,0,
-2658,28,7,2,2S,Tu,acquerrais,acquerr,ais,1,,0,
-2659,28,7,2,3S,Il,acquerrait,acquerr,ait,1,,0,
-2660,28,7,2,3P,Ils,acquerraient,acquerr,aient,1,,0,
-2661,28,7,2,1P,Nous,acquerrions,acquerr,ions,1,,0,
-2662,28,7,2,2P,Vous,acquerriez,acquerr,iez,1,,0,
-2666,28,9,2,,,acquérant,acquér,ant,,,0,
-2667,28,10,2,,,acquis,acqu,is,1,,0,
-2668,28,10,2,,,acquise(s),acqu,ise(s),1,,0,
-2722,29,1,3,1S,Je,vais,vai,s,1,1,0,
-2723,29,1,3,2S,Tu,vas,va,s,1,1,0,
-2724,29,1,3,3S,Il,va,va,,1,,0,
-2725,29,1,3,3P,Ils,vont,v,ont,1,1,0,
-2726,29,1,3,1P,Nous,allons,all,ons,,,0,
-2727,29,1,3,2P,Vous,allez,all,ez,,,0,
-2728,29,2,3,1S,J',irai,ir,ai,1,,0,
-2729,29,2,3,2S,Tu,iras,ir,as,1,,0,
-2730,29,2,3,3S,Il,ira,ir,a,1,,0,
-2731,29,2,3,3P,Ils,iront,ir,ont,1,,0,
-2732,29,2,3,1P,Nous,irons,ir,ons,1,,0,
-2733,29,2,3,2P,Vous,irez,ir,ez,1,,0,
-2734,29,3,3,1S,J',allais,all,ais,0,,0,
-2735,29,3,3,2S,Tu,allais,all,ais,,,0,
-2736,29,3,3,3S,Il,allait,all,ait,,,0,
-2737,29,3,3,3P,Ils,allaient,all,aient,,,0,
-2738,29,3,3,1P,Nous,allions,all,ions,,,0,
-2739,29,3,3,2P,Vous,alliez,all,iez,,,0,
-2740,29,4,3,1S,J',allai,all,ai,0,,0,
-2741,29,4,3,2S,Tu,allas,all,as,,,0,
-2742,29,4,3,3S,Il,alla,all,a,,,0,
-2743,29,4,3,3P,Ils,allèrent,all,èrent,,,0,
-2744,29,4,3,1P,Nous,allâmes,all,âmes,,,0,
-2745,29,4,3,2P,Vous,allâtes,all,âtes,,,0,
-2746,29,5,3,1S,J',aille,aill,e,1,,0,
-2747,29,5,3,2S,Tu,ailles,aill,es,1,,0,
-2748,29,5,3,3S,Il,aille,aill,e,1,,0,
-2749,29,5,3,3P,Ils,aillent,aill,ent,1,,0,
-2750,29,5,3,1P,Nous,allions,all,ions,1,,0,
-2751,29,5,3,2P,Vous,alliez,all,iez,1,,0,
-2752,29,6,3,1S,J',allasse,all,asse,,,0,
-2753,29,6,3,2S,Tu,allasses,all,asses,,,0,
-2754,29,6,3,3S,Il,allât,all,ât,,,0,
-2755,29,6,3,3P,Ils,allassent,all,assent,,,0,
-2756,29,6,3,1P,Nous,allassions,all,assions,,,0,
-2757,29,6,3,2P,Vous,allassiez,all,assiez,,,0,
-2758,29,7,3,1S,J',irais,ir,ais,1,,0,
-2759,29,7,3,2S,Tu,irais,ir,ais,1,,0,
-2760,29,7,3,3S,Il,irait,ir,ait,1,,0,
-2761,29,7,3,3P,Ils,iraient,ir,aient,1,,0,
-2762,29,7,3,1P,Nous,irions,ir,ions,1,,0,
-2763,29,7,3,2P,Vous,iriez,ir,iez,1,,0,
-2767,29,9,3,,,allant,all,ant,,,0,
-2768,29,10,3,,,allé(s),all,é(s),,,0,
-2769,29,10,3,,,allée(s),all,ée(s),,,0,
 2823,30,1,2,1S,J',aperçois,aperçoi,s,1,0,1,ç
 2824,30,1,2,2S,Tu,aperçois,aperçoi,s,1,,1,ç
 2825,30,1,2,3S,Il,aperçoit,aperçoi,t,1,,1,ç
@@ -1349,96 +1169,6 @@
 2969,31,9,2,,,assaillant,assaill,ant,,,0,
 2970,31,10,2,,,assailli(s),assaill,i(s),,,0,
 2971,31,10,2,,,assaillie(s),assaill,ie(s),,,0,
-3024,32,1,2,1S,J',assois,assoi,s,1,,0,
-3025,32,1,2,2S,Tu,assois,assoi,s,1,,0,
-3026,32,1,2,3S,Il,assoit,assoi,t,1,,0,
-3027,32,1,2,3P,Ils,assoient,assoi,ent,1,,0,
-3028,32,1,2,1P,Nous,assoyons,assoy,ons,1,,1,y
-3029,32,1,2,2P,Vous,assoyez,assoy,ez,1,,1,y
-3030,32,2,2,1S,J',assoirai,assoir,ai,1,,0,
-3031,32,2,2,2S,Tu,assoiras,assoir,as,1,,0,
-3032,32,2,2,3S,Il,assoira,assoir,a,1,,0,
-3033,32,2,2,3P,Ils,assoiront,assoir,ont,1,,0,
-3034,32,2,2,1P,Nous,assoirons,assoir,ons,1,,0,
-3035,32,2,2,2P,Vous,assoirez,assoir,ez,1,,0,
-3036,32,3,2,1S,J',assoyais,assoy,ais,0,,1,y
-3037,32,3,2,2S,Tu,assoyais,assoy,ais,,,1,y
-3038,32,3,2,3S,Il,assoyait,assoy,ait,,,1,y
-3039,32,3,2,3P,Ils,assoyaient,assoy,aient,,,1,y
-3040,32,3,2,1P,Nous,assoyions,assoy,ions,,,1,y
-3041,32,3,2,2P,Vous,assoyiez,assoy,iez,,,1,y
-3042,32,4,2,1S,J',assis,ass,is,1,,0,
-3043,32,4,2,2S,Tu,assis,ass,is,1,,0,
-3044,32,4,2,3S,Il,assit,ass,it,1,,0,
-3045,32,4,2,3P,Ils,assirent,ass,irent,1,,0,
-3046,32,4,2,1P,Nous,assîmes,ass,îmes,1,,0,
-3047,32,4,2,2P,Vous,assîtes,ass,îtes,1,,0,
-3048,32,5,2,1S,J',assoie,assoi,e,0,,0,
-3049,32,5,2,2S,Tu,assoies,assoi,es,,,0,
-3050,32,5,2,3S,Il,assoie,assoi,e,,,0,
-3051,32,5,2,3P,Ils,assoient,assoi,ent,,,0,
-3052,32,5,2,1P,Nous,assoyions,assoy,ions,0,,1,y
-3053,32,5,2,2P,Vous,assoyiez,assoy,iez,,,1,y
-3054,32,6,2,1S,J',assisse,ass,isse,0,,0,
-3055,32,6,2,2S,Tu,assisses,ass,isses,,,0,
-3056,32,6,2,3S,Il,assît,ass,ît,,,0,
-3057,32,6,2,3P,Ils,assissent,ass,issent,,,0,
-3058,32,6,2,1P,Nous,assissions,ass,issions,,,0,
-3059,32,6,2,2P,Vous,assissiez,ass,issiez,,,0,
-3060,32,7,2,1S,J',assoirais,assoir,ais,1,,0,
-3061,32,7,2,2S,Tu,assoirais,assoir,ais,1,,0,
-3062,32,7,2,3S,Il,assoirait,assoir,ait,1,,0,
-3063,32,7,2,3P,Ils,assoiraient,assoir,aient,1,,0,
-3064,32,7,2,1P,Nous,assoirions,assoir,ions,1,,0,
-3065,32,7,2,2P,Vous,assoiriez,assoir,iez,1,,0,
-3069,32,9,2,,,assoyant,asso,yant,,,0,
-3070,32,10,2,,,assis(e),ass,is(e),,,0,
-3071,32,10,2,,,assise(s),ass,ise(s),,,0,
-3120,33,1,2,1S,J',assieds,assied,s,1,,0,
-3121,33,1,2,2S,Tu,assieds,assied,s,1,,0,
-3122,33,1,2,3S,Il,assied,assied,,1,,0,
-3123,33,1,2,3P,Ils,asseyent,assey,ent,1,,0,
-3124,33,1,2,1P,Nous,asseyons,assey,ons,1,,0,
-3125,33,1,2,2P,Vous,asseyez,assey,ez,1,,0,
-3144,33,5,2,1S,J',asseye,assey,e,0,,1,y
-3145,33,5,2,2S,Tu,asseyes,assey,es,,,1,y
-3146,33,5,2,3S,Il,asseye,assey,e,,,1,y
-3147,33,5,2,3P,Ils,asseyent,assey,ent,,,1,y
-3148,33,5,2,1P,Nous,asseyions,assey,ions,,,1,y
-3149,33,5,2,2P,Vous,asseyiez,assey,iez,,,1,y
-3132,33,3,2,1S,J',asseyais,assey,ais,0,,1,y
-3133,33,3,2,2S,Tu,asseyais,assey,ais,,,1,y
-3134,33,3,2,3S,Il,asseyait,assey,ait,,,1,y
-3135,33,3,2,3P,Ils,asseyaient,assey,aient,,,1,y
-3136,33,3,2,1P,Nous,asseyions,assey,ions,,,1,y
-3137,33,3,2,2P,Vous,asseyiez,assey,iez,,,1,y
-3138,33,4,2,1S,J',assis,ass,is,1,,0,
-3139,33,4,2,2S,Tu,assis,ass,is,1,,0,
-3140,33,4,2,3S,Il,assit,ass,it,1,,0,
-3141,33,4,2,3P,Ils,assirent,ass,irent,1,,0,
-3142,33,4,2,1P,Nous,assîmes,ass,îmes,1,,0,
-3143,33,4,2,2P,Vous,assîtes,ass,îtes,1,,0,
-3150,33,6,2,1S,J',assisse,ass,isse,0,,0,
-3151,33,6,2,2S,Tu,assisses,ass,isses,,,0,
-3152,33,6,2,3S,Il,assît,ass,ît,,,0,
-3153,33,6,2,3P,Ils,assissent,ass,issent,,,0,
-3154,33,6,2,1P,Nous,assissions,ass,issions,,,0,
-3155,33,6,2,2P,Vous,assissiez,ass,issiez,,,0,
-3126,33,2,2,1S,J',assiérai,assiér,ai,1,,0,
-3127,33,2,2,2S,Tu,assiéras,assiér,as,1,,0,
-3128,33,2,2,3S,Il,assiéra,assiér,a,1,,0,
-3129,33,2,2,3P,Ils,assiéront,assiér,ont,1,,0,
-3130,33,2,2,1P,Nous,assiérons,assiér,ons,1,,0,
-3131,33,2,2,2P,Vous,assiérez,assiér,ez,1,,0,
-3156,33,7,2,1S,J',assiérais,assiér,ais,1,,0,
-3157,33,7,2,2S,Tu,assiérais,assiér,ais,1,,0,
-3158,33,7,2,3S,Il,assiérait,assiér,ait,1,,0,
-3159,33,7,2,3P,Ils,assiéraient,assiér,aient,1,,0,
-3160,33,7,2,1P,Nous,assiérions,assiér,ions,1,,0,
-3161,33,7,2,2P,Vous,assiériez,assiér,iez,1,,0,
-3165,33,9,2,,,asseyant,assey,ant,0,,0,
-3166,33,10,2,,,assis,ass,is,,,0,
-3167,33,10,2,,,assise(s),ass,ise(s),,,0,
 3222,34,2,2,1S,Je,battrai,battr,ai,1,,0,
 3223,34,2,2,2S,Tu,battras,battr,as,1,,0,
 3224,34,2,2,3S,Il,battra,battr,a,1,,0,
@@ -4178,19 +3908,283 @@
 9258,99,7,3,3P,Ils,resteraient,rest,eraient,0,0,0,
 9259,99,7,3,1P,Nous,resterions,rest,erions,0,0,0,
 9260,99,7,3,2P,Vous,resteriez,rest,eriez,0,0,0,
+1,27,3,0,x,J' ,absolvais,a,b,0
+1,27,3,0,x,Tu ,absolvais,a,b,0
+1,27,3,0,x,Il ,absolvait,a,b,0
+1,27,3,0,x,Ils ,absolvaient,a,b,0
+1,27,3,0,x,Nous ,absolvions,a,b,0
+1,27,3,0,x,Vous ,absolviez,a,b,0
+1,27,5,0,x,J' ,absolve,a,b,0
+1,27,5,0,x,Tu ,absolves,a,b,0
+1,27,5,0,x,Il ,absolve,a,b,0
+1,27,5,0,x,Ils ,absolvent,a,b,0
+1,27,5,0,x,Nous ,absolvions,a,b,0
+1,27,5,0,x,Vous ,absolviez,a,b,0
+1,27,6,0,x,J' ,absolusse,a,b,0
+1,27,6,0,x,Tu ,absolusses,a,b,0
+1,27,6,0,x,Il ,absolut,a,b,0
+1,27,6,0,x,Ils ,absolussent,a,b,0
+1,27,6,0,x,Nous ,absolussions,a,b,0
+1,27,6,0,x,Vous ,absolussiez,a,b,0
+1,27,9,0,x,absolv,ant,a,b,0
+1,27,10,0,x,absous,a,b,0
+1,27,10,0,x,absout,e(s),a,b,0
+1,27,7,0,x,J' ,absoudrais,a,b,1016
+1,27,7,0,x,Tu ,absoudrais,a,b,1016
+1,27,7,0,x,Il ,absoudrait,a,b,1016
+1,27,7,0,x,Ils ,absoudraient,a,b,2032
+1,27,7,0,x,Nous ,absoudrions,a,b,4064
+1,27,7,0,x,Vous ,absoudriez,a,b,4064
+1,27,2,0,x,Vous ,absoudrez,a,b,4064
+1,27,2,0,x,Nous ,absoudrons,a,b,4064
+1,27,2,0,x,Ils ,absoudront,a,b,2032
+1,27,2,0,x,Il ,absoudra,a,b,1016
+1,27,2,0,x,Tu ,absoudras,a,b,1016
+1,27,2,0,x,J' ,absoudrai,a,b,1016
+1,27,4,0,x,J' ,absolus,a,b,248
+1,27,4,0,x,Tu ,absolus,a,b,248
+1,27,4,0,x,Il ,absolut,a,b,248
+1,27,4,0,x,Ils ,absolurent,a,b,496
+1,27,4,0,x,Nous ,absolûmes,a,b,992
+1,27,4,0,x,Vous ,absolûtes,a,b,992
+1,27,1,0,x,Vous ,absolvez,a,b,992
+1,27,1,0,x,Nous ,absolvons,a,b,992
+1,27,1,0,x,Ils ,absolvent,a,b,496
+1,27,1,0,x,Il ,absout,a,b,248
+1,27,1,0,x,Tu ,absous,a,b,248
+1,27,1,0,x,J' ,absous,a,b,248
 9309,99,9,3,,,restant,rest,ant,0,0,0,
 9310,99,10,3,,,resté(s),rest,é(s),0,0,0,
 9311,99,10,3,,,restée(s),rest,ée(s),0,0,0,
-9000,100,9,0,2P,Use acheter as a,model,,,,0,0,0,
-9000,100,20,0,3P,Use acheter as a,model,,,,0,0,0,
-9000,100,7,0,1P,Use acheter as a,model,,,,0,0,0,
-9000,100,6,0,1S,Use acheter as a,model,,,,,0,0,0,
-9000,100,5,0,2S,Use acheter as a,model,,,,,0,0,0,
-9000,100,4,0,3S,Use acheter as a,model,,,,,0,0,0,
-9000,100,3,0,1P,Use acheter as a,model,,,,,0,0,0,
-9000,100,2,0,1P,Use acheter as a,model,,,,,0,0,0,
-9000,100,1,0,1P,Use acheter as a,model,,,,,0,0,0,
-9000,100,10,0,1P,Use acheter as a,model,,,,,0,0,0,
+1,28,1,0,0,Nous,acquérons,0,0,0,0,0,
+1,28,1,0,0,Vous,acquérez,0,0,0,0,0,
+1,28,3,0,0,J',acquérais,0,0,0,0,0,
+1,28,3,0,0,Tu,acquérais,0,0,0,0,0,
+1,28,3,0,0,Il,acquérait,0,0,0,0,0,
+1,28,3,0,0,Ils,acquéraient,0,0,0,0,0,
+1,28,3,0,0,Nous,acquérions,0,0,0,0,0,
+1,28,3,0,0,Vous,acquériez,0,0,0,0,0,
+1,28,5,0,0,J',acquière,0,0,0,0,0,
+1,28,5,0,0,Tu,acquières,0,0,0,0,0,
+1,28,5,0,0,Il,acquière,0,0,0,0,0,
+1,28,5,0,0,Ils,acquièrent,0,0,0,0,0,
+1,28,6,0,0,J',acquisse,0,0,0,0,0,
+1,28,6,0,0,Tu,acquisses,0,0,0,0,0,
+1,28,6,0,0,Il,acquît,0,0,0,0,0,
+1,28,6,0,0,Ils,acquissent,0,0,0,0,0,
+1,28,6,0,0,Nous,acquissions,0,0,0,0,0,
+1,28,6,0,0,Vous,acquisseiez,0,0,0,0,0,
+1,28,9,0,0,acquér,ant,0,0,0,0,0,
+1,28,10,0,0,acqu,is,0,0,0,0,0,
+1,28,10,0,0,acqu,ise(s),0,0,0,0,0,
+1,28,7,0,0,J',acquerrais,0,0,1016
+1,28,7,0,0,Tu,acquerrais,0,0,1016
+1,28,7,0,0,Il,acquerrait,0,0,1016
+1,28,7,0,0,Ils,acquerraient,0,0,2032
+1,28,7,0,0,Nous,acquerrions,0,0,4064
+1,28,7,0,0,Vous,acquerriez,0,0,4064
+1,28,2,0,0,J',acquerrai,0,0,1016
+1,28,2,0,0,Tu,acquerras,0,0,1016
+1,28,2,0,0,Il,acquerra,0,0,1016
+1,28,2,0,0,Ils,acquerront,0,0,2032
+1,28,2,0,0,Nous,acquerrons,0,0,4064
+1,28,2,0,0,Vous,acquerrez,0,0,4064
+1,28,4,0,0,J',acquis,0,0,3704
+1,28,4,0,0,Tu,acquis,0,0,3704
+1,28,4,0,0,Il,acquit,0,0,3704
+1,28,4,0,0,Ils,acquirent,0,0,240
+1,28,4,0,0,Nous,acquîmes,0,0,480
+1,28,4,0,0,Vous,acquîtes,0,0,480
+1,28,1,0,0,J',acquiers,0,0,1016
+1,28,1,0,0,Tu,acquiers,0,0,1016
+1,28,1,0,0,Il,acquiert,0,0,1016
+1,28,1,0,0,Ils,acquièrent,0,0,2032
+1,28,5,0,0,Nous,acquérions,0,0,2016
+1,28,5,0,0,Vous,acquérriez,0,0,2016
+1,29,1,0,0,Nous,allons,0,0,0,0,0,
+1,29,1,0,0,Vous,allez,0,0,0,0,0,
+1,29,3,0,0,J',allais,0,0,0,0,0,
+1,29,3,0,0,Tu,allais,0,0,0,0,0,
+1,29,3,0,0,Il,allait,0,0,0,0,0,
+1,29,3,0,0,Ils,allaient,0,0,0,0,0,
+1,29,3,0,0,Nous,allions,0,0,0,0,0,
+1,29,3,0,0,Vous,alliez,0,0,0,0,0,
+1,29,4,0,0,J',allai,0,0,0,0,0,
+1,29,4,0,0,Tu,allas,0,0,0,0,0,
+1,29,4,0,0,Il,alla,0,0,0,0,0,
+1,29,4,0,0,Ils,allèrent,0,0,0,0,0,
+1,29,4,0,0,Nous,allâmes,0,0,0,0,0,
+1,29,4,0,0,Vous,allâtes,0,0,0,0,0,
+1,29,6,0,0,J',allasse,0,0,0,0,0,
+1,29,6,0,0,Tu,allasses,0,0,0,0,0,
+1,29,6,0,0,Il,allât,0,0,0,0,0,
+1,29,6,0,0,Ils,allassent,0,0,0,0,0,
+1,29,6,0,0,Nous,allassions,0,0,0,0,0,
+1,29,6,0,0,Vous,allassiez,0,0,0,0,0,
+1,29,9,0,0,all,ant,0,0,0,0,0,
+1,29,10,0,0,all,é(s),0,0,0,0,0,
+1,29,10,0,0,all,ée(s),0,0,0,0,0,
+1,29,7,0,0,J',irais,0,0,24
+1,29,7,0,0,Tu,irais,0,0,24
+1,29,7,0,0,Il,irait,0,0,24
+1,29,7,0,0,Ils,iraient,0,0,48
+1,29,7,0,0,Nous,irions,0,0,96
+1,29,7,0,0,Vous,iriez,0,0,96
+1,29,2,0,0,J',irai,0,0,24,
+1,29,2,0,0,Tu,iras,0,0,24
+1,29,2,0,0,Il,ira,0,0,24
+1,29,2,0,0,Ils,iront,0,0,48,
+1,29,2,0,0,Nous,irons,0,0,96,
+1,29,2,0,0,Vous,irez,0,0,96
+1,29,1,0,0,Je,vais,0,0,120
+1,29,1,0,0,Tu,vas,0,0,120
+1,29,1,0,0,Il,va,0,0,120
+1,29,1,0,0,Ils,vont,0,0,240
+1,29,5,0,0,J',aille,0,0,120
+1,29,5,0,0,Tu,ailles,0,0,120
+1,29,5,0,0,Il,aille,0,0,120,0,0,
+1,29,5,0,0,Ils,aillent,0,0,240
+1,29,5,0,0,Nous,allions,0,0,224
+1,29,5,0,0,Vous,alliez,0,0,224
+1,2,1,0,0,J',ai,0,0,0
+1,2,1,0,0,Tu,as,0,0,0
+1,2,1,0,0,Il,a,0,0,0
+1,2,1,0,0,Ils,ont,0,0,0
+1,2,1,0,0,Nous,avons,0,0,0
+1,2,1,0,0,Vous,avez,0,0,0
+1,2,3,0,0,J',avais,0,0,0
+1,2,3,0,0,Tu,avais,0,0,0
+1,2,3,0,0,Il,avait,0,0,0
+1,2,3,0,0,Ils,avaient,0,0,0
+1,2,3,0,0,Nous,avions,0,0,0
+1,2,3,0,0,Vous,aviez,0,0,0
+1,2,9,0,0,ay,ant,0,0,0
+1,2,10,0,0,eu,(s),0,0,0
+1,2,10,0,0,eu,e(s),0,0,0
+1,2,6,0,0,J',eusse,0,0,0
+1,2,6,0,0,Tu,eusses,0,0,0
+1,2,6,0,0,Il,eût,0,0,0
+1,2,6,0,0,Ils,eussent,0,0,0
+1,2,6,0,0,Nous,eussions,0,0,0
+1,2,6,0,0,Vous,eussiez,0,0,0
+1,2,1,0,0,en,ayant,0,0,0
+1,29,1,0,0,Nous,allons,0,0,0
+1,29,1,0,0,Vous,allez,0,0,0
+1,29,3,0,0,J',allais,0,0,0
+1,29,3,0,0,Tu,allais,0,0,0
+1,29,3,0,0,Il,allait,0,0,0
+1,29,3,0,0,Ils,allaient,0,0,0
+1,29,3,0,0,Nous,allions,0,0,0
+1,29,3,0,0,Vous,alliez,0,0,0
+1,29,4,0,0,J',allai,0,0,0
+1,29,4,0,0,Tu,allas,0,0,0
+1,29,4,0,0,Il,alla,0,0,0
+1,29,4,0,0,Ils,allèrent,0,0,0
+1,29,4,0,0,Nous,allâmes,0,0,0
+1,29,4,0,0,Vous,allâtes,0,0,0
+1,29,6,0,0,J',allasse,0,0,0
+1,29,6,0,0,Tu,allasses,0,0,0
+1,29,6,0,0,Il,allât,0,0,0
+1,29,6,0,0,Ils,allassent,0,0,0
+1,29,6,0,0,Nous,allassions,0,0,0
+1,29,6,0,0,Vous,allassiez,0,0,0
+1,29,9,0,0,all,ant,0,0,0
+1,29,10,0,0,all,é(s),0,0,0
+1,29,10,0,0,all,ée(s),0,0,0
+1,29,7,0,0,J',irais,0,0,24
+1,29,7,0,0,Tu,irais,0,0,24
+1,29,7,0,0,Il,irait,0,0,24
+1,29,7,0,0,Ils,iraient,0,0,48
+1,29,7,0,0,Nous,irions,0,0,96
+1,29,7,0,0,Vous,iriez,0,0,96
+1,29,2,0,0,J',irai,0,0,24
+1,29,2,0,0,Tu,iras,0,0,24
+1,29,2,0,0,Il,ira,0,0,24
+1,29,2,0,0,Ils,iront,0,0,48
+1,29,2,0,0,Nous,irons,0,0,96
+1,29,2,0,0,Vous,irez,0,0,96
+1,29,1,0,0,Je,vais,0,0,120
+1,29,1,0,0,Tu,vas,0,0,120
+1,29,1,0,0,Il,va,0,0,120
+1,29,1,0,0,Ils,vont,0,0,240
+1,29,5,0,0,J',aille,0,0,120
+1,29,5,0,0,Tu,ailles,0,0,120
+1,29,5,0,0,Il,aille,0,0,12000
+1,29,5,0,0,Ils,aillent,0,0,240
+1,29,5,0,0,Nous,allions,0,0,224
+1,29,5,0,0,Vous,alliez,0,0,224
+1,2,5,0,0,J',aie,0,0,536
+1,2,5,0,0,Tu,aies,0,0,536
+1,2,5,0,0,Il,ait,0,0,568
+1,2,5,0,0,Ils,aient,0,0,560
+1,2,5,0,0,Nous,ayons,0,0,992
+1,2,5,0,0,Vous,ayez,0,0,992
+1,2,4,0,0,J',eus,0,0,968
+1,2,4,0,0,Tu,eus,0,0,968
+1,2,4,0,0,Il,eut,0,0,968
+1,2,4,0,0,Ils,eurent,0,0,16
+1,2,4,0,0,Nous,eûmes,0,0,32
+1,2,4,0,0,Vous,eûtes,0,0,32
+1,2,2,0,0,J',aurai,0,0,56
+1,2,2,0,0,Tu,auras,0,0,56
+1,2,2,0,0,Il,aura,0,0,56
+1,2,2,0,0,Ils,auront,0,0,112
+1,2,2,0,0,Nous,aurons,0,0,224
+1,2,2,0,0,Vous,aurez,0,0,224
+1,2,7,0,0,J',aurais,0,0,56
+1,2,7,0,0,Tu,aurais,0,0,56
+1,2,7,0,0,Il,aurait,0,0,56
+1,2,7,0,0,Ils,auraient,0,0,96
+1,2,7,0,0,Nous,aurions,0,0,224
+1,2,7,0,0,Vous,auriez,0,0,224
+1,32,1,0,0,Nous,assoyons,0,0,0
+1,32,1,0,0,Vous,assoyez,0,0,0
+1,32,5,0,0,J',assoie,0,0,0
+1,32,5,0,0,Tu,assoies,0,0,0
+1,32,5,0,0,Il,assoie,0,0,0
+1,32,5,0,0,Ils,assoient,0,0,0
+1,32,6,0,0,J',assisse,0,0,0
+1,32,6,0,0,Tu,assisses,0,0,0
+1,32,6,0,0,Il,assît,0,0,0
+1,32,6,0,0,Ils,assissent,0,0,0
+1,32,6,0,0,Nous,assissions,0,0,0
+1,32,6,0,0,Vous,assissiez,0,0,0
+1,32,9,0,0,asso,yant,0,0,0
+1,32,10,0,0,ass,is(e),0,0,0
+1,32,10,0,0,ass,ise(s),0,0,0
+1,32,7,0,0,J',assoirais,0,0,504
+1,32,7,0,0,Tu,assoirais,0,0,504
+1,32,7,0,0,Il,assoirait,0,0,504
+1,32,7,0,0,Ils,assoiraient,0,0,1008
+1,32,7,0,0,Nous,assoirions,0,0,2016
+1,32,7,0,0,Vous,assoiriez,0,0,2016
+1,32,2,0,0,J',assoirai,0,0,504
+1,32,2,0,0,Tu,assoiras,0,0,504
+1,32,2,0,0,Il,assoira,0,0,504
+1,32,2,0,0,Ils,assoiront,0,0,1008
+1,32,2,0,0,Nous,assoirons,0,0,2016
+1,32,2,0,0,Vous,assoirez,0,0,2016
+1,32,4,0,0,J',assis,0,0,1848
+1,32,4,0,0,Tu,assis,0,0,1848
+1,32,4,0,0,Il,assit,0,0,1848
+1,32,4,0,0,Ils,assirent,0,0,112
+1,32,4,0,0,Nous,assîmes,0,0,224
+1,32,4,0,0,Vous,assîtes,0,0,224
+1,32,1,0,0,J',assois,0,0,248
+1,32,1,0,0,Tu,assois,0,0,248
+1,32,1,0,0,Il,assoit,0,0,248
+1,32,1,0,0,Ils,assoient,0,0,496
+1,32,3,0,0,J',assoyais,0,0,128
+1,32,3,0,0,Tu,assoyais,0,0,128
+1,32,3,0,0,Il,assoyait,0,0,128
+1,32,3,0,0,Ils,assoyaient,0,0,256
+1,32,3,0,0,Nous,assoyions,0,0,512
+1,32,3,0,0,Vous,assoyiez,0,0,512
+1,32,5,0,0,Nous,assoyions,0,0,512
+1,32,5,0,0,Vous,assoyiez,0,0,512
+
+
+
 
 
 

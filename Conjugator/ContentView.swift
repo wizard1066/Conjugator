@@ -152,7 +152,8 @@ struct newView: View {
           
         }
       }.onTapGesture() {
-        if linkID != 0 {
+        if linkID != nil {
+        if linkID != 0  {
           //            self.display0Conjugations = false
           self.selections.removeAll()
           //            self.display0Conjugations = true
@@ -171,10 +172,13 @@ struct newView: View {
             self.display2Conjugations = true
           }
         }
+        }
       }
     }
   }
 }
+
+
 
 //struct ListView: View {
 //  @Binding var name:String

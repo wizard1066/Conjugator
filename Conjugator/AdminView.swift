@@ -148,7 +148,7 @@ struct AdminView: View {
         if display9 {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
 //            newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
-            newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display9)
+            admView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display9)
                 .font(Fonts.avenirNextCondensedMedium(size: 24))
                 .onTapGesture {
 //                  resetPublisher.send()
@@ -176,7 +176,7 @@ struct AdminView: View {
         }.labelsHidden()
           .onReceive([selectedTense].publisher) { ( value ) in
             self.tenseID = self.env.tensey.tensex[value].id
-            self.groupName = self.env.groupy.groupx[value].name
+//            self.groupName = self.env.groupy.groupx[value].name
             if value != self.lvalue {
               self.display9 = false
               self.selections.removeAll()
@@ -209,6 +209,51 @@ struct AdminView: View {
       }
     }
   }
+  
+  struct admView: View {
+  @EnvironmentObject var env : MyAppEnvironmentData
+  @State var word:String
+  @State var gate:Int?
+  @Binding var selections:[answerBlob]
+  @Binding var display2Conjugations:Bool
+  
+  var body: some View {
+    let letter = word.map( { String($0) } )
+    return VStack {
+      HStack(spacing:0) {
+        ForEach((0 ..< letter.count), id: \.self) { column in
+          Text(letter[column])
+            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
+          
+          
+        }
+      }
+//      .onTapGesture() {
+//
+//        if linkID != 0  {
+//          //            self.display0Conjugations = false
+//          self.selections.removeAll()
+//          //            self.display0Conjugations = true
+//          DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+//            for instance in self.env.answery.answerx {
+//              if instance.tenseID == tenseID && instance.verbID == linkID {
+//                self.selections.append(instance)
+//              }
+//            }
+//            self.selections.sort { (first, second) -> Bool in
+//              first.personID.debugDescription < second.personID.debugDescription
+//            }
+//            // fooBar
+//            //                  let zee =
+//            doDivertPublisher.send(linkID)
+//            self.display2Conjugations = true
+//          }
+//        }
+//        }
+      
+    }
+  }
+}
   
    struct SpotView: View {
     @Binding var word:String
