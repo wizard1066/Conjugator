@@ -50,6 +50,7 @@ struct PageOne: View {
     
     return VStack {
       Group {
+      
       Text("Conjugateur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
@@ -58,55 +59,45 @@ struct PageOne: View {
       navlink
         .frame(width:0, height:0)
       }
-      Spacer()
+      
       Button("Supérieur") {
-        DownLoadVerbs(levels:["easy","medium","hard","dynamic"], environment: self.env)
-        self.env.level = "hard"
-        self.env.currentPage = .SecondPage
-      }
-      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      .border(Color.primary)
-      .font(Fonts.avenirNextCondensedBold(size: 20))
-//      .modifier(DownLoadVerbs(levels:["easy","medium","hard"]))
-      
-      
-      Spacer()
+          DownLoadVerbs(levels:["easy","medium","hard","dynamic"], environment: self.env)
+          self.env.level = "hard"
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+    
       Button("Avancé") {
-        self.env.level = "hard"
-        DownLoadVerbs(levels:["hard"], environment: self.env)
-        self.env.currentPage = .SecondPage
-      }
-      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      .border(Color.primary)
-      .font(Fonts.avenirNextCondensedBold(size: 20))
-//      .modifier(DownLoadVerbs(levels:["hard"]))
-      
-      Spacer()
-        .frame(width: 1, height: 10, alignment: .center)
-      Button("Intermédiaire") {
-        self.env.level = "medium"
-        DownLoadVerbs(levels:["medium"], environment: self.env)
+          self.env.level = "hard"
+          DownLoadVerbs(levels:["hard"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
-        self.env.currentPage = .SecondPage
-      }
-      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      .border(Color.primary)
-      .font(Fonts.avenirNextCondensedBold(size: 20))
-//      .modifier(DownLoadVerbs(levels:["medium"]))
-      
-      
-      Spacer()
-        .frame(width: 1, height: 10, alignment: .center)
+        
+      Button("Intermédiaire") {
+          self.env.level = "medium"
+          DownLoadVerbs(levels:["medium"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+        
       Button("Débutant") {
-        self.env.level = "easy"
-        DownLoadVerbs(levels:["easy"], environment: self.env)
-        self.env.currentPage = .SecondPage
-      }
-      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      .border(Color.primary)
-      .font(Fonts.avenirNextCondensedBold(size: 20))
-      
-      Spacer()
+          self.env.level = "easy"
+          DownLoadVerbs(levels:["easy"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        Spacer()
     }
   }
   

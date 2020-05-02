@@ -270,7 +270,7 @@ struct PageTwo: View {
   @State var groupColor = true
   
   @State var selectedTense = 9
-  @State var verbSelected = "Conjugator"
+  @State var verbSelected = "Conjugateur"
   @State var preVerbSelected = ""
   @State var postVerbSelected = ""
   @State var tenseSelected = ""
@@ -389,7 +389,7 @@ struct PageTwo: View {
         EmptyView()
       }
       Text("fooBar").frame(width: 256, height: 0, alignment: .center)
-        .navigationBarTitle(Text("Conjugator"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
+        .navigationBarTitle(Text("Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           self.action = 1
           self.env.currentPage = .NavigationView
@@ -585,9 +585,8 @@ struct PageTwo: View {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
             HStack(spacing:0) {
               Spacer()
-              //                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
-              //                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
-              newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
+//              newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
+                Text(self.selections[column].name)
                 .onAppear(perform: {
                   for i in 0..<6 {
                     DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
@@ -600,17 +599,7 @@ struct PageTwo: View {
                 })
                 .opacity(self.showMe[column] ? 1 : 0)
                 //                  .offset(x: 0, y: self.newValue)
-                
-                
-                
-                // fooBar
-                
                 .font(Fonts.avenirNextCondensedBold(size: 22))
-              //                .animation(.default)
-              //                .transition(.opacity)
-              
-              
-              //                .opacity(self.display0Conjugations ? 1:0)
               Spacer()
             }
           }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
