@@ -135,6 +135,7 @@ struct Fonts {
 }
 
 struct newView: View {
+  
   @EnvironmentObject var env : MyAppEnvironmentData
   @State var word:String
   @State var gate:Int?
@@ -150,28 +151,30 @@ struct newView: View {
             .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
           
           
+          
+          
         }
       }.onTapGesture() {
         if linkID != nil {
-        if linkID != 0  {
-          //            self.display0Conjugations = false
-          self.selections.removeAll()
-          //            self.display0Conjugations = true
-          DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-            for instance in self.env.answery.answerx {
-              if instance.tenseID == tenseID && instance.verbID == linkID {
-                self.selections.append(instance)
+          if linkID != 0  {
+            //            self.display0Conjugations = false
+            self.selections.removeAll()
+            //            self.display0Conjugations = true
+            DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+              for instance in self.env.answery.answerx {
+                if instance.tenseID == tenseID && instance.verbID == linkID {
+                  self.selections.append(instance)
+                }
               }
+              self.selections.sort { (first, second) -> Bool in
+                first.personID.debugDescription < second.personID.debugDescription
+              }
+              // fooBar
+              //                  let zee =
+              doDivertPublisher.send(linkID)
+              self.display2Conjugations = true
             }
-            self.selections.sort { (first, second) -> Bool in
-              first.personID.debugDescription < second.personID.debugDescription
-            }
-            // fooBar
-            //                  let zee =
-            doDivertPublisher.send(linkID)
-            self.display2Conjugations = true
           }
-        }
         }
       }
     }
@@ -229,6 +232,8 @@ var tenseID: Int!
 var personID: PersonClass!
 
 struct PageTwo: View {
+  @State private var newValue: CGFloat = 256
+  @State private var showMe = [Bool](repeating: false, count: 6)
   @EnvironmentObject var env : MyAppEnvironmentData
   
   //Indicatif présent	dérivé du radical de l’infinitif
@@ -409,7 +414,7 @@ struct PageTwo: View {
           .onTapGesture() {
             self.selections.removeAll()
             self.display2Conjugations = false
-
+            
             verbID = self.env.verby.verbx[self.selectedVerb].id
             linkID = self.env.verby.verbx[self.selectedVerb].link
             
@@ -454,6 +459,10 @@ struct PageTwo: View {
               self.display0Verb = false
               self.display1Verb = true
               self.display2Conjugations = true
+              self.newValue = 256
+              for i in 0...5 {
+                self.showMe[i] = false
+              }
             }
             //              }
           }
@@ -547,7 +556,14 @@ struct PageTwo: View {
               self.display1Tense = true
               self.display0Verb = false
               self.display1Verb = true
-              self.display2Conjugations = true
+              self.newValue = 256
+              for i in 0...5 {
+                self.showMe[i] = false
+              }
+              withAnimation { ()
+                self.display2Conjugations = true
+              }
+              
             }
             //            }
           }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
@@ -572,10 +588,27 @@ struct PageTwo: View {
               //                newView(env: env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: selections, tenseID: tenseID, verbLink: verbLink, display0Conjugations: display0Conjugations)
               //                newView( word: self.selections[column].name, gate: self.selections[column].redMask!)
               newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
+                .onAppear(perform: {
+                  for i in 0..<6 {
+                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
+                      withAnimation(.easeOut(duration: 8.0)) {
+                        //                    self.newValue = 0
+                        self.showMe[i] = true
+                      }
+                    }
+                  }
+                })
+                .opacity(self.showMe[column] ? 1 : 0)
+                //                  .offset(x: 0, y: self.newValue)
+                
+                
                 
                 // fooBar
                 
                 .font(Fonts.avenirNextCondensedBold(size: 22))
+              //                .animation(.default)
+              //                .transition(.opacity)
+              
               
               //                .opacity(self.display0Conjugations ? 1:0)
               Spacer()
@@ -650,6 +683,8 @@ struct PageTwo: View {
     
   }
 }
+
+
 
 func colorCode(gate:Int, no:Int) -> Bool {
   

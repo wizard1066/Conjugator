@@ -50,7 +50,7 @@ struct PageOne: View {
     
     return VStack {
       Group {
-      Text("Conjugator")
+      Text("Conjugateur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
         .modifier(DownLoadConjugations())

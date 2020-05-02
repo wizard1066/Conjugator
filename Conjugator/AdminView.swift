@@ -224,7 +224,7 @@ struct AdminView: View {
         ForEach((0 ..< letter.count), id: \.self) { column in
           Text(letter[column])
             .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
-          
+            
           
         }
       }
@@ -326,8 +326,9 @@ func colorCodex(gate:Int, no:Int) -> Bool {
   }
 
 func writeFile(answers:[answerBlob]) {
-  print("amswerBlob ",answers.count)
-  let fileName = "Conjugations"
+//  print("amswerBlob ",answers.count)
+  let uuid = UUID().uuidString
+  let fileName = "Conjugations-" + uuid
   let dir = try? FileManager.default.url(for: .documentDirectory,
                                          in: .userDomainMask, appropriateFor: nil, create: true)
   
@@ -339,7 +340,7 @@ func writeFile(answers:[answerBlob]) {
         lines = lines + "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
       }
       do {
-        try lines.write(to: fileURL, atomically: true, encoding: .utf8)
+        try lines.write(to: fileURL, atomically: false, encoding: .utf8)
       } catch {
         print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
       }
@@ -354,7 +355,7 @@ func writeFile(answers:[answerBlob]) {
       } catch {
         print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
       }
-      print("Read from the file: \(inString) ")
+//      print("Read from the file: \(inString) ")
     }
     }
 }
