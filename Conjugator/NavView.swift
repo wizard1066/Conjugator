@@ -18,11 +18,12 @@ enum MyAppPage {
 
 final class MyAppEnvironmentData: ObservableObject {
   @Published var currentPage : MyAppPage? = .Menu
-  @Published var level:String = "easy"
+  @Published var level:String = "model"
   @Published var verby = verbDB()
   @Published var tensey = tenseDB()
   @Published var answery = answerDB()
-  @Published var groupy = groupDB()
+//  @Published var groupy = groupDB()
+  @Published var switchLanguage:Bool = false
 }
 
 var prime = true
@@ -40,7 +41,8 @@ struct NavigationTest: View {
 
 struct PageOne: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-  
+//  @State private var switchLanguage = false
+  @State private var intro2Do = true
   
   var body: some View {
     let navlink = NavigationLink(destination: PageTwo(),
@@ -51,7 +53,7 @@ struct PageOne: View {
     return VStack {
       Group {
       
-      Text("Conjugateur")
+      Text(env.switchLanguage ? "Conjugator":"Conjugateur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
         .modifier(DownLoadConjugations())
@@ -60,36 +62,24 @@ struct PageOne: View {
         .frame(width:0, height:0)
       }
       
-      Button("Supérieur") {
-          DownLoadVerbs(levels:["easy","medium","hard","dynamic"], environment: self.env)
-          self.env.level = "hard"
+      Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
+          DownLoadVerbs(levels:["model"], environment: self.env)
+          self.intro2Do = false
+          self.env.level = "model"
           self.env.currentPage = .SecondPage
         }
 //        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+      
+      
+        
     
-      Button("Avancé") {
-          self.env.level = "hard"
-          DownLoadVerbs(levels:["hard"], environment: self.env)
-          self.env.currentPage = .SecondPage
-        }
-//        .border(Color.primary)
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+      
         
+      
         
-      Button("Intermédiaire") {
-          self.env.level = "medium"
-          DownLoadVerbs(levels:["medium"], environment: self.env)
-          self.env.currentPage = .SecondPage
-        }
-//        .border(Color.primary)
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        
-        
-      Button("Débutant") {
+      Button(env.switchLanguage ? "Beginner":"Débutant") {
           self.env.level = "easy"
           DownLoadVerbs(levels:["easy"], environment: self.env)
           self.env.currentPage = .SecondPage
@@ -97,7 +87,50 @@ struct PageOne: View {
 //        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .disabled(intro2Do)
+        
+        Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
+          self.env.level = "medium"
+          DownLoadVerbs(levels:["medium"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .disabled(intro2Do)
+        
+        Button(env.switchLanguage ? "Advanced": "Avancé") {
+          self.env.level = "hard"
+          DownLoadVerbs(levels:["hard"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .disabled(intro2Do)
+        
+        Button(env.switchLanguage ? "Superior":"Supérieur") {
+          DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
+          self.env.level = "hard"
+          self.env.currentPage = .SecondPage
+        }
+//        .border(Color.primary)
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .disabled(intro2Do)
+        
         Spacer()
+        HStack {
+        Spacer()
+          Text(env.switchLanguage ? "French":"Français")
+            .font(Fonts.avenirNextCondensedBold(size: 10))
+          Toggle("French", isOn: $env.switchLanguage)
+            .font(Fonts.avenirNextCondensedBold(size: 10))
+            .labelsHidden()
+          Text(env.switchLanguage ? "English":"Anglais")
+            .font(Fonts.avenirNextCondensedBold(size: 10))
+        Spacer()
+      }.padding()
     }
   }
   
@@ -140,7 +173,7 @@ struct DownLoadConjugations: ViewModifier {
         if prime {
           prime = false
         self.env.tensey.tensex.removeAll()
-        self.env.groupy.groupx.removeAll()
+//        self.env.groupy.groupx.removeAll()
         self.env.answery.answerx.removeAll()
         
         let content2 = readConjugations()

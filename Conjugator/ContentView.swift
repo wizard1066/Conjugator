@@ -83,6 +83,8 @@ struct tenseBlob {
   var name:String!
   var derive:String!
   var color:String!
+  var nom:String!
+  var worked:String!
 }
 
 final class tenseDB: ObservableObject, Identifiable {
@@ -232,6 +234,7 @@ var tenseID: Int!
 var personID: PersonClass!
 
 struct PageTwo: View {
+  
   @State private var newValue: CGFloat = 256
   @State private var showMe = [Bool](repeating: false, count: 6)
   @EnvironmentObject var env : MyAppEnvironmentData
@@ -249,18 +252,33 @@ struct PageTwo: View {
   //Participe présent	dérivé du radical du nous du présent
   //Infinitif présent	forme de base
   
+  // finir/parle easy
+  // avoir/savoir advanced
+  // prendre advanced
   
   @State var tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1",
-    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1",
-    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1",
-    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1",
-    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1",
-    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1",
-    "9-8.Participe Présent.Dérivé du radical du nous du présent.1",
-    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1",
-    "20-10.Infinitif Présent.Forme de base.0"]
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem",
+    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem",
+    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present",
+    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem",
+    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive",
+    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present",
+    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present",
+    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form"]
+  @State var temps = [
+    "1-1.Future indicative.Derived from the full infinitive",
+    "2-2.Imperfect indicative.Derived from the stem of the nous present",
+    "3-3.Imperfect subjunctive.Derived from the simple past stem",
+    "4-4.Past participle.Derived from the infinitive stem",
+    "5-5.Present conditional.Derived from the full infinitive",
+    "6-6.Present indicative.Derived from the infinitive stem",
+    "7-7.Present infinitive.Basic form",
+    "9-8.Present participle.Derived from the stem of the nous present",
+    "10-9.Present subjunctive.Derived from the stem of the ils present",
+    "20-10.Simple past indicative.Derived from the stem of the nous present",
+  ]
   
   @State var verb:[String] = []
   @State var selectedVerb = 0
@@ -361,15 +379,15 @@ struct PageTwo: View {
       }
     }
     
-    func findHint1() -> String? {
-      let bob = env.tensey.tensex.filter({ tenseID == $0.id })
-      let sue = env.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
-      if bob.isEmpty {
-        return("")
-      } else {
-        return sue.first?.name!
-      }
-    }
+//    func findHint1() -> String? {
+//      let bob = env.tensey.tensex.filter({ tenseID == $0.id })
+////      let sue = env.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
+//      if bob.isEmpty {
+//        return("")
+//      } else {
+//        return sue.first?.name!
+//      }
+//    }
     
     
     //    let navlink2 = NavigationLink(destination: AdminView(),
@@ -504,7 +522,7 @@ struct PageTwo: View {
           Picker("", selection: $selectedTense) {
             ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
               //        ForEach(0 ..< tenses.count) {
-              Text(self.env.tensey.tensex[column].name)
+              Text(self.env.switchLanguage ? self.env.tensey.tensex[column].nom: self.env.tensey.tensex[column].name)
                 .font(Fonts.avenirNextCondensedBold(size: 24))
                 .background(self.showColor ? Color.yellow: Color.clear)
             }
@@ -521,7 +539,7 @@ struct PageTwo: View {
             self.display1Verb = true
             
             tenseID = self.env.tensey.tensex[self.selectedTense].id
-            self.groupName = self.env.tensey.tensex[self.selectedTense].derive
+            self.groupName =  self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].worked : self.env.tensey.tensex[self.selectedTense].derive
             self.groupColor = self.env.tensey.tensex[self.selectedTense].color == "1" ? true:false
             
             self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[self.selectedTense - 1].name : ""
@@ -585,21 +603,22 @@ struct PageTwo: View {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
             HStack(spacing:0) {
               Spacer()
-//              newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
-                Text(self.selections[column].name)
-                .onAppear(perform: {
-                  for i in 0..<6 {
-                    DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
-                      withAnimation(.easeOut(duration: 8.0)) {
-                        //                    self.newValue = 0
-                        self.showMe[i] = true
-                      }
-                    }
-                  }
-                })
+             newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
+//              Text(self.selections[column].name)
+                
                 .opacity(self.showMe[column] ? 1 : 0)
                 //                  .offset(x: 0, y: self.newValue)
                 .font(Fonts.avenirNextCondensedBold(size: 22))
+                .onAppear(perform: {
+            for i in 0..<6 {
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
+                withAnimation(.easeOut(duration: 8.0)) {
+                  //                    self.newValue = 0
+                  self.showMe[i] = true
+                }
+              }
+            }
+          })
               Spacer()
             }
           }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
@@ -607,6 +626,7 @@ struct PageTwo: View {
           .environment(\.defaultMinListHeaderHeight, 0)
           .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
           .offset(x: 0, y: -64)
+          
         //        .background(InsideView())
         
       } else {
@@ -615,6 +635,7 @@ struct PageTwo: View {
           .offset(x: 0, y: -64)
       }
       Spacer()
+      
     } // VStack
       .onReceive(rulesPublisher, perform: { ( _ ) in
         self.display0Verb = false
@@ -644,8 +665,7 @@ struct PageTwo: View {
           for instance in self.tenses {
             let breakout = instance.split(separator: ".")
             let breakdown = breakout[0].split(separator: "-")
-            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]))
-            //        print("newTense ",newTense)
+            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]))
             self.env.tensey.tensex.append(newTense)
           }
           

@@ -1,7 +1,7 @@
-7,parler,0,easy,avoir,parlé,parl,-er
+7,parler,0,model,avoir,parlé,parl,-er
 15,créer,0,easy,avoir,créé,cré,-er
 22,grasseyer,0,easy,avoir,grasseyé,grassey,-er
-25,finir,0,easy,avoir,fini,fin,-ir
+25,finir,0,model,avoir,fini,fin,-ir
 26,haïr,0,easy,avoir,haï,ha,-ïr
 31,assaillir,0,easy,avoir,assailli,assaill,-ir
 34,battre,0,easy,avoir,battu,batt,-re
@@ -24,7 +24,7 @@
 80,rompre,0,easy,avoir,rompu,romp,-re
 82,sentir,0,easy,avoir,senti,sent,-ir
 84,servir,0,easy,avoir,servi,serv,-ir
-85,sortir,0,easy,être,sorti,sort,-ir
+85,sortir,0,model,être,sorti,sort,-ir
 86,suivre,0,easy,avoir,suivi,suiv,-re
 93,vêtir,0,easy,avoir,vêtu,vêt,-ir
 8,acheter,0,medium,avoir,acheté,achet,-er
@@ -35,7 +35,7 @@
 13,assiéger,0,medium,avoir,assiégé,assiég,-er
 14,commencer,0,medium,avoir,commencé,commenc,-er
 16,employer,0,medium,avoir,employé,employ,-er
-17,envoyer,0,medium,avoir,envoyé,envoy,-er
+17,envoyer,0,model,avoir,envoyé,envoy,-er
 18,espérer,0,medium,avoir,espéré,espér,-er
 19,essayer,0,medium,avoir,essayé,essay,-er
 20,essuyer,0,medium,avoir,essuyé,essuy,-er
@@ -76,7 +76,7 @@
 74,pleuvoir,0,hard,avoir,plu,pleuv,-oir
 75,pourvoir,0,hard,avoir,pourvu,pourv,-oir
 76,pouvoir,0,hard,avoir,pu,pouv,-oir
-77,prendre,0,hard,avoir,pris,prend,-re
+77,prendre,0,model,avoir,pris,prend,-re
 81,savoir,0,hard,avoir,su,sav,-oir
 87,surseoir,0,hard,avoir,sursis,surse,-oir
 88,tenir,0,hard,avoir,tenu,ten,-ir
