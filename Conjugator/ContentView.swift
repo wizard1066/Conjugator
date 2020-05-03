@@ -8,6 +8,7 @@
 
 import SwiftUI
 import Combine
+import AVKit
 
 let populatePublisher = PassthroughSubject<String?,Never>()
 let rulesPublisher = PassthroughSubject<Void,Never>()
@@ -288,7 +289,7 @@ struct PageTwo: View {
   @State var groupColor = true
   
   @State var selectedTense = 9
-  @State var verbSelected = "Conjugateur"
+  @State var verbSelected = ""
   @State var preVerbSelected = ""
   @State var postVerbSelected = ""
   @State var tenseSelected = ""
@@ -337,6 +338,7 @@ struct PageTwo: View {
   
   @State var selections:[answerBlob] = []
   @State private var action: Int? = 0
+  @State private var overText = false
   
   var body: some View {
     
@@ -406,8 +408,11 @@ struct PageTwo: View {
       NavigationLink(destination: AdminView(), tag: 1, selection: $action) {
         EmptyView()
       }
+      
+//       Text(env.switchLanguage ? "Conjugator":"Conjugateur")
+       
       Text("fooBar").frame(width: 256, height: 0, alignment: .center)
-        .navigationBarTitle(Text("Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
+        .navigationBarTitle(Text(env.switchLanguage ? "Conjugator":"Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           self.action = 1
           self.env.currentPage = .NavigationView
@@ -416,15 +421,18 @@ struct PageTwo: View {
         .onAppear {
           populatePublisher.send(nil)
       }
+      
       ZStack {
         if display0Verb {
           Picker("", selection: $selectedVerb) {
             ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
               Text(self.display0Verb ? self.env.verby.verbx[column].name : "")
                 .font(Fonts.avenirNextCondensedBold(size: 24))
+                
             }
           }
           .frame(width: 256, height: 162, alignment: .center)
+//          .background(InsideView)
           .offset(x: 0, y: -32)
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
             self.selectedVerb = value
@@ -542,9 +550,21 @@ struct PageTwo: View {
             self.groupName =  self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].worked : self.env.tensey.tensex[self.selectedTense].derive
             self.groupColor = self.env.tensey.tensex[self.selectedTense].color == "1" ? true:false
             
-            self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[self.selectedTense - 1].name : ""
-            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[self.selectedTense + 1].name : ""
-            self.tenseSelected = self.env.tensey.tensex[self.selectedTense].name
+            if self.selectedTense > 0 {
+              self.preTenseSelected =  self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense - 1].name
+            } else {
+              self.preTenseSelected = ""
+            }
+            
+//            self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[self.selectedTense - 1].name : ""
+
+            if self.selectedTense < (self.env.tensey.tensex.count - 1 ) {
+              self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
+            } else {
+              self.postTenseSelected = ""
+            }
+//            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[self.selectedTense + 1].name : ""
+            self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
             
             if linkID != 0 {
               self.utiliser = "Même règle que " + findVerb(searchID: linkID)
@@ -826,3 +846,5 @@ extension UIApplication {
     sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
+
+
