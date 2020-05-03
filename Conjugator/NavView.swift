@@ -15,6 +15,7 @@ enum MyAppPage {
   case Menu
   case SecondPage
   case NavigationView
+  case PlayerPage
 }
 
 final class MyAppEnvironmentData: ObservableObject {
@@ -38,35 +39,7 @@ struct NavigationTest: View {
   }
 }
 
-class PlayerUIView: UIView {
-  private let playerLayer = AVPlayerLayer()
-  override init(frame: CGRect) {
-    super.init(frame: .zero)
-    let url = Bundle.main.url(forResource:"finalV3", withExtension: "mov")
-//    let url = URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
-//    let url = URL(string: "https://www.youtube.com/watch?v=XK8METRgK_U")!
-    let player = AVPlayer(url: url!)
-    player.play()
-    
-    playerLayer.player = player
-    layer.addSublayer(playerLayer)
-  }
-  required init?(coder: NSCoder) {
-   fatalError("init(coder:) has not been implemented")
-  }
-  override func layoutSubviews() {
-    super.layoutSubviews()
-    playerLayer.frame = UIScreen.main.bounds
-  }
-}
 
-struct PlayerView: UIViewRepresentable {
-  func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
-  }
-  func makeUIView(context: Context) -> UIView {
-    return PlayerUIView(frame: .zero)
-  }
-}
 
 
 struct PageOne: View {
@@ -79,14 +52,19 @@ struct PageOne: View {
                                  tag: .SecondPage,
                                  selection: $env.currentPage,
                                  label: { EmptyView() })
+                                 
+//    let navlink3 = NavigationLink(destination: playerPage(),
+//                                 tag: .PlayerPage,
+//                                 selection: $env.currentPage,
+//                                 label: { EmptyView() })
     
     return VStack {
-      ZStack {
-        Rectangle()
-        .fill(Color.yellow)
-        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
-//        PlayerView()
-      }
+//      ZStack {
+//        Rectangle()
+//        .fill(Color.yellow)
+//        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
+////        PlayerView()
+//      }
       Group {
       
       Text(env.switchLanguage ? "Conjugator":"Conjugateur")
@@ -98,12 +76,17 @@ struct PageOne: View {
         .frame(width:0, height:0)
       }
       
+      NavigationLink(destination: PlayerView(), tag: .PlayerPage, selection: self.$env.currentPage) {
+        EmptyView()
+      }
+      
       Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
           DownLoadVerbs(levels:["model"], environment: self.env)
           self.intro2Do = false
           self.env.level = "model"
           
 //          self.env.currentPage = .SecondPage
+          self.env.currentPage = .PlayerPage
           
         }
 //        .border(Color.primary)
