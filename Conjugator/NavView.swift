@@ -31,109 +31,85 @@ final class MyAppEnvironmentData: ObservableObject {
 var prime = true
 
 struct NavigationTest: View {
-  
   var body: some View {
     NavigationView {
-      PageOne()
+      ContentView()
     }
+    .statusBar(hidden: true)
   }
 }
 
 
 
 
-struct PageOne: View {
+struct ContentView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
 //  @State private var switchLanguage = false
   @State private var intro2Do = true
   
   var body: some View {
-    let navlink = NavigationLink(destination: PageTwo(),
-                                 tag: .SecondPage,
-                                 selection: $env.currentPage,
-                                 label: { EmptyView() })
-                                 
-//    let navlink3 = NavigationLink(destination: playerPage(),
-//                                 tag: .PlayerPage,
-//                                 selection: $env.currentPage,
-//                                 label: { EmptyView() })
-    
-    return VStack {
-//      ZStack {
-//        Rectangle()
-//        .fill(Color.yellow)
-//        .frame(width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height, alignment: .center)
-////        PlayerView()
-//      }
-      Group {
-      
+
+    VStack {
       Text(env.switchLanguage ? "Conjugator":"Conjugateur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
         .modifier(DownLoadConjugations())
-      
-      navlink
-        .frame(width:0, height:0)
-      }
-      
-      NavigationLink(destination: PlayerView(), tag: .PlayerPage, selection: self.$env.currentPage) {
+        
+        
+      NavigationLink(destination: PageTwo(), tag: .SecondPage, selection: self.$env.currentPage) {
         EmptyView()
-      }
+      }.navigationBarHidden(true)
+      .statusBar(hidden: true)
+
+
+      NavigationLink(destination: playerPage(), tag: .PlayerPage, selection: self.$env.currentPage) {
+        EmptyView()
+      }.navigationBarHidden(true)
+      .statusBar(hidden: true)
+      
       
       Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
           DownLoadVerbs(levels:["model"], environment: self.env)
           self.intro2Do = false
-          self.env.level = "model"
-          
-//          self.env.currentPage = .SecondPage
-          self.env.currentPage = .PlayerPage
-          
+          self.env.currentPage = prime ? .SecondPage : .PlayerPage
         }
-//        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      
-      
+
+
       Button(env.switchLanguage ? "Beginner":"Débutant") {
-          self.env.level = "easy"
           DownLoadVerbs(levels:["easy"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
-//        .border(Color.primary)
+
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .disabled(intro2Do)
-        
+
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
-          self.env.level = "medium"
           DownLoadVerbs(levels:["medium"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
-//        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .disabled(intro2Do)
-        
+
         Button(env.switchLanguage ? "Advanced": "Avancé") {
-          self.env.level = "hard"
           DownLoadVerbs(levels:["hard"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
-//        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .disabled(intro2Do)
-        
+
         Button(env.switchLanguage ? "Superior":"Supérieur") {
           DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
-          self.env.level = "hard"
           self.env.currentPage = .SecondPage
         }
-//        .border(Color.primary)
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         .disabled(intro2Do)
-        
+
         Spacer()
         HStack {
         Spacer()
@@ -146,7 +122,10 @@ struct PageOne: View {
             .font(Fonts.avenirNextCondensedBold(size: 10))
         Spacer()
       }.padding()
+
+
     }
+    .statusBar(hidden: true)
   }
   
 }
@@ -208,32 +187,7 @@ struct DownLoadConjugations: ViewModifier {
             let conjugation = String(tense[5] + " " + tense[6])
             //            for instance in self.answers {
             let personID = returnClass(class2C: String(tense[5]))
-//            //        print("conjugation ",conjugation)
-//            switch tense[5] {
-//            case "Je":
-//              personID = PersonClass.a1
-//              break
-//            case "J'":
-//              personID = PersonClass.a1
-//              break
-//            case "Tu":
-//              personID = PersonClass.a2
-//              break
-//            case "Il":
-//              personID = PersonClass.a3
-//              break
-//            case "Nous":
-//              personID = PersonClass.b1
-//              break
-//            case "Vous":
-//              personID = PersonClass.b2
-//              break
-//            case "Ils":
-//              personID = PersonClass.a4
-//              break
-//            default:
-//              break
-//            }
+
             
             var redMask:Int!
             if tense.count > 9 {
@@ -292,12 +246,14 @@ func returnClass(class2C:String) -> PersonClass {
     return personID
 }
 
-#if DEBUG
-struct NavigationTest_Previews: PreviewProvider {
-  static var previews: some View {
-    NavigationTest().environmentObject(MyAppEnvironmentData())
-  }
-}
-#endif
+
+
+//#if DEBUG
+//struct NavigationTest_Previews: PreviewProvider {
+//  static var previews: some View {
+//    NavigationTest().environmentObject(MyAppEnvironmentData())
+//  }
+//}
+//#endif
 
 

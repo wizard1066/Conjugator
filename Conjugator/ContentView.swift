@@ -420,7 +420,7 @@ struct PageTwo: View {
         .opacity(0)
         .onAppear {
           populatePublisher.send(nil)
-      }
+        }
       
       ZStack {
         if display0Verb {
@@ -656,7 +656,8 @@ struct PageTwo: View {
       }
       Spacer()
       
-    } // VStack
+    }.statusBar(hidden: true) // VStack
+    
       .onReceive(rulesPublisher, perform: { ( _ ) in
         self.display0Verb = false
         self.env.verby.verbx.removeAll()
@@ -707,7 +708,7 @@ struct PageTwo: View {
           //        self.display0Tense = true
           self.display2Conjugations = true
         }
-      })
+      }).statusBar(hidden: true)
     
     
   }
