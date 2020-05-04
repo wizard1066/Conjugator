@@ -9,6 +9,7 @@
 import SwiftUI
 import Combine
 import AVFoundation
+import StoreKit
 
 
 enum MyAppPage {
@@ -39,13 +40,18 @@ struct NavigationTest: View {
   }
 }
 
-
+var argent:String!
+var products = [SKProduct]()
 
 
 struct ContentView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
 //  @State private var switchLanguage = false
   @State private var intro2Do = true
+  @State private var showingAlert = false
+
+  @State private var purchased = false
+
   
   var body: some View {
 
@@ -54,6 +60,21 @@ struct ContentView: View {
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
         .modifier(DownLoadConjugations())
+        .onAppear {
+          IAPManager.shared.getProducts { (result) in
+            DispatchQueue.main.async {
+              switch result {
+                case .success(let downloaded):
+                  products = downloaded
+                  print("products ",products)
+                  guard let price = IAPManager.shared.getPriceFormatted(for: products.first!) else { return }
+                  argent = price
+                case .failure(let error):
+                  print("failure ",error)
+              }
+            }
+          }
+        }
         
         
       NavigationLink(destination: PageTwo(), tag: .SecondPage, selection: self.$env.currentPage) {
@@ -67,7 +88,6 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-      
       Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
           DownLoadVerbs(levels:["model"], environment: self.env)
           self.intro2Do = false
@@ -79,12 +99,23 @@ struct ContentView: View {
 
       Button(env.switchLanguage ? "Beginner":"Débutant") {
           DownLoadVerbs(levels:["easy"], environment: self.env)
-          self.env.currentPage = .SecondPage
+          if self.purchased {
+            self.env.currentPage = .SecondPage
+          } else {
+            self.showingAlert = true
+          }
         }
-
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(intro2Do)
+        .disabled(purchased)
+        .alert(isPresented: $showingAlert) {
+            Alert(title: Text("Buy Buy Buy"), message: Text("Acheter " + argent), primaryButton: .default(Text("Yes/Oui")) {
+              let success = IAPManager.shared.purchase(product: products.first!)
+              if success {
+                print("fooBar")
+              }
+            }, secondaryButton: .cancel())
+        }
 
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
           DownLoadVerbs(levels:["medium"], environment: self.env)
@@ -92,7 +123,7 @@ struct ContentView: View {
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(intro2Do)
+        .disabled(purchased)
 
         Button(env.switchLanguage ? "Advanced": "Avancé") {
           DownLoadVerbs(levels:["hard"], environment: self.env)
@@ -100,7 +131,7 @@ struct ContentView: View {
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(intro2Do)
+        .disabled(purchased)
 
         Button(env.switchLanguage ? "Superior":"Supérieur") {
           DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
@@ -108,7 +139,7 @@ struct ContentView: View {
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(intro2Do)
+        .disabled(purchased)
 
         Spacer()
         HStack {

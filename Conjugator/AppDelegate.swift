@@ -11,11 +11,14 @@ import CoreData
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
-
-
+  
+  func applicationWillTerminate(_ application: UIApplication) {
+    IAPManager.shared.stopObserving()
+  }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
     // Override point for customization after application launch.
+    IAPManager.shared.startObserving()
     return true
   }
 

@@ -9,16 +9,58 @@
 import Foundation
 import SwiftUI
 import AVFoundation
+import Combine
+
+let timePublisher = PassthroughSubject<TimeInterval, Never>()
+let videoFinished = PassthroughSubject<Void, Never>()
+
+//class PlayerTimeObserver {
+////  let publisher = PassthroughSubject<TimeInterval, Never>()
+//  private var timeObservation: Any?
+//
+//  init(player: AVPlayer) {
+//    // Periodically observe the player's current time, whilst playing
+//    timeObservation = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { [weak self] time in
+//      guard let self = self else { return }
+//      // Publish the new player time
+//      print("time ",time.seconds)
+//      self.publisher.send(time.seconds)
+//    }
+//  }
+//}
+
+struct PlayerTimeView: View {
+//  let timeObserver: PlayerTimeObserver
+  @State private var currentTime: TimeInterval = 0
+  
+  var body: some View {
+    Text("\(currentTime)")
+    .onReceive(timePublisher) { time in
+      self.currentTime = time
+    }
+  }
+}
 
 class PlayerUIView: UIView {
+//  let publisher = PassthroughSubject<TimeInterval, Never>()
+  private var timeObservation: Any?
   private let playerLayer = AVPlayerLayer()
   override init(frame: CGRect) {
     super.init(frame: .zero)
-    let url = Bundle.main.url(forResource:"finalV3", withExtension: "mov")
+    let url = Bundle.main.url(forResource:"demo", withExtension: "mov")
 //    let url = URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
 //    let url = URL(string: "https://www.youtube.com/watch?v=XK8METRgK_U")!
     let player = AVPlayer(url: url!)
     player.play()
+    
+    timeObservation = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { [weak self] time in
+      guard let self = self else { return }
+      // Publish the new player time
+      print("time.seconds ",time.seconds)
+      timePublisher.send(time.seconds)
+      
+      NotificationCenter.default.addObserver(self, selector: #selector(self.finishVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
+    }
     
     playerLayer.player = player
     layer.addSublayer(playerLayer)
@@ -30,23 +72,39 @@ class PlayerUIView: UIView {
     super.layoutSubviews()
     playerLayer.frame = CGRect(x: 0, y: -115, width: UIScreen.main.bounds.width, height: UIScreen.main.bounds.height)
   }
+  
+  @objc func finishVideo() {
+        print("Video Finished")
+        NotificationCenter.default.removeObserver(NSNotification.Name.AVPlayerItemDidPlayToEndTime)
+        videoFinished.send()
+  }
+  
 }
+
+
 
 struct PlayerView: UIViewRepresentable {
   func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
   }
   func makeUIView(context: Context) -> UIView {
-    return PlayerUIView(frame: .zero)
+      PlayerUIView(frame: .zero)
   }
 }
 
 struct playerPage: View {
-  
   @EnvironmentObject var env : MyAppEnvironmentData
+  @Environment(\.presentationMode) var presentation
   
   var body: some View {
     ZStack {
-        PlayerView().offset(x: 100, y: -100)
+        PlayerTimeView().zIndex(1)
+          .offset(x: 100, y: -100)
+        PlayerView().onReceive(videoFinished) { (_) in
+          self.presentation.wrappedValue.dismiss()
+        }
+//          .offset(x: 100, y: -100)
+        
+//        PlayerTimeView(timeObserver: PlayerTimeObserver(player: player))
       }
     }
   }
