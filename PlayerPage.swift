@@ -47,7 +47,7 @@ class PlayerUIView: UIView {
   private let playerLayer = AVPlayerLayer()
   override init(frame: CGRect) {
     super.init(frame: .zero)
-    let url = Bundle.main.url(forResource:"demo", withExtension: "mov")
+    let url = Bundle.main.url(forResource:"AppDemo", withExtension: "mov")
 //    let url = URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
 //    let url = URL(string: "https://www.youtube.com/watch?v=XK8METRgK_U")!
     let player = AVPlayer(url: url!)
@@ -96,15 +96,16 @@ struct playerPage: View {
   @Environment(\.presentationMode) var presentation
   
   var body: some View {
-    ZStack {
-        PlayerTimeView().zIndex(1)
-          .offset(x: 100, y: -100)
+    VStack {
         PlayerView().onReceive(videoFinished) { (_) in
           self.presentation.wrappedValue.dismiss()
         }
-//          .offset(x: 100, y: -100)
-        
-//        PlayerTimeView(timeObserver: PlayerTimeObserver(player: player))
+      HStack {
+        Spacer()
+        PlayerTimeView()
+          .font(Fonts.avenirNextCondensedBold(size: 20))
+        Spacer()
+      }
       }
     }
   }

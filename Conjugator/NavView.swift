@@ -50,7 +50,7 @@ struct ContentView: View {
   @State private var intro2Do = true
   @State private var showingAlert = false
 
-  @State private var purchased = false
+  @State var purchased = false
 
   
   var body: some View {
@@ -96,50 +96,11 @@ struct ContentView: View {
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
 
-
-      Button(env.switchLanguage ? "Beginner":"Débutant") {
-          DownLoadVerbs(levels:["easy"], environment: self.env)
-          if self.purchased {
-            self.env.currentPage = .SecondPage
-          } else {
-            self.showingAlert = true
-          }
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(purchased)
-        .alert(isPresented: $showingAlert) {
-            Alert(title: Text("Buy Buy Buy"), message: Text("Acheter " + argent), primaryButton: .default(Text("Yes/Oui")) {
-              let success = IAPManager.shared.purchase(product: products.first!)
-              if success {
-                print("fooBar")
-              }
-            }, secondaryButton: .cancel())
-        }
-
-        Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
-          DownLoadVerbs(levels:["medium"], environment: self.env)
-          self.env.currentPage = .SecondPage
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(purchased)
-
-        Button(env.switchLanguage ? "Advanced": "Avancé") {
-          DownLoadVerbs(levels:["hard"], environment: self.env)
-          self.env.currentPage = .SecondPage
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(purchased)
-
-        Button(env.switchLanguage ? "Superior":"Supérieur") {
-          DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
-          self.env.currentPage = .SecondPage
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .disabled(purchased)
+      if !purchased {
+        BuyView(purchased: self.$purchased)
+      } else {
+        PaidView()
+      }
 
         Spacer()
         HStack {
@@ -158,8 +119,77 @@ struct ContentView: View {
     }
     .statusBar(hidden: true)
   }
-  
 }
+
+
+
+struct PaidView: View {
+  @EnvironmentObject var env : MyAppEnvironmentData
+
+  var body: some View {
+    
+    VStack {
+     Button(env.switchLanguage ? "Beginner":"Débutant") {
+          DownLoadVerbs(levels:["easy"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+       
+
+        Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
+          DownLoadVerbs(levels:["medium"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+
+        Button(env.switchLanguage ? "Advanced": "Avancé") {
+          DownLoadVerbs(levels:["hard"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+
+        Button(env.switchLanguage ? "Superior":"Supérieur") {
+          DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
+          self.env.currentPage = .SecondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+      }
+  }
+}
+
+struct BuyView: View {
+  @EnvironmentObject var env : MyAppEnvironmentData
+  @State private var intro2Do = true
+  @State private var showingAlert = false
+  @Binding var purchased:Bool
+  
+  var body: some View {
+    VStack {
+      Button(env.switchLanguage ? "Buy": "Acheter") {
+        self.showingAlert = true
+      }
+      .font(Fonts.avenirNextCondensedBold(size: 20))
+      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+      .alert(isPresented: $showingAlert) {
+          Alert(title: Text("Buy Buy Buy"), message: Text("Acheter " + argent), primaryButton: .default(Text("Oui")) {
+            let success = IAPManager.shared.purchase(product: products.first!)
+              if success {
+                print("fooBar")
+                self.purchased = true
+              }
+            }, secondaryButton: .cancel())
+      }
+    }
+  }
+}
+
 
 func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
   
