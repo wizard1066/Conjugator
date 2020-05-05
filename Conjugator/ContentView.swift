@@ -159,10 +159,7 @@ struct newView: View {
       }.onTapGesture() {
         if linkID != nil {
           if linkID != 0  {
-            //            self.display0Conjugations = false
             self.selections.removeAll()
-            
-            //            self.display0Conjugations = true
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
               for instance in self.env.answery.answerx {
                 if instance.tenseID == tenseID && instance.verbID == linkID {
@@ -172,8 +169,6 @@ struct newView: View {
               self.selections.sort { (first, second) -> Bool in
                 first.personID.debugDescription < second.personID.debugDescription
               }
-              // fooBar
-              //                  let zee =
               doDivertPublisher.send(linkID)
               defaultLinkColor.send()
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {

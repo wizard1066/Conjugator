@@ -177,7 +177,13 @@ struct BuyView: View {
   var body: some View {
     VStack {
       Button(env.switchLanguage ? "Buy": "Acheter") {
-        self.showingAlert = true
+        if !self.purchased {
+          let success = IAPManager.shared.purchase(product: products.first!)
+          if success {
+            print("fooBar")
+            self.purchased = true
+          }
+        }
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -190,6 +196,27 @@ struct BuyView: View {
               }
             }, secondaryButton: .cancel())
       }
+      Button(env.switchLanguage ? "Restore": "Restaurer") {
+        self.showingAlert = true
+        IAPManager.shared.restorePurchases { (result) in
+          switch result {
+            case .success(let success):
+              if success {
+                print("successfully restored")
+//                self.delegate?.didFinishRestoringPurchasedProducts()
+              } else {
+                print("failed restoration")
+//                self.delegate?.didFinishRestoringPurchasesWithZeroProducts()
+              }
+ 
+            case .failure(let error):
+                print("error ",error )
+              }
+        }
+      }
+      .font(Fonts.avenirNextCondensedBold(size: 20))
+      .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+      
     }
   }
 }
