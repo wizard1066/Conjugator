@@ -13,6 +13,7 @@ import AVKit
 let populatePublisher = PassthroughSubject<String?,Never>()
 let rulesPublisher = PassthroughSubject<Void,Never>()
 let doDivertPublisher = PassthroughSubject<Int,Never>()
+let defaultLinkColor = PassthroughSubject<Void,Never>()
 
 var shaker = true
 var once = true
@@ -144,24 +145,23 @@ struct newView: View {
   @State var gate:Int?
   @Binding var selections:[answerBlob]
   @Binding var display2Conjugations:Bool
+  @State var color2U:Color!
   
   var body: some View {
     let letter = word.map( { String($0) } )
+    
     return VStack {
       HStack(spacing:0) {
         ForEach((0 ..< letter.count), id: \.self) { column in
           Text(letter[column])
-            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
-          
-          
-          
-          
+            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: self.color2U)
         }
       }.onTapGesture() {
         if linkID != nil {
           if linkID != 0  {
             //            self.display0Conjugations = false
             self.selections.removeAll()
+            
             //            self.display0Conjugations = true
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
               for instance in self.env.answery.answerx {
@@ -175,7 +175,10 @@ struct newView: View {
               // fooBar
               //                  let zee =
               doDivertPublisher.send(linkID)
-              self.display2Conjugations = true
+              defaultLinkColor.send()
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
+                self.display2Conjugations = true
+              }
             }
           }
         }
@@ -230,6 +233,7 @@ var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Colo
 
 var rien = [String](repeating: " ", count: 7)
 var linkID: Int!
+
 var verbID: Int!
 var tenseID: Int!
 var personID: PersonClass!
@@ -284,6 +288,7 @@ struct PageTwo: View {
   @State var verb:[String] = []
   @State var selectedVerb = 0
   @State var selectedGroup = 0
+  @State var linkColor: Color = Color.red
   
   @State var groupName = ""
   @State var groupColor = true
@@ -420,6 +425,8 @@ struct PageTwo: View {
         .opacity(0)
         .onAppear {
           populatePublisher.send(nil)
+        }.onReceive(defaultLinkColor) { (_) in
+          self.linkColor = Color.black
         }
       
       ZStack {
@@ -448,6 +455,9 @@ struct PageTwo: View {
             
             if linkID != 0 {
               self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+              self.linkColor = Color.blue
+            } else {
+              self.linkColor = Color.black
             }
             
             self.display0Tense = false
@@ -568,6 +578,9 @@ struct PageTwo: View {
             
             if linkID != 0 {
               self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+              self.linkColor = Color.blue
+            } else {
+              self.linkColor = Color.black
             }
             self.display2Conjugations = false
             self.selections.removeAll()
@@ -623,9 +636,8 @@ struct PageTwo: View {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
             HStack(spacing:0) {
               Spacer()
-             newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations)
+             newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations, color2U: self.linkColor)
 //              Text(self.selections[column].name)
-                
                 .opacity(self.showMe[column] ? 1 : 0)
                 //                  .offset(x: 0, y: self.newValue)
                 .font(Fonts.avenirNextCondensedBold(size: 22))

@@ -30,6 +30,7 @@ final class MyAppEnvironmentData: ObservableObject {
 }
 
 var prime = true
+var played = false
 
 struct NavigationTest: View {
   var body: some View {
@@ -40,14 +41,14 @@ struct NavigationTest: View {
   }
 }
 
-var argent:String!
+var argent:String = ""
 var products = [SKProduct]()
 
 
 struct ContentView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
 //  @State private var switchLanguage = false
-  @State private var intro2Do = true
+  
   @State private var showingAlert = false
 
   @State var purchased = false
@@ -90,11 +91,14 @@ struct ContentView: View {
       
       Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
           DownLoadVerbs(levels:["model"], environment: self.env)
-          self.intro2Do = false
-          self.env.currentPage = prime ? .SecondPage : .PlayerPage
+         
+          self.env.currentPage = played ? .SecondPage : .PlayerPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .onReceive(nextFrame) { (_) in
+          played = true
+        }
 
       if !purchased {
         BuyView(purchased: self.$purchased)
@@ -166,7 +170,7 @@ struct PaidView: View {
 
 struct BuyView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-  @State private var intro2Do = true
+  
   @State private var showingAlert = false
   @Binding var purchased:Bool
   

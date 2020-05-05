@@ -13,6 +13,7 @@ import Combine
 
 let timePublisher = PassthroughSubject<TimeInterval, Never>()
 let videoFinished = PassthroughSubject<Void, Never>()
+let nextFrame = PassthroughSubject<Void, Never>()
 
 //class PlayerTimeObserver {
 ////  let publisher = PassthroughSubject<TimeInterval, Never>()
@@ -77,6 +78,7 @@ class PlayerUIView: UIView {
         print("Video Finished")
         NotificationCenter.default.removeObserver(NSNotification.Name.AVPlayerItemDidPlayToEndTime)
         videoFinished.send()
+        nextFrame.send()
   }
   
 }
@@ -103,7 +105,7 @@ struct playerPage: View {
       HStack {
         Spacer()
         PlayerTimeView()
-          .font(Fonts.avenirNextCondensedBold(size: 20))
+          .font(Fonts.avenirNextCondensedBold(size: 16))
         Spacer()
       }
       }
