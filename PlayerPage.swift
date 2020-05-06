@@ -38,7 +38,9 @@ struct PlayerTimeView: View {
     Text("\(currentTime)")
     .onReceive(timePublisher) { time in
       self.currentTime = time
-    }
+    }.statusBar(hidden: true)
+    .navigationBarHidden(true)
+    .navigationBarBackButtonHidden(true)
   }
 }
 
@@ -105,7 +107,7 @@ struct playerPage: View {
       HStack {
         Spacer()
         PlayerTimeView()
-          .font(Fonts.avenirNextCondensedBold(size: 16))
+          .font(Fonts.avenirNextCondensedBold(size: 12))
         Spacer()
       }
       }

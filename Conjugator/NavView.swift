@@ -11,6 +11,9 @@ import Combine
 import AVFoundation
 import StoreKit
 
+let showIAPError = PassthroughSubject<String, Never>()
+let showIAPMessage = PassthroughSubject<String, Never>()
+let purchasedGoodPublisher = PassthroughSubject<Bool, Never>()
 
 enum MyAppPage {
   case Menu
@@ -44,6 +47,12 @@ struct NavigationTest: View {
 var argent:String = ""
 var products = [SKProduct]()
 
+func productsHandler(product: SKProduct, error:IAPManager.IAPManagerError) {
+  
+}
+
+
+
 
 struct ContentView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
@@ -62,19 +71,26 @@ struct ContentView: View {
         .padding()
         .modifier(DownLoadConjugations())
         .onAppear {
+          
+          
           IAPManager.shared.getProducts { (result) in
             DispatchQueue.main.async {
               switch result {
                 case .success(let downloaded):
-                  products = downloaded
-                  print("products ",products)
-                  guard let price = IAPManager.shared.getPriceFormatted(for: products.first!) else { return }
-                  argent = price
+                  for product in downloaded {
+                    guard let price = IAPManager.shared.formatPrice(for: product)
+                      else { break }
+                      print("products ",(product as SKProduct).price, price)
+                      products.append(product)
+                  }
                 case .failure(let error):
-                  print("failure ",error)
+                  let failure = error.localizedDescription
+//                  showIAPError.send(failure)
               }
             }
           }
+        }.onReceive(purchasedGoodPublisher) { ( toutBon ) in
+          self.purchased = toutBon
         }
         
         
@@ -89,7 +105,7 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-      Button(env.switchLanguage ? "Model Verbs":"Verbes Modèles") {
+      Button(env.switchLanguage ? "Demo Verbs":"Verbes Demo") {
           DownLoadVerbs(levels:["model"], environment: self.env)
          
           self.env.currentPage = played ? .SecondPage : .PlayerPage
@@ -170,7 +186,7 @@ struct PaidView: View {
 
 struct BuyView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
-  
+  @State private var message:String = ""
   @State private var showingAlert = false
   @Binding var purchased:Bool
   
@@ -178,40 +194,30 @@ struct BuyView: View {
     VStack {
       Button(env.switchLanguage ? "Buy": "Acheter") {
         if !self.purchased {
-          let success = IAPManager.shared.purchase(product: products.first!)
-          if success {
-            print("fooBar")
-            self.purchased = true
-          }
+          let success = IAPManager.shared.purchase(product: products.filter({ "ch.cqd.moreVerbs" == $0.productIdentifier }).first!)
         }
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+      .onReceive(showIAPError, perform: { ( message ) in
+        self.message = message
+        self.showingAlert = true
+      })
+      .onReceive(showIAPMessage, perform: { ( message ) in
+        self.message = message
+        self.showingAlert = true
+      })
       .alert(isPresented: $showingAlert) {
-          Alert(title: Text("Buy Buy Buy"), message: Text("Acheter " + argent), primaryButton: .default(Text("Oui")) {
-            let success = IAPManager.shared.purchase(product: products.first!)
-              if success {
-                print("fooBar")
-                self.purchased = true
-              }
-            }, secondaryButton: .cancel())
+        Alert(title: Text(message), message: Text(message), dismissButton: .default(Text("OK")))
       }
       Button(env.switchLanguage ? "Restore": "Restaurer") {
-        self.showingAlert = true
         IAPManager.shared.restorePurchases { (result) in
           switch result {
             case .success(let success):
-              if success {
-                print("successfully restored")
-//                self.delegate?.didFinishRestoringPurchasedProducts()
-              } else {
-                print("failed restoration")
-//                self.delegate?.didFinishRestoringPurchasesWithZeroProducts()
-              }
- 
+              success ? showIAPMessage.send("Successfully restored") : showIAPMessage.send("Failed to restore")
             case .failure(let error):
-                print("error ",error )
-              }
+              showIAPError.send(error.localizedDescription)
+            }
         }
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -269,10 +275,6 @@ struct DownLoadConjugations: ViewModifier {
 //            print("verb ",lines)
             
             let tense = lines.split(separator: ",")
-            
-            if lines.contains("abso") {
-              print("tense ",tense)
-            }
             
             let verbID = Int(String(tense[1]))
             let tenseID = Int(String(tense[2]))

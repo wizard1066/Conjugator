@@ -9,6 +9,8 @@
 import StoreKit
 import Combine
 
+
+
 class IAPManager: NSObject {
   
   static let shared = IAPManager()
@@ -24,9 +26,11 @@ class IAPManager: NSObject {
   enum IAPManagerError: Error {
     case noProductIDsFound
     case noProductsFound
-    case paymentWasCancelled
-    case productRequestFailed
+    case paymentCancelled
+    case requestFailed
   }
+  
+  
   
   func buy(product: SKProduct, withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
     let payment = SKPayment(product: product)
@@ -51,20 +55,18 @@ class IAPManager: NSObject {
   
   func getProducts(withHandler productsReceiveHandler: @escaping (_ result: Result<[SKProduct], IAPManagerError>) -> Void) {
     onReceiveProductsHandler = productsReceiveHandler
-    guard let productIDs = getProductIDs() else {
-      productsReceiveHandler(.failure(.noProductIDsFound))
-      return
-    }
+    let productIDs = Set(getProductIDs()!)
     let request = SKProductsRequest(productIdentifiers: Set(productIDs))
     request.delegate = self
     request.start()
   }
   
   fileprivate func getProductIDs() -> [String]? {
-    return ["ch.cqd.moreVerbs"]
+    return ["ch.cqd.noun","ch.cqd.moreVerbs","ch.cqd.encoreVerbe"]
+//    return ["ch.cqd.nouns"]
   }
   
-  func getPriceFormatted(for product: SKProduct) -> String? {
+  func formatPrice(for product: SKProduct) -> String? {
     let formatter = NumberFormatter()
     formatter.numberStyle = .currency
     formatter.locale = product.priceLocale
@@ -73,9 +75,10 @@ class IAPManager: NSObject {
   
   func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
     if totalRestoredPurchases != 0 {
+        showIAPMessage.send("IAP: Purchases successfull restored!")
         onBuyProductHandler?(.success(true))
     } else {
-        print("IAP: No purchases to restore!")
+        showIAPMessage.send("IAP: No purchases to restore!")
         onBuyProductHandler?(.success(false))
     }
   }
@@ -83,10 +86,11 @@ class IAPManager: NSObject {
   func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
     if let error = error as? SKError {
         if error.code != .paymentCancelled {
-            print("IAP Restore Error:", error.localizedDescription)
+            showIAPMessage.send("IAP Restore Error: " + error.localizedDescription)
             onBuyProductHandler?(.failure(error))
         } else {
-            onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
+            showIAPMessage.send("IAP Error: " + error.localizedDescription)
+            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
         }
     }
   }
@@ -101,15 +105,17 @@ class IAPManager: NSObject {
     if !IAPManager.shared.canMakePayments() {
         return false
     } else {
-//        delegate?.willStartLongProcess()
         IAPManager.shared.buy(product: product) { (result) in
             DispatchQueue.main.async {
                 switch result {
                 case .success(_):
-                  print("ok ",product)
+                  print("ok ",product.productIdentifier)
+                  purchasedGoodPublisher.send(true)
 //                  do update self.updateGameDataWithPurchasedProduct(product)
                 case .failure(let error):
-                  print("error ",error)
+                  print("error ",error.localizedDescription)
+//                  purchasedGoodPublisher.send(false)
+                  showIAPError.send(error.localizedDescription)
 //                    show error self.delegate?.showIAPRelatedError(error)
                 }
             }
@@ -119,33 +125,42 @@ class IAPManager: NSObject {
 }
 }
 
+
 extension IAPManager.IAPManagerError: LocalizedError {
     var errorDescription: String? {
         switch self {
         case .noProductIDsFound: return "No In-App Purchase product identifiers were found."
         case .noProductsFound: return "No In-App Purchases were found."
-        case .productRequestFailed: return "Unable to fetch available In-App Purchase products at the moment."
-        case .paymentWasCancelled: return "In-App Purchase process was cancelled."
+        case .requestFailed: return "Unable to fetch available In-App Purchase products at the moment."
+        case .paymentCancelled: return "In-App Purchase process was cancelled."
         }
     }
 }
 
-extension IAPManager: SKProductsRequestDelegate {
+extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
   func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
     let products = response.products
     if products.count > 0 {
       onReceiveProductsHandler?(.success(products))
+      for product in products {
+        print("success ",product.productIdentifier)
+      }
     } else {
       onReceiveProductsHandler?(.failure(.noProductsFound))
+      print("failure ")
+    }
+    if !response.invalidProductIdentifiers.isEmpty {
+      onReceiveProductsHandler?(.failure(.noProductIDsFound))
+      print("fucked ",response.invalidProductIdentifiers)
     }
   }
   
   func request(_ request: SKRequest, didFailWithError error: Error) {
-    onReceiveProductsHandler?(.failure(.productRequestFailed))
+    onReceiveProductsHandler?(.failure(.requestFailed))
   }
   
   func requestDidFinish(_ request: SKRequest) {
- 
+    print("request did finish ")
   }
   
 }
@@ -165,13 +180,13 @@ extension IAPManager: SKPaymentTransactionObserver {
           if error.code != .paymentCancelled {
             onBuyProductHandler?(.failure(error))
           } else {
-            onBuyProductHandler?(.failure(IAPManagerError.paymentWasCancelled))
+            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
           }
           print("IAP Error:", error.localizedDescription)
         }
         SKPaymentQueue.default().finishTransaction(transaction)
       case .deferred, .purchasing: break
-      @unknown default: break
+        @unknown default: break
       }
     }
   }
