@@ -10,6 +10,18 @@ import StoreKit
 import Combine
 
 
+final class productsDB: ObservableObject, Identifiable {
+  
+  static let shared = productsDB()
+  var items:[SKProduct] = []
+  {
+      willSet {
+        DispatchQueue.main.async {
+          self.objectWillChange.send()
+        }
+      }
+  }
+}
 
 class IAPManager: NSObject {
   
@@ -30,7 +42,10 @@ class IAPManager: NSObject {
     case requestFailed
   }
   
-  
+  func buyV5(product: SKProduct) {
+    let payment = SKPayment(product: product)
+    SKPaymentQueue.default().add(payment)
+  }
   
   func buy(product: SKProduct, withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
     let payment = SKPayment(product: product)
@@ -52,6 +67,18 @@ class IAPManager: NSObject {
   func stopObserving() {
     SKPaymentQueue.default().remove(self)
   }
+    
+  func getProductsV5() {
+    let productIDs = Set(returnProductIDs())
+    let request = SKProductsRequest(productIdentifiers: Set(productIDs))
+    request.delegate = self
+    request.start()
+  }
+  
+  func returnProductIDs() -> [String] {
+    return ["ch.cqd.noun","ch.cqd.moreVerbs","ch.cqd.encoreVerbe"]
+  }
+  
   
   func getProducts(withHandler productsReceiveHandler: @escaping (_ result: Result<[SKProduct], IAPManagerError>) -> Void) {
     onReceiveProductsHandler = productsReceiveHandler
@@ -63,7 +90,6 @@ class IAPManager: NSObject {
   
   fileprivate func getProductIDs() -> [String]? {
     return ["ch.cqd.noun","ch.cqd.moreVerbs","ch.cqd.encoreVerbe"]
-//    return ["ch.cqd.nouns"]
   }
   
   func formatPrice(for product: SKProduct) -> String? {
@@ -101,28 +127,38 @@ class IAPManager: NSObject {
     SKPaymentQueue.default().restoreCompletedTransactions()
   }
   
-  func purchase(product: SKProduct) -> Bool {
+  func purchaseV5(product: SKProduct) -> Bool {
     if !IAPManager.shared.canMakePayments() {
         return false
     } else {
-        IAPManager.shared.buy(product: product) { (result) in
-            DispatchQueue.main.async {
-                switch result {
-                case .success(_):
-                  print("ok ",product.productIdentifier)
-                  purchasedGoodPublisher.send(true)
-//                  do update self.updateGameDataWithPurchasedProduct(product)
-                case .failure(let error):
-                  print("error ",error.localizedDescription)
-//                  purchasedGoodPublisher.send(false)
-                  showIAPError.send(error.localizedDescription)
-//                    show error self.delegate?.showIAPRelatedError(error)
-                }
-            }
-        }
-        return true
+      let payment = SKPayment(product: product)
+      SKPaymentQueue.default().add(payment)
     }
-}
+    return true
+  }
+  
+//  func purchase(product: SKProduct) -> Bool {
+//    if !IAPManager.shared.canMakePayments() {
+//        return false
+//    } else {
+//        IAPManager.shared.buy(product: product) { (result) in
+//            DispatchQueue.main.async {
+//                switch result {
+//                case .success(_):
+//                  print("ok ",product.productIdentifier)
+//                  purchasedPublisher.send(true)
+////                  do update self.updateGameDataWithPurchasedProduct(product)
+//                case .failure(let error):
+//                  print("error ",error.localizedDescription)
+////                  purchasedGoodPublisher.send(false)
+//                  showIAPError.send(error.localizedDescription)
+////                    show error self.delegate?.showIAPRelatedError(error)
+//                }
+//            }
+//        }
+//        return true
+//    }
+//   }
 }
 
 
@@ -139,24 +175,34 @@ extension IAPManager.IAPManagerError: LocalizedError {
 
 extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
   func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {
-    let products = response.products
-    if products.count > 0 {
-      onReceiveProductsHandler?(.success(products))
-      for product in products {
-        print("success ",product.productIdentifier)
-      }
-    } else {
-      onReceiveProductsHandler?(.failure(.noProductsFound))
-      print("failure ")
+    let badProducts = response.invalidProductIdentifiers
+    let goodProducts = response.products
+    
+    if response.products.count > 0 {
+      productsDB.shared.items = response.products
+      print("bon ",productsDB.shared.items)
     }
-    if !response.invalidProductIdentifiers.isEmpty {
-      onReceiveProductsHandler?(.failure(.noProductIDsFound))
-      print("fucked ",response.invalidProductIdentifiers)
-    }
+    
+    
+//    let products = response.products
+//    if products.count > 0 {
+//      onReceiveProductsHandler?(.success(products))
+//      for product in products {
+//        print("success ",product.productIdentifier)
+//      }
+//    } else {
+//      onReceiveProductsHandler?(.failure(.noProductsFound))
+//      print("failure ")
+//    }
+//    if !response.invalidProductIdentifiers.isEmpty {
+//      onReceiveProductsHandler?(.failure(.noProductIDsFound))
+//      print("fucked ",response.invalidProductIdentifiers)
+//    }
   }
   
   func request(_ request: SKRequest, didFailWithError error: Error) {
-    onReceiveProductsHandler?(.failure(.requestFailed))
+    print("didFailWithError ",error)
+//    onReceiveProductsHandler?(.failure(.requestFailed))
   }
   
   func requestDidFinish(_ request: SKRequest) {
@@ -167,27 +213,57 @@ extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
 
 extension IAPManager: SKPaymentTransactionObserver {
   func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
-    transactions.forEach { (transaction) in
+     transactions.forEach { (transaction) in
       switch transaction.transactionState {
       case .purchased:
-        onBuyProductHandler?(.success(true))
         SKPaymentQueue.default().finishTransaction(transaction)
+        purchasePublisher.send(("Purchased ",true))
       case .restored:
         totalRestoredPurchases += 1
         SKPaymentQueue.default().finishTransaction(transaction)
+        purchasePublisher.send(("Restored ",true))
       case .failed:
         if let error = transaction.error as? SKError {
-          if error.code != .paymentCancelled {
-            onBuyProductHandler?(.failure(error))
-          } else {
-            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
-          }
-          print("IAP Error:", error.localizedDescription)
+          purchasePublisher.send(("Payment Error \(error.code) ",false))
+          print("Payment Failed \(error.code)")
         }
         SKPaymentQueue.default().finishTransaction(transaction)
-      case .deferred, .purchasing: break
-        @unknown default: break
+      case .deferred:
+        print("Ask Mom ...")
+        purchasePublisher.send(("Payment Diferred ",false))
+      case .purchasing:
+        print("working on it...")
+        purchasePublisher.send(("Payment in Process ",false))
+      default:
+        break
       }
     }
   }
 }
+
+
+//  func paymentQueue(_ queue: SKPaymentQueue, updatedTransactions transactions: [SKPaymentTransaction]) {
+//    transactions.forEach { (transaction) in
+//      switch transaction.transactionState {
+//      case .purchased:
+//        onBuyProductHandler?(.success(true))
+//        SKPaymentQueue.default().finishTransaction(transaction)
+//      case .restored:
+//        totalRestoredPurchases += 1
+//        SKPaymentQueue.default().finishTransaction(transaction)
+//      case .failed:
+//        if let error = transaction.error as? SKError {
+//          if error.code != .paymentCancelled {
+//            onBuyProductHandler?(.failure(error))
+//          } else {
+//            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
+//          }
+//          print("IAP Error:", error.localizedDescription)
+//        }
+//        SKPaymentQueue.default().finishTransaction(transaction)
+//      case .deferred, .purchasing: break
+//        @unknown default: break
+//      }
+//    }
+//  }
+//}

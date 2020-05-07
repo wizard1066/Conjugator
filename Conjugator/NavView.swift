@@ -6,6 +6,8 @@
 //  Copyright © 2020 Mark Lucking. All rights reserved.
 //
 
+//Subjonctif Present ecrite
+
 import SwiftUI
 import Combine
 import AVFoundation
@@ -13,7 +15,8 @@ import StoreKit
 
 let showIAPError = PassthroughSubject<String, Never>()
 let showIAPMessage = PassthroughSubject<String, Never>()
-let purchasedGoodPublisher = PassthroughSubject<Bool, Never>()
+let purchasePublisher = PassthroughSubject<(String, Bool), Never>()
+
 
 enum MyAppPage {
   case Menu
@@ -45,7 +48,7 @@ struct NavigationTest: View {
 }
 
 var argent:String = ""
-var products = [SKProduct]()
+//var products = [SKProduct]()
 
 func productsHandler(product: SKProduct, error:IAPManager.IAPManagerError) {
   
@@ -60,7 +63,15 @@ struct ContentView: View {
   
   @State private var showingAlert = false
 
+#if targetEnvironment(simulator)
+  // your simulator code
+  @State var purchased = true
+#else
+  // your real device code
   @State var purchased = false
+#endif
+
+  
 
   
   var body: some View {
@@ -71,26 +82,30 @@ struct ContentView: View {
         .padding()
         .modifier(DownLoadConjugations())
         .onAppear {
-          
-          
-          IAPManager.shared.getProducts { (result) in
-            DispatchQueue.main.async {
-              switch result {
-                case .success(let downloaded):
-                  for product in downloaded {
-                    guard let price = IAPManager.shared.formatPrice(for: product)
-                      else { break }
-                      print("products ",(product as SKProduct).price, price)
-                      products.append(product)
-                  }
-                case .failure(let error):
-                  let failure = error.localizedDescription
+//          IAPManager.shared.getProducts { (result) in
+//            DispatchQueue.main.async {
+//
+//
+//              switch result {
+//                case .success(let downloaded):
+//                  for product in downloaded {
+//                    guard let price = IAPManager.shared.formatPrice(for: product)
+//                      else { break }
+//                      print("products ",(product as SKProduct).price, price)
+//                     self.products.append(product)
+//                  }
+//                case .failure(let error):
+//                  let failure = error.localizedDescription
 //                  showIAPError.send(failure)
-              }
-            }
+//              }
+//            }
+//          }
+        }.onReceive(purchasePublisher) { ( toutBon ) in
+          let (message, success) = toutBon
+          if success {
+            self.purchased = success
+            showIAPMessage.send(message)
           }
-        }.onReceive(purchasedGoodPublisher) { ( toutBon ) in
-          self.purchased = toutBon
         }
         
         
@@ -184,17 +199,35 @@ struct PaidView: View {
   }
 }
 
+struct BuyViewV5: View {
+  @Binding var purchased:Bool
+  @ObservedObject var products = productsDB.shared
+  var body: some View {
+      List {
+        ForEach((0 ..< self.products.items.count), id: \.self) { column in
+          Text(self.products.items[column].localizedDescription)
+            .onTapGesture {
+              print("buybuybuy")
+            }
+        }
+      }
+  }
+}
+
 struct BuyView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
   @State private var message:String = ""
   @State private var showingAlert = false
   @Binding var purchased:Bool
+  @ObservedObject var products = productsDB.shared
+  @State var ready = false
   
   var body: some View {
     VStack {
       Button(env.switchLanguage ? "Buy": "Acheter") {
+        print("products ",self.products)
         if !self.purchased {
-          let success = IAPManager.shared.purchase(product: products.filter({ "ch.cqd.moreVerbs" == $0.productIdentifier }).first!)
+          let success = IAPManager.shared.purchaseV5(product: self.products.items.filter({ "ch.cqd.moreVerbs" == $0.productIdentifier }).first!)
         }
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -209,6 +242,11 @@ struct BuyView: View {
       })
       .alert(isPresented: $showingAlert) {
         Alert(title: Text(message), message: Text(message), dismissButton: .default(Text("OK")))
+      }
+      List {
+        ForEach((0 ..< self.products.items.count), id: \.self) { column in
+          Text(self.products.items[column].localizedDescription)
+        }
       }
       Button(env.switchLanguage ? "Restore": "Restaurer") {
         IAPManager.shared.restorePurchases { (result) in
