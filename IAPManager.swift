@@ -47,13 +47,13 @@ class IAPManager: NSObject {
     SKPaymentQueue.default().add(payment)
   }
   
-  func buy(product: SKProduct, withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
-    let payment = SKPayment(product: product)
-    SKPaymentQueue.default().add(payment)
- 
-    // Keep the completion handler.
-    onBuyProductHandler = handler
-  }
+//  func buy(product: SKProduct, withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+//    let payment = SKPayment(product: product)
+//    SKPaymentQueue.default().add(payment)
+// 
+//    // Keep the completion handler.
+//    onBuyProductHandler = handler
+//  }
   
   func canMakePayments() -> Bool {
     return SKPaymentQueue.canMakePayments()
@@ -102,30 +102,53 @@ class IAPManager: NSObject {
   func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
     if totalRestoredPurchases != 0 {
         showIAPMessage.send("IAP: Purchases successfull restored!")
-        onBuyProductHandler?(.success(true))
     } else {
         showIAPMessage.send("IAP: No purchases to restore!")
-        onBuyProductHandler?(.success(false))
     }
   }
   
+//  func paymentQueueRestoreCompletedTransactionsFinishedB(_ queue: SKPaymentQueue) {
+//    if totalRestoredPurchases != 0 {
+//        showIAPMessage.send("IAP: Purchases successfull restored!")
+//        onBuyProductHandler?(.success(true))
+//    } else {
+//        showIAPMessage.send("IAP: No purchases to restore!")
+//        onBuyProductHandler?(.success(false))
+//    }
+//  }
+
   func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
     if let error = error as? SKError {
         if error.code != .paymentCancelled {
             showIAPMessage.send("IAP Restore Error: " + error.localizedDescription)
-            onBuyProductHandler?(.failure(error))
         } else {
             showIAPMessage.send("IAP Error: " + error.localizedDescription)
-            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
         }
     }
   }
   
-  func restorePurchases(withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
-    onBuyProductHandler = handler
+//  func paymentQueueB(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
+//    if let error = error as? SKError {
+//        if error.code != .paymentCancelled {
+//            showIAPMessage.send("IAP Restore Error: " + error.localizedDescription)
+//            onBuyProductHandler?(.failure(error))
+//        } else {
+//            showIAPMessage.send("IAP Error: " + error.localizedDescription)
+//            onBuyProductHandler?(.failure(IAPManagerError.paymentCancelled))
+//        }
+//    }
+//  }
+  
+  func restorePurchasesV5() {
     totalRestoredPurchases = 0
     SKPaymentQueue.default().restoreCompletedTransactions()
   }
+  
+//  func restorePurchases(withHandler handler: @escaping ((_ result: Result<Bool, Error>) -> Void)) {
+//    onBuyProductHandler = handler
+//    totalRestoredPurchases = 0
+//    SKPaymentQueue.default().restoreCompletedTransactions()
+//  }
   
   func purchaseV5(product: SKProduct) -> Bool {
     if !IAPManager.shared.canMakePayments() {
@@ -162,16 +185,16 @@ class IAPManager: NSObject {
 }
 
 
-extension IAPManager.IAPManagerError: LocalizedError {
-    var errorDescription: String? {
-        switch self {
-        case .noProductIDsFound: return "No In-App Purchase product identifiers were found."
-        case .noProductsFound: return "No In-App Purchases were found."
-        case .requestFailed: return "Unable to fetch available In-App Purchase products at the moment."
-        case .paymentCancelled: return "In-App Purchase process was cancelled."
-        }
-    }
-}
+//extension IAPManager.IAPManagerError: LocalizedError {
+//    var errorDescription: String? {
+//        switch self {
+//        case .noProductIDsFound: return "No In-App Purchase product identifiers were found."
+//        case .noProductsFound: return "No In-App Purchases were found."
+//        case .requestFailed: return "Unable to fetch available In-App Purchase products at the moment."
+//        case .paymentCancelled: return "In-App Purchase process was cancelled."
+//        }
+//    }
+//}
 
 extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
   func productsRequest(_ request: SKProductsRequest, didReceive response: SKProductsResponse) {

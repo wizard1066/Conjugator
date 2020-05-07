@@ -249,14 +249,15 @@ struct BuyView: View {
         }
       }
       Button(env.switchLanguage ? "Restore": "Restaurer") {
-        IAPManager.shared.restorePurchases { (result) in
-          switch result {
-            case .success(let success):
-              success ? showIAPMessage.send("Successfully restored") : showIAPMessage.send("Failed to restore")
-            case .failure(let error):
-              showIAPError.send(error.localizedDescription)
-            }
-        }
+        IAPManager.shared.restorePurchasesV5()
+//        IAPManager.shared.restorePurchases { (result) in
+//          switch result {
+//            case .success(let success):
+//              success ? showIAPMessage.send("Successfully restored") : showIAPMessage.send("Failed to restore")
+//            case .failure(let error):
+//              showIAPError.send(error.localizedDescription)
+//            }
+//        }
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
