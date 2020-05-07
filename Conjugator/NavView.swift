@@ -13,7 +13,7 @@ import Combine
 import AVFoundation
 import StoreKit
 
-let showIAPError = PassthroughSubject<String, Never>()
+//let showIAPError = PassthroughSubject<String, Never>()
 let showIAPMessage = PassthroughSubject<String, Never>()
 let purchasePublisher = PassthroughSubject<(String, Bool), Never>()
 
@@ -50,9 +50,7 @@ struct NavigationTest: View {
 var argent:String = ""
 //var products = [SKProduct]()
 
-func productsHandler(product: SKProduct, error:IAPManager.IAPManagerError) {
-  
-}
+
 
 
 
@@ -232,10 +230,10 @@ struct BuyView: View {
       }
       .font(Fonts.avenirNextCondensedBold(size: 20))
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-      .onReceive(showIAPError, perform: { ( message ) in
-        self.message = message
-        self.showingAlert = true
-      })
+//      .onReceive(showIAPError, perform: { ( message ) in
+//        self.message = message
+//        self.showingAlert = true
+//      })
       .onReceive(showIAPMessage, perform: { ( message ) in
         self.message = message
         self.showingAlert = true

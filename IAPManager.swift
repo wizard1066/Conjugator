@@ -27,20 +27,20 @@ class IAPManager: NSObject {
   
   static let shared = IAPManager()
   
-  var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
-  var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
+//  var onReceiveProductsHandler: ((Result<[SKProduct], IAPManagerError>) -> Void)?
+//  var onBuyProductHandler: ((Result<Bool, Error>) -> Void)?
   var totalRestoredPurchases: Int = 0
   
   private override init() {
     super.init()
   }
   
-  enum IAPManagerError: Error {
-    case noProductIDsFound
-    case noProductsFound
-    case paymentCancelled
-    case requestFailed
-  }
+//  enum IAPManagerError: Error {
+//    case noProductIDsFound
+//    case noProductsFound
+//    case paymentCancelled
+//    case requestFailed
+//  }
   
   func buyV5(product: SKProduct) {
     let payment = SKPayment(product: product)
@@ -80,17 +80,17 @@ class IAPManager: NSObject {
   }
   
   
-  func getProducts(withHandler productsReceiveHandler: @escaping (_ result: Result<[SKProduct], IAPManagerError>) -> Void) {
-    onReceiveProductsHandler = productsReceiveHandler
-    let productIDs = Set(getProductIDs()!)
-    let request = SKProductsRequest(productIdentifiers: Set(productIDs))
-    request.delegate = self
-    request.start()
-  }
-  
-  fileprivate func getProductIDs() -> [String]? {
-    return ["ch.cqd.noun","ch.cqd.moreVerbs","ch.cqd.encoreVerbe"]
-  }
+//  func getProducts(withHandler productsReceiveHandler: @escaping (_ result: Result<[SKProduct], IAPManagerError>) -> Void) {
+//    onReceiveProductsHandler = productsReceiveHandler
+//    let productIDs = Set(getProductIDs()!)
+//    let request = SKProductsRequest(productIdentifiers: Set(productIDs))
+//    request.delegate = self
+//    request.start()
+//  }
+//
+//  fileprivate func getProductIDs() -> [String]? {
+//    return ["ch.cqd.noun","ch.cqd.moreVerbs","ch.cqd.encoreVerbe"]
+//  }
   
   func formatPrice(for product: SKProduct) -> String? {
     let formatter = NumberFormatter()
@@ -101,9 +101,9 @@ class IAPManager: NSObject {
   
   func paymentQueueRestoreCompletedTransactionsFinished(_ queue: SKPaymentQueue) {
     if totalRestoredPurchases != 0 {
-        showIAPMessage.send("IAP: Purchases successfull restored!")
+        purchasePublisher.send(("IAP: Purchases successfull restored!",true))
     } else {
-        showIAPMessage.send("IAP: No purchases to restore!")
+        purchasePublisher.send(("IAP: No purchases to restore!",true))
     }
   }
   
@@ -120,9 +120,9 @@ class IAPManager: NSObject {
   func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
     if let error = error as? SKError {
         if error.code != .paymentCancelled {
-            showIAPMessage.send("IAP Restore Error: " + error.localizedDescription)
+            purchasePublisher.send(("IAP Restore Error: " + error.localizedDescription,false))
         } else {
-            showIAPMessage.send("IAP Error: " + error.localizedDescription)
+            purchasePublisher.send(("IAP Error: " + error.localizedDescription,false))
         }
     }
   }
@@ -201,11 +201,12 @@ extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
     let badProducts = response.invalidProductIdentifiers
     let goodProducts = response.products
     
-    if response.products.count > 0 {
+    if goodProducts.count > 0 {
       productsDB.shared.items = response.products
       print("bon ",productsDB.shared.items)
     }
     
+    print("badProducts ",badProducts)
     
 //    let products = response.products
 //    if products.count > 0 {
@@ -225,6 +226,7 @@ extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
   
   func request(_ request: SKRequest, didFailWithError error: Error) {
     print("didFailWithError ",error)
+    purchasePublisher.send(("Purchase request failed ",true))
 //    onReceiveProductsHandler?(.failure(.requestFailed))
   }
   
