@@ -12,7 +12,7 @@ import AVKit
 
 let populatePublisher = PassthroughSubject<String?,Never>()
 let rulesPublisher = PassthroughSubject<Void,Never>()
-let doDivertPublisher = PassthroughSubject<Int,Never>()
+let doDivertPublisher = PassthroughSubject<(Int,Int),Never>()
 let defaultLinkColor = PassthroughSubject<Void,Never>()
 
 var shaker = true
@@ -87,6 +87,7 @@ struct tenseBlob {
   var color:String!
   var nom:String!
   var worked:String!
+  var linked:Int!
 }
 
 final class tenseDB: ObservableObject, Identifiable {
@@ -169,7 +170,8 @@ struct newView: View {
               self.selections.sort { (first, second) -> Bool in
                 first.personID.debugDescription < second.personID.debugDescription
               }
-              doDivertPublisher.send(linkID)
+              let newTense = self.env.tensey.tensex[tenseID].linked!
+              doDivertPublisher.send((linkID,newTense))
               defaultLinkColor.send()
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
                 self.display2Conjugations = true
@@ -257,16 +259,16 @@ struct PageTwo: View {
   // prendre advanced
   
   @State var tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem",
-    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive",
-    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem",
-    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present",
-    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem",
-    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive",
-    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present",
-    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present",
-    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form"]
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
+    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem.4",
+    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
+    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
+    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
+    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
+    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
+    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
   @State var temps = [
     "1-1.Future indicative.Derived from the full infinitive",
     "2-2.Imperfect indicative.Derived from the stem of the nous present",
@@ -446,8 +448,6 @@ struct PageTwo: View {
             verbID = self.env.verby.verbx[self.selectedVerb].id
             linkID = self.env.verby.verbx[self.selectedVerb].link
             
-            print("bug alert ",self.selectedVerb,linkID)
-            
             if linkID != 0 {
               self.utiliser = "Même règle que " + findVerb(searchID: linkID)
               self.linkColor = Color.blue
@@ -505,23 +505,48 @@ struct PageTwo: View {
               .frame(width: 256, height: 162, alignment: .center)
               .offset(x: 0, y: -32)
               .onReceive(doDivertPublisher, perform: { ( row ) in
-                
+                let (verbIDidx, tenseIDidx) = row
                 
                 self.display1Verb = false
                 self.display0Verb = true
                 self.noDivert = false
-                print("verb ",findVerbIndex(searchID: row))
-                self.selectedVerb = findVerbIndex(searchID: row)
+                
+                self.display1Tense = false
+                self.display0Tense = true
+                
+                self.selectedTense = tenseIDidx
+                tenseID = tenseIDidx
+                
+                if self.selectedTense > 0 {
+                  self.preTenseSelected =  self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense - 1].name
+                } else {
+                  self.preTenseSelected = ""
+                }
+                
+                if self.selectedTense < (self.env.tensey.tensex.count - 1 ) {
+                  self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
+                } else {
+                  self.postTenseSelected = ""
+                }
+                self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
+                
+                
+                self.selectedVerb = findVerbIndex(searchID: verbIDidx)
                 verbID = self.env.verby.verbx[self.selectedVerb].id
                 linkID = self.env.verby.verbx[self.selectedVerb].link
+                
+                
+                
                 
                 self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
                 self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
                 self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
                 
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
                   self.display1Verb = true
                   self.display0Verb = false
+                  self.display1Tense = true
+                  self.display0Tense = false
                   self.noDivert = true
                 }
               })
@@ -560,15 +585,12 @@ struct PageTwo: View {
             } else {
               self.preTenseSelected = ""
             }
-            
-//            self.preTenseSelected = self.selectedTense > 0 ? self.env.tensey.tensex[self.selectedTense - 1].name : ""
 
             if self.selectedTense < (self.env.tensey.tensex.count - 1 ) {
               self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
             } else {
               self.postTenseSelected = ""
             }
-//            self.postTenseSelected = self.selectedTense < (self.env.tensey.tensex.count - 1 ) ? self.env.tensey.tensex[self.selectedTense + 1].name : ""
             self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
             
             if linkID != 0 {
@@ -693,7 +715,9 @@ struct PageTwo: View {
           for instance in self.tenses {
             let breakout = instance.split(separator: ".")
             let breakdown = breakout[0].split(separator: "-")
-            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]))
+            print("breakdown ",breakdown)
+            print("breakout ",breakout)
+            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
             self.env.tensey.tensex.append(newTense)
           }
           
