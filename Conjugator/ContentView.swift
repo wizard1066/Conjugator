@@ -661,7 +661,7 @@ struct PageTwo: View {
                 .onAppear(perform: {
             for i in 0..<6 {
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
-                withAnimation(.easeOut(duration: 8.0)) {
+                withAnimation(.easeOut(duration: 1.0)) {
                   //                    self.newValue = 0
                   self.showMe[i] = true
                 }
