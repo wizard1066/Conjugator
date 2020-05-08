@@ -2848,51 +2848,51 @@
 9258,99,7,3,3P,Ils,resteraient,rest,eraient,0,0,0,
 9259,99,7,3,1P,Nous,resterions,rest,erions,0,0,0,
 9260,99,7,3,2P,Vous,resteriez,rest,eriez,0,0,0,
-1,27,3,0,x,J' ,absolvais,a,b,0
-1,27,3,0,x,Tu ,absolvais,a,b,0
-1,27,3,0,x,Il ,absolvait,a,b,0
-1,27,3,0,x,Ils ,absolvaient,a,b,0
-1,27,3,0,x,Nous ,absolvions,a,b,0
-1,27,3,0,x,Vous ,absolviez,a,b,0
-1,27,5,0,x,J' ,absolve,a,b,0
-1,27,5,0,x,Tu ,absolves,a,b,0
-1,27,5,0,x,Il ,absolve,a,b,0
-1,27,5,0,x,Ils ,absolvent,a,b,0
-1,27,5,0,x,Nous ,absolvions,a,b,0
-1,27,5,0,x,Vous ,absolviez,a,b,0
-1,27,6,0,x,J' ,absolusse,a,b,0
-1,27,6,0,x,Tu ,absolusses,a,b,0
-1,27,6,0,x,Il ,absolut,a,b,0
-1,27,6,0,x,Ils ,absolussent,a,b,0
-1,27,6,0,x,Nous ,absolussions,a,b,0
-1,27,6,0,x,Vous ,absolussiez,a,b,0
+1,27,3,0,x,J',absolvais,a,b,0
+1,27,3,0,x,Tu,absolvais,a,b,0
+1,27,3,0,x,Il,absolvait,a,b,0
+1,27,3,0,x,Ils,absolvaient,a,b,0
+1,27,3,0,x,Nous,absolvions,a,b,0
+1,27,3,0,x,Vous,absolviez,a,b,0
+1,27,5,0,x,J',absolve,a,b,0
+1,27,5,0,x,Tu,absolves,a,b,0
+1,27,5,0,x,Il,absolve,a,b,0
+1,27,5,0,x,Ils,absolvent,a,b,0
+1,27,5,0,x,Nous,absolvions,a,b,0
+1,27,5,0,x,Vous,absolviez,a,b,0
+1,27,6,0,x,J',absolusse,a,b,0
+1,27,6,0,x,Tu,absolusses,a,b,0
+1,27,6,0,x,Il,absolut,a,b,0
+1,27,6,0,x,Ils,absolussent,a,b,0
+1,27,6,0,x,Nous,absolussions,a,b,0
+1,27,6,0,x,Vous,absolussiez,a,b,0
 1,27,9,0,x,absolv,ant,a,b,0
 1,27,10,0,x,absous,a,b,0
 1,27,10,0,x,absout,e(s),a,b,0
-1,27,7,0,x,J' ,absoudrais,a,b,1016
-1,27,7,0,x,Tu ,absoudrais,a,b,1016
-1,27,7,0,x,Il ,absoudrait,a,b,1016
-1,27,7,0,x,Ils ,absoudraient,a,b,2032
-1,27,7,0,x,Nous ,absoudrions,a,b,4064
-1,27,7,0,x,Vous ,absoudriez,a,b,4064
-1,27,2,0,x,Vous ,absoudrez,a,b,4064
-1,27,2,0,x,Nous ,absoudrons,a,b,4064
-1,27,2,0,x,Ils ,absoudront,a,b,2032
-1,27,2,0,x,Il ,absoudra,a,b,1016
-1,27,2,0,x,Tu ,absoudras,a,b,1016
-1,27,2,0,x,J' ,absoudrai,a,b,1016
-1,27,4,0,x,J' ,absolus,a,b,248
-1,27,4,0,x,Tu ,absolus,a,b,248
-1,27,4,0,x,Il ,absolut,a,b,248
-1,27,4,0,x,Ils ,absolurent,a,b,496
-1,27,4,0,x,Nous ,absolûmes,a,b,992
-1,27,4,0,x,Vous ,absolûtes,a,b,992
-1,27,1,0,x,Vous ,absolvez,a,b,992
-1,27,1,0,x,Nous ,absolvons,a,b,992
-1,27,1,0,x,Ils ,absolvent,a,b,496
-1,27,1,0,x,Il ,absout,a,b,248
-1,27,1,0,x,Tu ,absous,a,b,248
-1,27,1,0,x,J' ,absous,a,b,248
+1,27,7,0,x,J',absoudrais,a,b,1016
+1,27,7,0,x,Tu,absoudrais,a,b,1016
+1,27,7,0,x,Il,absoudrait,a,b,1016
+1,27,7,0,x,Ils,absoudraient,a,b,2032
+1,27,7,0,x,Nous,absoudrions,a,b,4064
+1,27,7,0,x,Vous,absoudriez,a,b,4064
+1,27,2,0,x,Vous,absoudrez,a,b,4064
+1,27,2,0,x,Nous,absoudrons,a,b,4064
+1,27,2,0,x,Ils,absoudront,a,b,2032
+1,27,2,0,x,Il,absoudra,a,b,1016
+1,27,2,0,x,Tu,absoudras,a,b,1016
+1,27,2,0,x,J',absoudrai,a,b,1016
+1,27,4,0,x,J',absolus,a,b,248
+1,27,4,0,x,Tu,absolus,a,b,248
+1,27,4,0,x,Il,absolut,a,b,248
+1,27,4,0,x,Ils,absolurent,a,b,496
+1,27,4,0,x,Nous,absolûmes,a,b,992
+1,27,4,0,x,Vous,absolûtes,a,b,992
+1,27,1,0,x,Vous,absolvez,a,b,992
+1,27,1,0,x,Nous,absolvons,a,b,992
+1,27,1,0,x,Ils,absolvent,a,b,496
+1,27,1,0,x,Il,absout,a,b,248
+1,27,1,0,x,Tu,absous,a,b,248
+1,27,1,0,x,J',absous,a,b,248
 9309,99,9,3,,,restant,rest,ant,0,0,0,
 9310,99,10,3,,,resté(s),rest,é(s),0,0,0,
 9311,99,10,3,,,restée(s),rest,ée(s),0,0,0,
@@ -4056,11 +4056,11 @@
 3,32,4,1X,0,Ils,assirent,0,0,0,112
 3,32,4,1X,0,Nous,assîmes,0,0,0,224
 3,32,4,1X,0,Vous,assîtes,0,0,0,224
-3,32,1,1X,0,J' ,assois,0,0,0,248
+3,32,1,1X,0,J',assois,0,0,0,248
 3,32,1,1X,0,Tu,assois,0,0,0,248
 3,32,1,1X,0,Il,assoit,0,0,0,248
 3,32,1,1X,0,Ils,assoient,0,0,0,496
-3,32,3,1X,0,J' ,assoyais,0,0,0,128
+3,32,3,1X,0,J',assoyais,0,0,0,128
 3,32,3,1X,0,Tu,assoyais,0,0,0,128
 3,32,3,1X,0,Il,assoyait,0,0,0,128
 3,32,3,1X,0,Ils,assoyaient,0,0,0,256
@@ -4301,7 +4301,7 @@
 6296,67,6,3,2P,Vous,naquissiez,naqu,issiez,,,0,
 6306,67,9,3,,,naissant,naiss,ant,,,0,
 
-3,68,1,1X,0,J' ,ois,0,0,0,24
+3,68,1,1X,0,J',ois,0,0,0,24
 3,68,1,1X,0,Tu,ois,0,0,0,24
 3,68,1,1X,0,Il,oit,0,0,0,24
 3,68,1,1X,0,Ils,oient,0,0,0,48
@@ -4309,13 +4309,13 @@
 3,68,1,1X,0,Vous,oyez,0,0,0,96
 3,68,5,1X,0,Nous,oyions,0,0,0,96
 3,68,5,1X,0,Vous,oyiez,0,0,0,96
-3,68,4,1X,0,J' ,ouïs,0,0,0,120
+3,68,4,1X,0,J',ouïs,0,0,0,120
 3,68,4,1X,0,Tu,ouïs,0,0,0,120
 3,68,4,1X,0,Il,ouït,0,0,0,120
 3,68,4,1X,0,Ils,ouïrent,0,0,0,2032
 3,68,4,1X,0,Nous,ouïmes,0,0,0,2016
 3,68,4,1X,0,Vous,ouïtes,0,0,0,2016
-3,68,6,1X,0,J' ,ouïsse,0,0,0,2016
+3,68,6,1X,0,J',ouïsse,0,0,0,2016
 3,68,6,1X,0,Tu,ouïsses,0,0,0,2016
 3,68,6,1X,0,Il,ouït,0,0,0,2016
 3,68,6,1X,0,Ils,ouïssent,0,0,0,4032
