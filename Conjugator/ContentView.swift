@@ -428,6 +428,26 @@ struct PageTwo: View {
       
       ZStack {
         if display0Verb {
+        HStack {
+          Image(systemName: "goforward.plus")
+            .resizable()
+            .zIndex(1)
+            
+            .opacity(0.8)
+            .frame(width: 32, height: 32, alignment: .center)
+            .offset(x: 0, y: -32)
+            .padding()
+            .onTapGesture {
+              if self.selectedVerb < (self.env.verby.verbx.count + 8) {
+                self.selectedVerb += 8
+              } else {
+                self.selectedVerb = 0
+              }
+            }
+            .onLongPressGesture {
+              self.selectedVerb = self.env.verby.verbx.count - 1
+            }
+          Spacer()
           Picker("", selection: $selectedVerb) {
             ForEach((0 ..< env.verby.verbx.count), id: \.self) { column in
               Text(self.display0Verb ? self.env.verby.verbx[column].name : "")
@@ -435,7 +455,7 @@ struct PageTwo: View {
                 
             }
           }
-          .frame(width: 256, height: 162, alignment: .center)
+          .frame(width: 128, height: 162, alignment: .center)
 //          .background(InsideView)
           .offset(x: 0, y: -32)
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
@@ -499,6 +519,26 @@ struct PageTwo: View {
           }
           .labelsHidden()
           .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
+          Spacer()
+          Image(systemName:"gobackward.minus")
+            .resizable()
+            .zIndex(1)
+            
+            .opacity(0.8)
+            .frame(width: 32, height: 32, alignment: .center)
+            .offset(x: 0, y: -32)
+            .padding()
+            .onTapGesture {
+              if self.selectedVerb > 8 {
+                self.selectedVerb -= 8
+              } else {
+                self.selectedVerb = 0
+              }
+            }
+            .onLongPressGesture {
+              self.selectedVerb = 0
+            }
+        }
         } else {
           if display1Verb {
             VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
