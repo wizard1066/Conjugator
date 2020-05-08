@@ -23,6 +23,7 @@ enum MyAppPage {
   case SecondPage
   case NavigationView
   case PlayerPage
+  case ListView
 }
 
 final class MyAppEnvironmentData: ObservableObject {
@@ -80,6 +81,7 @@ struct ContentView: View {
         .padding()
         .modifier(DownLoadConjugations())
         .onAppear {
+          DownLoadTenses(environment: self.env)
 //          IAPManager.shared.getProducts { (result) in
 //            DispatchQueue.main.async {
 //
@@ -118,9 +120,14 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
+      NavigationLink(destination: ListView(), tag: .ListView, selection: self.$env.currentPage) {
+        EmptyView()
+      }.navigationBarHidden(true)
+      .statusBar(hidden: true)
+      
       Button(env.switchLanguage ? "Demo Verbs":"Verbes Demo") {
           DownLoadVerbs(levels:["model"], environment: self.env)
-         
+          
           self.env.currentPage = played ? .SecondPage : .PlayerPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -163,6 +170,7 @@ struct PaidView: View {
     
     VStack {
      Button(env.switchLanguage ? "Beginner":"Débutant") {
+          DownLoadTenses(environment: self.env)
           DownLoadVerbs(levels:["easy"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
@@ -171,6 +179,7 @@ struct PaidView: View {
        
 
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
+          DownLoadTenses(environment: self.env)
           DownLoadVerbs(levels:["medium"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
@@ -179,6 +188,7 @@ struct PaidView: View {
         
 
         Button(env.switchLanguage ? "Advanced": "Avancé") {
+          DownLoadTenses(environment: self.env)
           DownLoadVerbs(levels:["hard"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
@@ -187,8 +197,17 @@ struct PaidView: View {
         
 
         Button(env.switchLanguage ? "Superior":"Supérieur") {
+          DownLoadTenses(environment: self.env)
           DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
           self.env.currentPage = .SecondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+        Button(env.switchLanguage ? "List":"List") {
+          DownLoadTenses(environment: self.env)
+          DownLoadVerbs(levels:["easy","medium","hard","model"], environment: self.env)
+          self.env.currentPage = .ListView
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -263,6 +282,37 @@ struct BuyView: View {
     }
   }
 }
+
+
+
+func DownLoadTenses(environment: MyAppEnvironmentData) {
+  print("DownLoadTenses")
+  let tenses = [
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
+    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem.4",
+    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
+    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
+    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
+    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
+    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
+    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
+  
+  for instance in tenses {
+  
+    let breakout = instance.split(separator: ".")
+    let breakdown = breakout[0].split(separator: "-")
+    let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
+    environment.tensey.tensex.append(newTense)
+    
+  }
+  
+  environment.tensey.tensex.sort { (first, second) -> Bool in
+    first.name < second.name
+  }
+}
+
 
 
 func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {

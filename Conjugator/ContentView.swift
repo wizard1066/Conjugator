@@ -258,29 +258,29 @@ struct PageTwo: View {
   // avoir/savoir advanced
   // prendre advanced
   
-  @State var tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
-    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
-    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present.4",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem.4",
-    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
-    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
-    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
-    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
-    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
-    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
-  @State var temps = [
-    "1-1.Future indicative.Derived from the full infinitive",
-    "2-2.Imperfect indicative.Derived from the stem of the nous present",
-    "3-3.Imperfect subjunctive.Derived from the simple past stem",
-    "4-4.Past participle.Derived from the infinitive stem",
-    "5-5.Present conditional.Derived from the full infinitive",
-    "6-6.Present indicative.Derived from the infinitive stem",
-    "7-7.Present infinitive.Basic form",
-    "9-8.Present participle.Derived from the stem of the nous present",
-    "10-9.Present subjunctive.Derived from the stem of the ils present",
-    "20-10.Simple past indicative.Derived from the stem of the nous present",
-  ]
+//  @State var tenses = [
+//    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
+//    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
+//    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present.4",
+//    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem.4",
+//    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
+//    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
+//    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
+//    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
+//    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
+//    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
+//  @State var temps = [
+//    "1-1.Future indicative.Derived from the full infinitive",
+//    "2-2.Imperfect indicative.Derived from the stem of the nous present",
+//    "3-3.Imperfect subjunctive.Derived from the simple past stem",
+//    "4-4.Past participle.Derived from the infinitive stem",
+//    "5-5.Present conditional.Derived from the full infinitive",
+//    "6-6.Present indicative.Derived from the infinitive stem",
+//    "7-7.Present infinitive.Basic form",
+//    "9-8.Present participle.Derived from the stem of the nous present",
+//    "10-9.Present subjunctive.Derived from the stem of the ils present",
+//    "20-10.Simple past indicative.Derived from the stem of the nous present",
+//  ]
   
   @State var verb:[String] = []
   @State var selectedVerb = 0
@@ -743,28 +743,22 @@ struct PageTwo: View {
         
         
         
-        if once {
-          once = false
-          
-          //      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-          //      for instance in dictSortByValue {
-          //        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-          //        self.env.groupy.groupx.append(newGroup)
-          //      }
-          
-          for instance in self.tenses {
-            let breakout = instance.split(separator: ".")
-            let breakdown = breakout[0].split(separator: "-")
-            print("breakdown ",breakdown)
-            print("breakout ",breakout)
-            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
-            self.env.tensey.tensex.append(newTense)
-          }
-          
-          self.env.tensey.tensex.sort { (first, second) -> Bool in
-            first.name < second.name
-          }
-        }
+//        if once {
+//          once = false
+//          
+//          for instance in self.tenses {
+//            let breakout = instance.split(separator: ".")
+//            let breakdown = breakout[0].split(separator: "-")
+//            print("breakdown ",breakdown)
+//            print("breakout ",breakout)
+//            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
+//            self.env.tensey.tensex.append(newTense)
+//          }
+//          
+//          self.env.tensey.tensex.sort { (first, second) -> Bool in
+//            first.name < second.name
+//          }
+//        }
         
         if seek != nil {
           self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in
