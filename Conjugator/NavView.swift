@@ -180,7 +180,7 @@ struct PaidView: View {
 
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
           DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["medium"], environment: self.env)
+          DownLoadVerbs(levels:["medium","model"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
