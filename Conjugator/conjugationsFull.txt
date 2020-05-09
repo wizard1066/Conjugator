@@ -3092,7 +3092,7 @@
 4,12,5,3X,0,Il,arguë,0,0,0,1920
 4,12,5,3X,0,Nous,arguïons,0,0,0,7680
 4,12,5,3X,0,Vous,arguïez,0,0,0,7680
-4,12,5,3X,0,Ils,arguent,0,0,0,7936
+4,12,5,3X,0,Ils,arguënt,0,0,0,7936
 4,12,3,3X,0,Nous,arguïons,0,0,0,7680
 4,12,3,3X,0,Vous,arguïez,0,0,0,7680
 1009,12,1,2,1P,Nous,arguons,argu,ons,,,0,
@@ -3109,8 +3109,6 @@
 1026,12,4,2,3P,Ils,arguèrent,argu,èrent,,,0,
 1027,12,4,2,1P,Nous,arguâmes,argu,âmes,,,0,
 1028,12,4,2,2P,Vous,argutes,argu,tes,,,0,
-1033,12,5,2,1P,Nous,arguïons,argu,ïons,,1,0,
-1034,12,5,2,2P,Vous,arguïez,argu,ïez,,1,0,
 1035,12,6,2,1S,J',arguasse,argu,asse,,,0,
 1036,12,6,2,2S,Tu,arguasses,argu,asses,,,0,
 1037,12,6,2,3S,Il,arguât,argu,ât,,,0,
