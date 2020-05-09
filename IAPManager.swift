@@ -106,16 +106,6 @@ class IAPManager: NSObject {
         purchasePublisher.send(("IAP: No purchases to restore!",true))
     }
   }
-  
-//  func paymentQueueRestoreCompletedTransactionsFinishedB(_ queue: SKPaymentQueue) {
-//    if totalRestoredPurchases != 0 {
-//        showIAPMessage.send("IAP: Purchases successfull restored!")
-//        onBuyProductHandler?(.success(true))
-//    } else {
-//        showIAPMessage.send("IAP: No purchases to restore!")
-//        onBuyProductHandler?(.success(false))
-//    }
-//  }
 
   func paymentQueue(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
     if let error = error as? SKError {
@@ -126,6 +116,16 @@ class IAPManager: NSObject {
         }
     }
   }
+  
+  //  func paymentQueueRestoreCompletedTransactionsFinishedB(_ queue: SKPaymentQueue) {
+//    if totalRestoredPurchases != 0 {
+//        showIAPMessage.send("IAP: Purchases successfull restored!")
+//        onBuyProductHandler?(.success(true))
+//    } else {
+//        showIAPMessage.send("IAP: No purchases to restore!")
+//        onBuyProductHandler?(.success(false))
+//    }
+//  }
   
 //  func paymentQueueB(_ queue: SKPaymentQueue, restoreCompletedTransactionsFailedWithError error: Error) {
 //    if let error = error as? SKError {

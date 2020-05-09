@@ -180,7 +180,7 @@ struct PaidView: View {
 
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
           DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["medium","model"], environment: self.env)
+          DownLoadVerbs(levels:["medium"], environment: self.env)
           self.env.currentPage = .SecondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -224,7 +224,7 @@ struct BuyViewV5: View {
         ForEach((0 ..< self.products.items.count), id: \.self) { column in
           Text(self.products.items[column].localizedDescription)
             .onTapGesture {
-              print("buybuybuy")
+              IAPManager.shared.purchaseV5(product: self.products.items[column])
             }
         }
       }
@@ -260,11 +260,11 @@ struct BuyView: View {
       .alert(isPresented: $showingAlert) {
         Alert(title: Text(message), message: Text(message), dismissButton: .default(Text("OK")))
       }
-      List {
-        ForEach((0 ..< self.products.items.count), id: \.self) { column in
-          Text(self.products.items[column].localizedDescription)
-        }
-      }
+//      List {
+//        ForEach((0 ..< self.products.items.count), id: \.self) { column in
+//          Text(self.products.items[column].localizedDescription)
+//        }
+//      }
       Button(env.switchLanguage ? "Restore": "Restaurer") {
         IAPManager.shared.restorePurchasesV5()
 //        IAPManager.shared.restorePurchases { (result) in
