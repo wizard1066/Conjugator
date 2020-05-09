@@ -13,48 +13,61 @@ struct ListView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
   
   var body: some View {
-    VStack {
-      Text("ListView")
+    var verbView = [String]()
+    var colorView = [Int]()
+    var selections = [answerBlob]()
+    for idx in 0..<env.verby.verbx.count {
+      if env.verby.verbx[idx].id < 99 {
+        for idx2 in 0..<env.tensey.tensex.count {
+          verbView.append(env.verby.verbx[idx].name + " - " + env.tensey.tensex[idx2].name)
+          colorView.append(0)
+          verbID = env.verby.verbx[idx].id
+          tenseID = env.tensey.tensex[idx2].id
+          selections = returnDB(tenseID: tenseID, verbID: verbID, environment: env)
+          for idx3 in 0..<selections.count {
+            verbView.append(selections[idx3].name)
+            colorView.append(selections[idx3].redMask!)
+          }
+        }
+      }
+    }
+    return VStack {
+      Text("ListView").font(Fonts.avenirNextCondensedBold(size: 32))
       List {
-        ForEach((0 ..< env.verby.verbx.count), id: \.self) { column1 in
-          TenseList(column1: column1)
+        ForEach((0 ..< verbView.count), id: \.self) { column1 in
+          TableView(word: verbView[column1], gate: colorView[column1])
+            .font(Fonts.avenirNextCondensedBold(size: 20))
+//          Text(verbView[column1])
+//          TenseList(column1: column1)
 //          Text(self.env.verby.verbx[column].name)
 //          ForEach ((0 ..< env.tensey.tensex.count), id: \.self) { column in
 //              Text(self.env.tensey.tensex[column].name)
         }
-      }
+      }.environment(\.defaultMinListRowHeight, 20)
+          .environment(\.defaultMinListHeaderHeight, 0)
+          
     }
   }
 }
 
-struct TenseList: View {
-  @State var column1: Int
-  @EnvironmentObject var env : MyAppEnvironmentData
+struct TableView: View {
+  
+//  @EnvironmentObject var env : MyAppEnvironmentData
+  @State var word:String
+  @State var gate:Int?
+  
   var body: some View {
-    VStack {
-//      List {
-        ForEach ((0 ..< env.tensey.tensex.count), id: \.self) { column2 in
-//          Text(self.env.verby.verbx[self.column1].name + self.env.tensey.tensex[column2].name)
-          DataList(column1: self.column1, column2: column2)
-//        }
-      }
-    }
-  }
-}
-
-var selections = [answerBlob]()
-
-struct DataList: View {
-  @State var column1: Int
-  @State var column2: Int
-  @State var display = false
-  @EnvironmentObject var env : MyAppEnvironmentData
-  var body: some View {
-    selections = returnDB(tenseID: column2, verbID: column1, environment: env)
+    let letter = word.map( { String($0) } )
+    
     return VStack {
-      LineView(display: display ? selections[0].name : "")
+      HStack(spacing:0) {
+        ForEach((0 ..< letter.count), id: \.self) { column in
+          Text(letter[column])
+            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
+        }
+      }
+     }
     }
-  }
 }
 
 func returnDB(tenseID: Int, verbID: Int, environment: MyAppEnvironmentData) -> [answerBlob]{
