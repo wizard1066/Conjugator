@@ -615,7 +615,8 @@
 1526,soumettre,63,dynamic
 1527,transmettre,63,dynamic
 1528,émoudreremoudre,64,dynamic
-1529,émouvoirpromouvoir,66,dynamic
+1529,émouvoir,66,dynamic
+1656,promouvoir,66,dynamic
 1530,renaître,67,dynamic
 1531,repaître,69,dynamic
 1532,départir,70,dynamic
@@ -730,9 +731,9 @@
 1641,prévenir,92,dynamic
 1642,provenir,92,dynamic
 1643,redevenir,92,dynamic
-1644,seressouvenir ,92,dynamic
+1644,se ressouvenir,92,dynamic
 1645,revenir,92,dynamic
-1646,sesouvenir ,92,dynamic
+1646,se souvenir ,92,dynamic
 1647,subvenir,92,dynamic
 1648,survenir,92,dynamic
 1649,devêtir,93,dynamic

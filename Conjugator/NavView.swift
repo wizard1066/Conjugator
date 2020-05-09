@@ -224,7 +224,7 @@ struct BuyViewV5: View {
         ForEach((0 ..< self.products.items.count), id: \.self) { column in
           Text(self.products.items[column].localizedDescription)
             .onTapGesture {
-              IAPManager.shared.purchaseV5(product: self.products.items[column])
+              let _ = IAPManager.shared.purchaseV5(product: self.products.items[column])
             }
         }
       }
