@@ -67,7 +67,7 @@ struct ContentView: View {
   @State var purchased = true
 #else
   // your real device code
-  @State var purchased = false
+  @State var purchased = true
 #endif
 
   
@@ -286,6 +286,9 @@ struct BuyView: View {
 
 
 func DownLoadTenses(environment: MyAppEnvironmentData) {
+  if environment.tensey.tensex.count > 0 {
+    return
+  }
   print("DownLoadTenses")
   let tenses = [
     "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
@@ -359,30 +362,41 @@ struct DownLoadConjugations: ViewModifier {
         
         for lines in content2! {
           if lines.count > 1 {
-//            print("verb ",lines)
+            
             
             let tense = lines.split(separator: ",")
             
-            let verbID = Int(String(tense[1]))
-            let tenseID = Int(String(tense[2]))
-            let conjugation = String(tense[5] + " " + tense[6])
+            
+            let verbID = Int(String(tense[0]).trimmingCharacters(in: .whitespacesAndNewlines))
+            let tenseID = Int(String(tense[1]).trimmingCharacters(in: .whitespacesAndNewlines))
+            let conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines) + " " + tense[4].trimmingCharacters(in: .whitespacesAndNewlines))
             //            for instance in self.answers {
-            let personID = returnClass(class2C: String(tense[5]))
+            let personID = returnClass(class2C: String(tense[3]).trimmingCharacters(in: .whitespacesAndNewlines))
 
             
+            
             var redMask:Int!
+            if tense.count > 5 {
+              redMask = Int(String(tense[5]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 6 {
+              redMask = Int(String(tense[6]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 7 {
+              redMask = Int(String(tense[7]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 8 {
+              redMask = Int(String(tense[8]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
             if tense.count > 9 {
-              redMask = Int(tense[9])
-            }
-            if tense.count > 10 {
-              redMask = Int(tense[9] + tense[10])
-            }
-            if tense.count > 11 {
-              redMask = Int(tense[9] + tense[10] + tense[11])
+              redMask = Int(String(tense[9]).trimmingCharacters(in: .whitespacesAndNewlines))
             }
             if redMask == nil {
               redMask = 0
             }
+            
+            print("red ",tense[0],redMask!)
+            
             
             if verbID != nil {
               let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)

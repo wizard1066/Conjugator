@@ -655,7 +655,7 @@
 1565,désapprendre,77,dynamic
 1566,entreprendre,77,dynamic
 1567,s'éprendre,77,dynamic
-1568,seméprendre ,77,dynamic
+1568,seméprendre,77,dynamic
 1569,réapprendre,77,dynamic
 1570,reprendre,77,dynamic
 1571,surprendre,77,dynamic
@@ -731,9 +731,9 @@
 1641,prévenir,92,dynamic
 1642,provenir,92,dynamic
 1643,redevenir,92,dynamic
-1644,se ressouvenir,92,dynamic
+1644,seressouvenir,92,dynamic
 1645,revenir,92,dynamic
-1646,se souvenir ,92,dynamic
+1646,sesouvenir ,92,dynamic
 1647,subvenir,92,dynamic
 1648,survenir,92,dynamic
 1649,devêtir,93,dynamic
