@@ -1,3 +1,93 @@
+7, 20, XX, parler, , 0, 0, 0
+15, 20, XX, créer, , 0, 0, 0
+22, 20, XX, grasseyer, , 0, 0, 0
+25, 20, XX, finir, , 0, 0, 0
+26, 20, XX, haïr, , 0, 0, 0
+31, 20, XX, assaillir, , 0, 0, 0
+34, 20, XX, battre, , 0, 0, 0
+39, 20, XX, conclure, , 0, 0, 0
+43, 20, XX, courir, , 0, 0, 0
+44, 20, XX, couvrir, , 0, 0, 0
+53, 20, XX, écrire, , 0, 0, 0
+21, 20, XX, étudier, , 0, 0, 0
+49, 20, XX, cuire, , 0, 0, 0
+52, 20, XX, dormir, , 0, 0, 0
+54, 20, XX, faillir, , 0, 0, 0
+57, 20, XX, fondre, , 0, 0, 0
+58, 20, XX, foutre, , 0, 0, 0
+64, 20, XX, moudre, , 0, 0, 0
+70, 20, XX, partir, , 0, 0, 0
+71, 20, XX, peindre, , 0, 0, 0
+72, 20, XX, perdre, , 0, 0, 0
+78, 20, XX, rendre, , 0, 0, 0
+79, 20, XX, rire, , 0, 0, 0
+80, 20, XX, rompre, , 0, 0, 0
+82, 20, XX, sentir, , 0, 0, 0
+84, 20, XX, servir, , 0, 0, 0
+85, 20, XX, sortir, , 0, 0, 0
+86, 20, XX, suivre, , 0, 0, 0
+93, 20, XX, vêtir, , 0, 0, 0
+8, 20, XX, acheter, , 0, 0, 0
+9, 20, XX, jeter, , 0, 0, 0
+10, 20, XX, appeler, , 0, 0, 0
+11, 20, XX, congeler, , 0, 0, 0
+12, 20, XX, arguer, , 0, 0, 0
+13, 20, XX, assiéger, , 0, 0, 0
+14, 20, XX, commencer, , 0, 0, 0
+16, 20, XX, employer, , 0, 0, 0
+17, 20, XX, envoyer, , 0, 0, 0
+18, 20, XX, espérer, , 0, 0, 0
+19, 20, XX, essayer, , 0, 0, 0
+20, 20, XX, essuyer, , 0, 0, 0
+23, 20, XX, lever, , 0, 0, 0
+24, 20, XX, manger, , 0, 0, 0
+30, 20, XX, apercevoir, , 0, 0, 0
+46, 20, XX, croire, , 0, 0, 0
+89, 20, XX, traire, , 0, 0, 0
+2, 20, XX, avoir, , 0, 0, 0
+3, 20, XX, être, , 0, 0, 0
+27, 20, XX, absoudre, , 0, 0, 0
+28, 20, XX, acquérir, , 0, 0, 0
+29, 20, XX, aller, , 0, 0, 0
+32, 20, XX, asseoir, , 0, 0, 0
+35, 20, XX, boire, , 0, 0, 0
+37, 20, XX, choir, , 0, 0, 0
+38, 20, XX, clore, , 0, 0, 0
+40, 20, XX, confire, , 0, 0, 0
+41, 20, XX, connaître, , 0, 0, 0
+42, 20, XX, coudre, , 0, 0, 0
+45, 20, XX, craindre, , 0, 0, 0
+47, 20, XX, croître, , 0, 0, 0
+48, 20, XX, cueillir, , 0, 0, 0
+50, 20, XX, devoir, , 0, 0, 0
+51, 20, XX, dire, , 0, 0, 0
+55, 20, XX, faire, , 0, 0, 0
+56, 20, XX, falloir, , 0, 0, 0
+59, 20, XX, fuir, , 0, 0, 0
+61, 20, XX, joindre, , 0, 0, 0
+62, 20, XX, lire, , 0, 0, 0
+63, 20, XX, mettre, , 0, 0, 0
+65, 20, XX, mourir, , 0, 0, 0
+66, 20, XX, mouvoir, , 0, 0, 0
+67, 20, XX, naître, , 0, 0, 0
+68, 20, XX, ouïr, , 0, 0, 0
+69, 20, XX, paître, , 0, 0, 0
+73, 20, XX, plaire, , 0, 0, 0
+74, 20, XX, pleuvoir, , 0, 0, 0
+75, 20, XX, pourvoir, , 0, 0, 0
+76, 20, XX, pouvoir, , 0, 0, 0
+77, 20, XX, prendre, , 0, 0, 0
+81, 20, XX, savoir, , 0, 0, 0
+87, 20, XX, surseoir, , 0, 0, 0
+88, 20, XX, tenir, , 0, 0, 0
+90, 20, XX, vaincre, , 0, 0, 0
+91, 20, XX, valoir, , 0, 0, 0
+92, 20, XX, venir, , 0, 0, 0
+94, 20, XX, vivre, , 0, 0, 0
+95, 20, XX, voir, , 0, 0, 0
+96, 20, XX, vouloir, , 0, 0, 0
+
+
 10, 1, 0, Il,  appelle, 0, 0 ,1408
 10, 1, 0, Ils,  appellent, 0, 0,768
 10, 1, 0, J',  appelle, 0, 0 ,1408
@@ -962,60 +1052,27 @@
 26,9,2,,haïssant,0
 26,10,2,,haï(s),0
 
+27,10,0,absous,0,0
+27,10,0,absout,e(s),0
 
-27, 1, x, Il,  absout, a, b
-27, 1, x, Ils,  absolvent, a, b
-27, 1, x, J',  absous, a, b
-27, 1, x, Nous,  absolvons, a, b
-27, 1, x, Tu,  absous, a, b
-27, 1, x, Vous,  absolvez, a, b
+27,7,0,J',absoudrais,1016
+27,7,0,Tu,absoudrais,1016
+27,7,0,Il,absoudrait,1016
+27,7,0,Ils,absoudraient,2032
+27,7,0,Nous,absoudrions,4064
+27,7,0,Vous,absoudriez,4064
 
-27, 10, x, absous,  a, b, 0
-27, 10, x, absout,  e(s), a, b
+27,2,0,Vous,absoudrez,4064
+27,2,0,Nous,absoudrons,4064
+27,2,0,Ils,absoudront,2032
+27,2,0,Il,absoudra,1016
+27,2,0,Tu,absoudras,1016
+27,2,0,J',absoudrai,1016
 
-27, 2, x, Il,  absoudra, a, b
-27, 2, x, Ils,  absoudront, a, b
-27, 2, x, J',  absoudrai, a, b
-27, 2, x, Nous,  absoudrons, a, b
-27, 2, x, Tu,  absoudras, a, b
-27, 2, x, Vous,  absoudrez, a, b
+27,1,0,Il,absout,248
+27,1,0,Tu,absous,248
+27,1,0,J',absous,248
 
-27, 3, x, Il,  absolvait, a, b
-27, 3, x, Ils,  absolvaient, a, b
-27, 3, x, J',  absolvais, a, b
-27, 3, x, Nous,  absolvions, a, b
-27, 3, x, Tu,  absolvais, a, b
-27, 3, x, Vous,  absolviez, a, b
-
-27, 4, x, Il,  absolut, a, b
-27, 4, x, Ils,  absolurent, a, b
-27, 4, x, J',  absolus, a, b
-27, 4, x, Nous,  absolûmes, a, b
-27, 4, x, Tu,  absolus, a, b
-27, 4, x, Vous,  absolûtes, a, b
-
-27, 5, x, Il,  absolve, a, b
-27, 5, x, Ils,  absolvent, a, b
-27, 5, x, J',  absolve, a, b
-27, 5, x, Nous,  absolvions, a, b
-27, 5, x, Tu,  absolves, a, b
-27, 5, x, Vous,  absolviez, a, b
-
-27, 6, x, Il,  absolut, a, b
-27, 6, x, Ils,  absolussent, a, b
-27, 6, x, J',  absolusse, a, b
-27, 6, x, Nous,  absolussions, a, b
-27, 6, x, Tu,  absolusses, a, b
-27, 6, x, Vous,  absolussiez, a, b
-
-27, 7, x, Il,  absoudrait, a, b
-27, 7, x, Ils,  absoudraient, a, b
-27, 7, x, J',  absoudrais, a, b
-27, 7, x, Nous,  absoudrions, a, b
-27, 7, x, Tu,  absoudrais, a, b
-27, 7, x, Vous,  absoudriez, a, b
-
-27, 9, x, absolv,  ant, a, b
 
 28, 1, 0, Il,  acquiert, 0, 0 ,1016
 28, 1, 0, Ils,  acquièrent, 0, 0 ,2032
