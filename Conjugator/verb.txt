@@ -1,9 +1,8 @@
 7,parler,0,model,avoir,parlé,parl,-er
 15,créer,0,easy,avoir,créé,cré,-er
-22,grasseyer,0,easy,avoir,grasseyé,grassey,-er
 25,finir,0,model,avoir,fini,fin,-ir
 26,haïr,0,easy,avoir,haï,ha,-ïr
-31,assaillir,0,easy,avoir,assailli,assaill,-ir
+31,assaillir,0,hard,avoir,assailli,assaill,-ir
 34,battre,0,easy,avoir,battu,batt,-re
 39,conclure,0,easy,avoir,conclu,conclu,-re
 43,courir,0,easy,avoir,couru,cour,-ir
@@ -12,7 +11,7 @@
 21,étudier,0,easy,avoir,étudié,étudi,-er
 49,cuire,0,easy,avoir,cuit,cui,-re
 52,dormir,0,easy,avoir,dormi,dorm,-ir
-54,faillir,0,easy,avoir,failli,faill,-ir
+54,faillir,0,hard,avoir,failli,faill,-ir
 57,fondre,0,easy,avoir,fondu,fond,-re
 58,foutre,0,easy,avoir,foutu,fout,-re
 64,moudre,0,easy,avoir,moulu,moud,-re
@@ -51,7 +50,6 @@
 29,aller,0,hard,être,allé,all,-er
 32,asseoir,0,hard,avoir,assis,asse,-oir
 35,boire,0,hard,avoir,bu,boi,-re
-37,choir,0,hard,avoir,chu,ch,-oir
 38,clore,0,hard,avoir,clos,clo,-re
 40,confire,0,hard,avoir,confit,confi,-re
 41,connaître,0,hard,avoir,connu,connaît,-re
@@ -71,7 +69,6 @@
 66,mouvoir,0,hard,avoir,mû,mouv,-oir
 67,naître,0,hard,être,né,naît,-re
 68,ouïr,0,hard,avoir,ouï,ou,-ïr
-69,paître,0,hard,,,paît,-re
 73,plaire,0,hard,avoir,plu,plai,-re
 74,pleuvoir,0,hard,avoir,plu,pleuv,-oir
 75,pourvoir,0,hard,avoir,pourvu,pourv,-oir
@@ -477,8 +474,6 @@
 1388,rebattre,34,dynamic
 1389,emboire,35,dynamic
 1390,débouillir,36,dynamic
-1391,déchoir,37,dynamic
-1392,échoir,37,dynamic
 1393,déclore,38,dynamic
 1394,éclore,38,dynamic
 1395,enclore,38,dynamic
@@ -618,7 +613,6 @@
 1529,émouvoir,66,dynamic
 1656,promouvoir,66,dynamic
 1530,renaître,67,dynamic
-1531,repaître,69,dynamic
 1532,départir,70,dynamic
 1533,repartir,70,dynamic
 1534,astreindre,71,dynamic
