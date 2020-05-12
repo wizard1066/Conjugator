@@ -298,7 +298,7 @@ func DownLoadTenses(environment: MyAppEnvironmentData) {
     "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
     "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
     "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
-    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
+    "9-9.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
     "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
     "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
   
@@ -369,7 +369,12 @@ struct DownLoadConjugations: ViewModifier {
             
             let verbID = Int(String(tense[0]).trimmingCharacters(in: .whitespacesAndNewlines))
             let tenseID = Int(String(tense[1]).trimmingCharacters(in: .whitespacesAndNewlines))
-            let conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines) + " " + tense[4].trimmingCharacters(in: .whitespacesAndNewlines))
+            var conjugation:String!
+            if tense[4].trimmingCharacters(in: .whitespacesAndNewlines) != "0" {
+              conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines) + " " + tense[4].trimmingCharacters(in: .whitespacesAndNewlines))
+            } else {
+              conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines))
+            }
             //            for instance in self.answers {
             let personID = returnClass(class2C: String(tense[3]).trimmingCharacters(in: .whitespacesAndNewlines))
 
