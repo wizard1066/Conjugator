@@ -82,24 +82,6 @@ struct ContentView: View {
         .modifier(DownLoadConjugations())
         .onAppear {
           DownLoadTenses(environment: self.env)
-//          IAPManager.shared.getProducts { (result) in
-//            DispatchQueue.main.async {
-//
-//
-//              switch result {
-//                case .success(let downloaded):
-//                  for product in downloaded {
-//                    guard let price = IAPManager.shared.formatPrice(for: product)
-//                      else { break }
-//                      print("products ",(product as SKProduct).price, price)
-//                     self.products.append(product)
-//                  }
-//                case .failure(let error):
-//                  let failure = error.localizedDescription
-//                  showIAPError.send(failure)
-//              }
-//            }
-//          }
         }.onReceive(purchasePublisher) { ( toutBon ) in
           let (message, success) = toutBon
           if success {
@@ -107,7 +89,6 @@ struct ContentView: View {
             showIAPMessage.send(message)
           }
         }
-        
         
       NavigationLink(destination: PageTwo(), tag: .SecondPage, selection: self.$env.currentPage) {
         EmptyView()
@@ -230,6 +211,26 @@ struct BuyViewV5: View {
       }
   }
 }
+
+struct ContentViewV: View {
+  @State var showingAlert = false
+  @State var message = ""
+  var body: some View {
+   VStack {
+     Text("Hello World")
+       .onReceive(purchasePublisher) { ( toutBon ) in
+             let (message, success) = toutBon
+             if success {
+               self.message = message
+               self.showingAlert = true
+             }
+         }
+            .alert(isPresented: $showingAlert) {
+Alert(title: Text(message), message: Text(message), dismissButton: .default(Text("OK")))
+          }
+       }
+    }
+ }
 
 struct BuyView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
