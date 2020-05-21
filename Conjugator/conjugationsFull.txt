@@ -3976,3 +3976,19 @@
 99, 7, 3S, Il,  resterait, rest, erait 0 0
 99, 9, , ,  restant, rest, ant 0 0
 
+34, 9, 1Z,  batt-u, 0,0,0,0
+39, 9, 1Z,  concl-u, 0,0,0,0
+48, 9, 1Z,  cueill-i, 0,0,0,0
+55, 10, 1Z, fait-t, 0,0,0,0
+61, 10, 1Z, join-t, 0,0,0,0
+53 2, 1Z, j',écris, 0,0,0,0
+53, 2, 1Z, tu,écris, 0,0,0,0
+53, 2, 1Z, il,écrit, 0,0,0,0
+53, 2, 1Z, ils,écriv-ent, 0,0,0,0
+53, 2, 1Z, nous,écriv-ons, 0,0,0,0
+53, 2, 1Z, vous,écriv-ez, 0,0,0,0
+
+
+
+
+
