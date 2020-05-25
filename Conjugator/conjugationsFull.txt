@@ -2002,7 +2002,7 @@
 55, 1, 1Q, Ils,f-ont,0,0,0,0
 55, 1, 1Q, Nous,fais-ons,0,0,0,0
 55, 1, 1Q, Vous,fait-es,0,0,0,0
-55, 10, 1X, fai,  t, 0, 0 ,16
+55, 10, 1Z, fait-t, 0,0,16
 55, 2, 1X, Il,  fera, 0, 0 ,56
 55, 2, 1X, Ils,  feront, 0, 0 ,112
 55, 2, 1X, Je,  ferai, 0, 0 ,56
@@ -3252,12 +3252,10 @@
 83, 7, 3S, Il,  siérait, siér, ait  0
 83, 9, , ,  seyant, se, yant  0
 83, 9, , ,  séant, sé, ant  0
-84, 1, 0, Il,  sert, 0, 0 ,56
-84, 1, 0, Je,  sers, 0, 0 ,56
-84, 1, 0, Tu,  sers, 0, 0 ,56
+
 84, 10, , ,  servi, serv, i(s)  0
 84, 20, XX, servir, , 0, 0, 0
-84, 4, 2P, Vous,  servîtes, serv, îtes  0
+
 84, 6, 1P, Nous,  servissions, serv, issions  0
 84, 6, 1S, Je,  servisse, serv, isse  0
 84, 6, 2P, Vous,  servissiez, serv, issiez  0
@@ -3265,23 +3263,41 @@
 84, 6, 3P, Ils,  servissent, serv, issent  0
 84, 6, 3S, Il,  servît, serv, ît  0
 84, 9, , ,  servant, serv, ant  0
+
+84, 1, 0, Il,  sert, 0, 0 ,56
+84, 1, 0, Je,  sers, 0, 0 ,56
+84, 1, 0, Tu,  sers, 0, 0 ,56
 84,1,1P,Nous,servons,serv,ons,,,0,
 84,1,2P,Vous,servez,serv,ez,,,0,
 84,1,3P,Ils,servent,serv,ent,,,0,
+
 84,2,2,Il,servira,0
 84,2,2,Ils,serviront,0
 84,2,2,Je,servirai,0
 84,2,2,Nous,servirons,0
 84,2,2,Tu,serviras,0
 84,2,2,Vous,servirez,0
+
+84,3,2,Je,serv-ais,0
+84,3,2,Tu,serv-ais,0
+84,3,2,Il,serv-ait,0
+84,3,2,Ils,serv-aient,0
 84,3,2,Nous,servions,0
 84,3,2,Vous,serviez,0
+
+84,5,2,Je,serv-e,0
+84,5,2,Tu,serv-es,0
+84,5,2,Il,serv-e,0
+84,5,2,Ils,serv-ent,0
+84,5,2,Nous,serv-ions,0
+84,5,2,Vous,serv-iez,0
+
 84,4,2,Il,servit,0
 84,4,2,Ils,servirent,0
 84,4,2,Je,servis,0
 84,4,2,Tu,servis,0
-84,5,2,Nous,servions,0
-84,5,2,Vous,serviez,0
+84,4,2,Nous,serv-îmes,0
+84,4,2,Vous,serv-îtes,0
 
 84,7,2,Il,servirait,0
 84,7,2,Ils,serviraient,0
@@ -3574,11 +3590,14 @@
 90, 4, 2S, Tu,  vainquis, vainqu, is  0
 90, 4, 3P, Ils,  vainquirent, vainqu, irent  0
 90, 4, 3S, Il,  vainquit, vainqu, it  0
+
 90, 5, 1P, Nous,  vainquions, vainqu, ions  0
 90, 5, 2P, Vous,  vainquiez, vainqu, iez  0
 90, 5, 2S, Tu,  vainques, vainqu, es  0
 90, 5, 3P, Ils,  vainquent, vainqu, ent  0
 90, 5, 3S, Il,  vainque, vainqu, e  0
+90, 5, 3S, Je,vainqu-e,0
+
 90, 6, 1P, Nous,  vainquissions, vainqu, issions  0
 90, 6, 1S, Je,  vainquisse, vainqu, isse  0
 90, 6, 2P, Vous,  vainquissiez, vainqu, issiez  0
@@ -3637,10 +3656,15 @@
 91, 7, 0, Tu,  vaudrais, 0, 0 ,248
 91, 7, 0, Vous,  vaudriez, 0, 0 ,992
 91, 9, , ,  valant, val, ant  0
+
+
 92, 1, 0, Il,  vient, 0, 0 ,1912
 92, 1, 0, Ils,  viennent, 0, 0 ,496
 92, 1, 0, Je,  viens, 0, 0 ,1912
 92, 1, 0, Tu,  viens, 0, 0 ,1912
+92, 1, 0, Nous,ven-ons,0
+92, 1, 0, Vous,ven-ez,0
+
 92, 10, 0, ven,  u, 0, 0 ,16144
 92, 2, 0, Il,  viendra, 0, 0 ,504
 92, 2, 0, Ils,  viendront, 0, 0 ,1008
@@ -3994,8 +4018,8 @@
 34, 9, 1Z,  batt-u, 0,0,0,0
 39, 9, 1Z,  concl-u, 0,0,0,0
 48, 9, 1Z,  cueill-i, 0,0,0,0
-55, 10, 1Z, fait-t, 0,0,0,0
-61, 10, 1Z, join-t, 0,0,0,0
+
+
 53 2, 1Z, j',écris, 0,0,0,0
 53, 2, 1Z, tu,écris, 0,0,0,0
 53, 2, 1Z, il,écrit, 0,0,0,0
