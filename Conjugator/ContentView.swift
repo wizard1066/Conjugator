@@ -10,10 +10,10 @@ import SwiftUI
 import Combine
 import AVKit
 
-let populatePublisher = PassthroughSubject<String?,Never>()
-let rulesPublisher = PassthroughSubject<Void,Never>()
-let doDivertPublisher = PassthroughSubject<(Int,Int),Never>()
-let defaultLinkColor = PassthroughSubject<Void,Never>()
+let populatePublisher = PassthroughSubject<String?, Never>()
+let rulesPublisher = PassthroughSubject<Void, Never>()
+let doDivertPublisher = PassthroughSubject<(Int, Int), Never>()
+let defaultLinkColor = PassthroughSubject<Void, Never>()
 
 var shaker = true
 var once = true
@@ -29,21 +29,21 @@ enum PersonClass {
 }
 
 struct VerbBlob {
-  var id:Int!
-  var name:String!
-  var link:Int?
+  var id: Int!
+  var name: String!
+  var link: Int?
 }
 
 final class VerbDB: ObservableObject, Identifiable {
-  @Published var verbx:[VerbBlob] = [] {
+  @Published var verbx: [VerbBlob] = [] {
     willSet {
       objectWillChange.send()
     }
   }
 }
 
-func readVerb(fileName:String) -> [String]? {
-  let fileURL = Bundle.main.url(forResource:fileName, withExtension: "txt")
+func readVerb(fileName: String) -> [String]? {
+  let fileURL = Bundle.main.url(forResource: fileName, withExtension: "txt")
   do {
     if try fileURL!.checkResourceIsReachable() {
       
@@ -62,7 +62,7 @@ func readVerb(fileName:String) -> [String]? {
 }
 
 func readConjugations() -> [String]? {
-  let fileURL = Bundle.main.url(forResource:"conjugationsFull", withExtension: "txt")
+  let fileURL = Bundle.main.url(forResource: "conjugationsFull", withExtension: "txt")
   do {
     if try fileURL!.checkResourceIsReachable() {
       print("file exist")
@@ -80,18 +80,18 @@ func readConjugations() -> [String]? {
 }
 
 struct TenseBlob {
-  var id:Int!
-  var groupID:Int!
-  var name:String!
-  var derive:String!
-  var color:String!
-  var nom:String!
-  var worked:String!
-  var linked:Int!
+  var id: Int!
+  var groupID: Int!
+  var name: String!
+  var derive: String!
+  var color: String!
+  var nom: String!
+  var worked: String!
+  var linked: Int!
 }
 
 final class TenseDB: ObservableObject, Identifiable {
-  @Published var tensex:[TenseBlob] = [] {
+  @Published var tensex: [TenseBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -102,14 +102,14 @@ struct AnswerBlob {
   var verbID: Int!
   var tenseID: Int!
   var personID: PersonClass!
-  var name:String!
-  var redMask:Int?
-  var stemMask:Int?
-  var termMask:Int?
+  var name: String!
+  var redMask: Int?
+  var stemMask: Int?
+  var termMask: Int?
 }
 
 final class AnswerDB: ObservableObject, Identifiable {
-  @Published var answerx:[AnswerBlob] = [] {
+  @Published var answerx: [AnswerBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -118,11 +118,11 @@ final class AnswerDB: ObservableObject, Identifiable {
 
 struct GroupBlob {
   var groupID: Int!
-  var name:String!
+  var name: String!
 }
 
 final class GroupDB: ObservableObject, Identifiable {
-  @Published var groupx:[GroupBlob] = [] {
+  @Published var groupx: [GroupBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -130,36 +130,36 @@ final class GroupDB: ObservableObject, Identifiable {
 }
 
 struct Fonts {
-  static func avenirNextCondensedBold (size:CGFloat) -> Font{
-    return Font.custom("AvenirNextCondensed-Bold",size: size)
+  static func avenirNextCondensedBold (size: CGFloat) -> Font {
+    return Font.custom("AvenirNextCondensed-Bold", size: size)
   }
   
-  static func avenirNextCondensedMedium (size:CGFloat) -> Font{
-    return Font.custom("AvenirNextCondensed-Medium",size: size)
+  static func avenirNextCondensedMedium (size: CGFloat) -> Font {
+    return Font.custom("AvenirNextCondensed-Medium", size: size)
   }
 }
 
 struct NewView: View {
   
-  @EnvironmentObject var env : MyAppEnvironmentData
-  @State var word:String
-  @State var gate:Int?
-  @Binding var selections:[AnswerBlob]
-  @Binding var display2Conjugations:Bool
-  @State var color2U:Color!
+  @EnvironmentObject var env: MyAppEnvironmentData
+  @State var word: String
+  @State var gate: Int?
+  @Binding var selections: [AnswerBlob]
+  @Binding var display2Conjugations: Bool
+  @State var color2U: Color!
   
   var body: some View {
-    let letter = word.map( { String($0) } )
+    let letter = word.map({String($0)})
     
     return VStack {
-      HStack(spacing:0) {
+      HStack(spacing: 0) {
         ForEach((0 ..< letter.count), id: \.self) { column in
           Text(letter[column])
-            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: self.color2U)
+            .foregroundColor(colorCode(gate: Int(self.gate!), noX: column) ? Color.red: self.color2U)
         }
-      }.onTapGesture() {
+      }.onTapGesture {
         if linkID != nil {
-          if linkID != 0  {
+          if linkID != 0 {
             self.selections.removeAll()
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
               for instance in self.env.answery.answerx {
@@ -171,7 +171,7 @@ struct NewView: View {
                 first.personID.debugDescription < second.personID.debugDescription
               }
               let newTense = self.env.tensey.tensex[tenseID].linked!
-              doDivertPublisher.send((linkID,newTense))
+              doDivertPublisher.send((linkID, newTense))
               defaultLinkColor.send()
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
                 self.display2Conjugations = true
@@ -183,8 +183,6 @@ struct NewView: View {
     }
   }
 }
-
-
 
 //struct ListView: View {
 //  @Binding var name:String
@@ -219,14 +217,13 @@ struct NewView: View {
 //  }
 //}
 
-let bsize:CGFloat = 48
-let asize:CGFloat = 32
-let fsize:CGFloat = 32
-let qsize:CGFloat = 20
+let bsize: CGFloat = 48
+let asize: CGFloat = 32
+let fsize: CGFloat = 32
+let qsize: CGFloat = 20
 
-var ruleColors:[Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
+var ruleColors: [Color] = [Color.blue, Color.purple, Color.green, Color.red, Color(red:255/255, green:105/255, blue:180/255), Color.orange, Color.clear, Color.yellow]
 //var verbs: [Int:String] = [7:"Parler",2:"Avoir",70:"Finir",77:"Prendre",81:"Savoir"]
-
 
 var rien = [String](repeating: " ", count: 7)
 var linkID: Int!
@@ -239,50 +236,9 @@ struct PageTwo: View {
   
   @State private var newValue: CGFloat = 256
   @State private var showMe = [Bool](repeating: false, count: 6)
-  @EnvironmentObject var env : MyAppEnvironmentData
+  @EnvironmentObject var env: MyAppEnvironmentData
   
-  //Indicatif présent	dérivé du radical de l’infinitif
-  //Indicatif futur	dérivé de l’infinitif complet
-  //Indicatif imparfait	dérivé du radical nous du présent
-  //Indicatif passé simple	dérivé du radical nous du présent
-  
-  //Subjonctif présent	dérivé du radical du ils du présent
-  //Subjonctif imparfait	dérivé du radical du passé simple
-  
-  //Conditionnel présent	dérivé de l’infinitif complet
-  //Participe passé	dérivé du radical de l’infinitif
-  //Participe présent	dérivé du radical du nous du présent
-  //Infinitif présent	forme de base
-  
-  // finir/parle easy
-  // avoir/savoir advanced
-  // prendre advanced
-  
-//  @State var tenses = [
-//    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
-//    "2-2.Indicatif futur.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
-//    "3-3.Indicatif imparfait.Dérivé du radical du nous du présent.1.Imperfect indicative.Derived from the stem of nous present.4",
-//    "4-4.Indicatif passé simple.Dérivé du radical du nous du présent.1.Past participle.Derived from infinitive stem.4",
-//    "5-5.Subjonctif Présent.Dérivé du radical du ils du présent.1.Present subjunctive.Derived from the stem of ils present.4",
-//    "6-6.Subjonctif Imparfait.Dérivé du radical du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
-//    "7-7.Conditionnel Présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
-//    "9-8.Participe Présent.Dérivé du radical du nous du présent.1.Present participle.Derived from the stem of nous present.4",
-//    "10-9.Participe Passé.Dérivé du radical de l'infinitif.1.Simple past indicative.Derived from the stem of nous present.4",
-//    "20-10.Infinitif Présent.Forme de base.0.Present infinitive.Basic form.4"]
-//  @State var temps = [
-//    "1-1.Future indicative.Derived from the full infinitive",
-//    "2-2.Imperfect indicative.Derived from the stem of the nous present",
-//    "3-3.Imperfect subjunctive.Derived from the simple past stem",
-//    "4-4.Past participle.Derived from the infinitive stem",
-//    "5-5.Present conditional.Derived from the full infinitive",
-//    "6-6.Present indicative.Derived from the infinitive stem",
-//    "7-7.Present infinitive.Basic form",
-//    "9-8.Present participle.Derived from the stem of the nous present",
-//    "10-9.Present subjunctive.Derived from the stem of the ils present",
-//    "20-10.Simple past indicative.Derived from the stem of the nous present",
-//  ]
-  
-  @State var verb:[String] = []
+  @State var verb: [String] = []
   @State var selectedVerb = 0
   @State var selectedGroup = 0
   @State var linkColor: Color = Color.red
@@ -312,14 +268,10 @@ struct PageTwo: View {
   @State var display1Tense = true
   
   @State var showColor = false
-  //  @State var verbID:Int!
-  //  @State var verbLink:Int!
-  //  @State var tenseID:Int!
-  //  @State var personID: PersonClass!
-  @State var utiliser:String!
+  @State var utiliser: String!
   
-  @State var lvalue:Int = 99
-  @State var pvalue:Int = 99
+  @State var lvalue: Int = 99
+  @State var pvalue: Int = 99
   
   @State var isSelect1S = false
   @State var isSelect2S = false
@@ -328,17 +280,17 @@ struct PageTwo: View {
   @State var isSelect2P = false
   @State var isSelect3P = false
   
-  @State var answerText:String = ""
+  @State var answerText: String = ""
   @State var ruleColor: Color = Color.clear
   
-  @State var hintOne:String = ""
-  @State var hintTwo:String = ""
+  @State var hintOne: String = ""
+  @State var hintTwo: String = ""
   @State var hintOneVisible = false
   @State var hintTwoVisible = false
   
   @State var noDivert = true
   
-  @State var selections:[AnswerBlob] = []
+  @State var selections: [AnswerBlob] = []
   @State private var action: Int? = 0
   @State private var overText = false
   
@@ -354,7 +306,6 @@ struct PageTwo: View {
     }
     
     func findIndex() -> Int? {
-      //      let bob = answery.answerx.filter({ verbID == $0.verbID && tenseID == $0.tenseID && personID == $0.personID})
       let zak = env.answery.answerx.firstIndex { ( data ) -> Bool in
         data.personID == personID && data.verbID == verbID && data.tenseID == tenseID
       }
@@ -383,35 +334,17 @@ struct PageTwo: View {
       }
     }
     
-//    func findHint1() -> String? {
-//      let bob = env.tensey.tensex.filter({ tenseID == $0.id })
-////      let sue = env.groupy.groupx.filter({ bob.first?.groupID == $0.groupID})
-//      if bob.isEmpty {
-//        return("")
-//      } else {
-//        return sue.first?.name!
-//      }
-//    }
-    
-    
-    //    let navlink2 = NavigationLink(destination: AdminView(),
-    //                       tag: .NavigationView,
-    //                       selection: $env.currentPage,
-    //                       label: { EmptyView() })
-    
     let design = UIFontDescriptor.SystemDesign.rounded
     let descriptor = UIFontDescriptor.preferredFontDescriptor(withTextStyle: .largeTitle)
       .withDesign(design)!
     let font = UIFont.init(descriptor: descriptor, size: 48)
-    UINavigationBar.appearance().largeTitleTextAttributes = [.font : font]
+    UINavigationBar.appearance().largeTitleTextAttributes = [.font: font]
     
     return VStack(alignment: .center) {
       // Tried using $env.currentPage, but it seemed to be too slow setting this up
       NavigationLink(destination: AdminView(), tag: 1, selection: $action) {
         EmptyView()
       }
-      
-//       Text(env.switchLanguage ? "Conjugator":"Conjugateur")
        
       Text("fooBar").frame(width: 256, height: 0, alignment: .center)
         .navigationBarTitle(Text(env.switchLanguage ? "Conjugator":"Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
@@ -461,7 +394,7 @@ struct PageTwo: View {
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
             self.selectedVerb = value
           }
-          .onTapGesture() {
+          .onTapGesture {
             self.selections.removeAll()
             self.display2Conjugations = false
             
@@ -481,10 +414,7 @@ struct PageTwo: View {
             self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
             self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
             self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
-            
-            //              if self.selectedVerb != self.pvalue {
             self.display2Conjugations = true
-            //                self.display2Conjugations = false
             self.selections.removeAll()
             if linkID! == 0 {
               for instance in self.env.answery.answerx {
@@ -501,8 +431,6 @@ struct PageTwo: View {
                 self.selections.append(spc)
               }
             }
-            
-            //                self.pvalue = self.selectedVerb
             DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
               self.display2Conjugations = true
               self.display0Tense = true
@@ -515,12 +443,11 @@ struct PageTwo: View {
                 self.showMe[loop] = false
               }
             }
-            //              }
           }
           .labelsHidden()
           .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
           Spacer()
-          Image(systemName:"gobackward.minus")
+          Image(systemName: "gobackward.minus")
             .resizable()
             .zIndex(1)
             
@@ -570,13 +497,9 @@ struct PageTwo: View {
                 }
                 self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
                 
-                
                 self.selectedVerb = findVerbIndex(searchID: verbIDidx)
                 verbID = self.env.verby.verbx[self.selectedVerb].id
                 linkID = self.env.verby.verbx[self.selectedVerb].link
-                
-                
-                
                 
                 self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
                 self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
@@ -594,7 +517,6 @@ struct PageTwo: View {
         }
       }
       
-      
       ZStack {
         if display0Tense {
           Picker("", selection: $selectedTense) {
@@ -610,7 +532,7 @@ struct PageTwo: View {
             .onReceive([selectedTense].publisher) { ( value ) in
               self.selectedTense = value
           }
-          .onTapGesture() {
+          .onTapGesture {
             self.selections.removeAll()
             self.display2Conjugations = false
             
@@ -671,9 +593,7 @@ struct PageTwo: View {
               withAnimation { ()
                 self.display2Conjugations = true
               }
-              
             }
-            //            }
           }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         }
         if display1Tense {
@@ -691,18 +611,15 @@ struct PageTwo: View {
       if display2Conjugations {
         List {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
-            HStack(spacing:0) {
+            HStack(spacing: 0) {
               Spacer()
               NewView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations, color2U: self.linkColor)
-//              Text(self.selections[column].name)
                 .opacity(self.showMe[column] ? 1 : 0)
-                //                  .offset(x: 0, y: self.newValue)
                 .font(Fonts.avenirNextCondensedBold(size: 22))
                 .onAppear(perform: {
             for loop in 0..<6 {
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(loop)) {
                 withAnimation(.easeOut(duration: 1.0)) {
-                  //                    self.newValue = 0
                   self.showMe[loop] = true
                 }
               }
@@ -715,8 +632,6 @@ struct PageTwo: View {
           .environment(\.defaultMinListHeaderHeight, 0)
           .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
           .offset(x: 0, y: -64)
-          
-        //        .background(InsideView())
         
       } else {
         Spacer()
@@ -730,20 +645,11 @@ struct PageTwo: View {
       .onReceive(rulesPublisher, perform: { ( _ ) in
         self.display0Verb = false
         self.env.verby.verbx.removeAll()
-        //      let dictSortByValue = groups.sorted(by: {$0.value < $1.value} )
-        //      for instance in groups {
-        //        let newGroup = groupBlob(groupID: instance.key, name: instance.value)
-        //        self.env.groupy.groupx.append(newGroup)
-        //      }
       })
       .onReceive(populatePublisher, perform: { ( seek ) in
         self.display0Verb = false
         self.display0Tense = false
         self.display2Conjugations = false
-        
-        
-        
-
         
         if seek != nil {
           self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in
@@ -751,40 +657,34 @@ struct PageTwo: View {
           })!
         }
         
-        
         DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
           shaker = true
           self.display0Verb = true
-          //        self.display0Tense = true
           self.display2Conjugations = true
         }
       }).statusBar(hidden: true)
-    
-    
   }
 }
 
-
-
-func colorCode(gate:Int, no:Int) -> Bool {
+func colorCode(gate: Int, noX: Int) -> Bool {
   
-  let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
-  let bcr = String(no, radix:2).pad(with: "0", toLength: 16)
-  let binaryColumn = 1 << no
+//  let bgr = String(gate, radix: 2).pad(with: "0", toLength: 16)
+//  let bcr = String(noX, radix: 2).pad(with: "0", toLength: 16)
+  let binaryColumn = 1 << noX
   
   let value = UInt64(gate) & UInt64(binaryColumn)
-  let vr = String(value, radix:2).pad(with: "0", toLength: 16)
+//  let vor = String(value, radix: 2).pad(with: "0", toLength: 16)
   
   //    print("bg ",bgr," bc ",bcr,vr)
   return value > 0 ? true:false
 }
 
 struct TenseView: View {
-  @Binding var display0Tense:Bool
-  @Binding var display1Tense:Bool
-  @Binding var preTenseSelected:String
-  @Binding var tenseSelected:String
-  @Binding var postTenseSelected:String
+  @Binding var display0Tense: Bool
+  @Binding var display1Tense: Bool
+  @Binding var preTenseSelected: String
+  @Binding var tenseSelected: String
+  @Binding var postTenseSelected: String
   
   var body: some View {
     VStack {
@@ -814,14 +714,12 @@ struct TenseView: View {
   }
 }
 
-
-
 struct VerbView: View {
-  @Binding var display0Verb:Bool
-  @Binding var display1Verb:Bool
-  @Binding var preVerbSelected:String
-  @Binding var verbSelected:String
-  @Binding var postVerbSelected:String
+  @Binding var display0Verb: Bool
+  @Binding var display1Verb: Bool
+  @Binding var preVerbSelected: String
+  @Binding var verbSelected: String
+  @Binding var postVerbSelected: String
   
   var body: some View {
     VStack {
@@ -830,7 +728,6 @@ struct VerbView: View {
         .onLongPressGesture {
           self.display1Verb = false
           self.display0Verb = true
-          //            self.display0Tense.toggle()
       }
       .opacity(0.1)
       .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
@@ -839,20 +736,16 @@ struct VerbView: View {
         .onLongPressGesture {
           self.display1Verb = false
           self.display0Verb = true
-          //            self.display0Tense.toggle()
       }
       Text(postVerbSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
           self.display1Verb = false
           self.display0Verb = true
-          //            self.display0Tense.toggle()
       }
       .opacity(0.1)
       .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
     }
-    
-    
   }
 }
 
@@ -865,7 +758,7 @@ struct InsideView: View {
           .fill(Color.green)
           .opacity(0.2)
           .onAppear {
-            print("geo ",geometry.frame(in: .global))
+            print("geo ", geometry.frame(in: .global))
         }
       }
       
@@ -873,15 +766,11 @@ struct InsideView: View {
   }
 }
 
-
-
 struct ContentView_Previews: PreviewProvider {
   static var previews: some View {
     PageTwo()
   }
 }
-
-
 
 extension String {
   func pad(with character: String, toLength length: Int) -> String {
@@ -897,5 +786,3 @@ extension UIApplication {
     sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
   }
 }
-
-

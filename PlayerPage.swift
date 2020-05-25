@@ -16,7 +16,7 @@ let videoFinished = PassthroughSubject<Void, Never>()
 let nextFrame = PassthroughSubject<Void, Never>()
 
 //class PlayerTimeObserver {
-////  let publisher = PassthroughSubject<TimeInterval, Never>()
+//  let publisher = PassthroughSubject<TimeInterval, Never>()
 //  private var timeObservation: Any?
 //
 //  init(player: AVPlayer) {
@@ -50,7 +50,7 @@ class PlayerUIView: UIView {
   private let playerLayer = AVPlayerLayer()
   override init(frame: CGRect) {
     super.init(frame: .zero)
-    let url = Bundle.main.url(forResource:"AppDemo", withExtension: "mov")
+    let url = Bundle.main.url(forResource: "AppDemo", withExtension: "mov")
 //    let url = URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
 //    let url = URL(string: "https://www.youtube.com/watch?v=XK8METRgK_U")!
     let player = AVPlayer(url: url!)
@@ -59,7 +59,7 @@ class PlayerUIView: UIView {
     timeObservation = player.addPeriodicTimeObserver(forInterval: CMTime(seconds: 0.5, preferredTimescale: 600), queue: nil) { [weak self] time in
       guard let self = self else { return }
       // Publish the new player time
-      print("time.seconds ",time.seconds)
+      print("time.seconds ", time.seconds)
       timePublisher.send(time.seconds)
       
       NotificationCenter.default.addObserver(self, selector: #selector(self.finishVideo), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: nil)
@@ -85,8 +85,6 @@ class PlayerUIView: UIView {
   
 }
 
-
-
 struct PlayerView: UIViewRepresentable {
   func updateUIView(_ uiView: UIView, context: UIViewRepresentableContext<PlayerView>) {
   }
@@ -96,7 +94,7 @@ struct PlayerView: UIViewRepresentable {
 }
 
 struct PlayerPage: View {
-  @EnvironmentObject var env : MyAppEnvironmentData
+  @EnvironmentObject var env: MyAppEnvironmentData
   @Environment(\.presentationMode) var presentation
   
   var body: some View {

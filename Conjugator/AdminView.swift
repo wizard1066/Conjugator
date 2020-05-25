@@ -10,8 +10,8 @@ import Foundation
 import SwiftUI
 import Combine
 
-let nextPublisher = PassthroughSubject<Void,Never>()
-let resetPublisher = PassthroughSubject<Void,Never>()
+let nextPublisher = PassthroughSubject<Void, Never>()
+let resetPublisher = PassthroughSubject<Void, Never>()
 
 struct AdminView: View {
   @State private var firstname = ""
@@ -20,20 +20,20 @@ struct AdminView: View {
   @State private var selectedTense = 0
   @State private var selectAnswer = 0
   
-  @State var verbID:Int!
-  @State var tenseID:Int!
+  @State var verbID: Int!
+  @State var tenseID: Int!
   @State var personID: PersonClass!
   @State var groupName: String!
   
-  @State var lvalue:Int = 99
-  @State var pvalue:Int = 99
+  @State var lvalue: Int = 99
+  @State var pvalue: Int = 99
   
   @State var answer = [String](repeating: "", count: 7)
   @State var colors = [Int](repeating: 0, count: 7)
   @State var persons = [PersonClass](repeating: PersonClass.cx, count: 7)
   @State var select = [Bool](repeating: false, count: 7)
   @State var choice = [Bool](repeating: false, count: 99)
-  @State var selections:[AnswerBlob] = []
+  @State var selections: [AnswerBlob] = []
   @State var selectedAnswer = 0
   @State var verbText = ""
   
@@ -52,19 +52,13 @@ struct AdminView: View {
   @State var word = "PRESSME"
   @State var sumsum = 0
   
-  
-  @EnvironmentObject var env : MyAppEnvironmentData
-  
-  
+  @EnvironmentObject var env: MyAppEnvironmentData
   
   var body: some View {
-    
-
+  
     return
       
-      VStack(){
-        
-        
+      VStack {
         
         SpotView(word: $word, sumsum: $sumsum, display9: $display9)
           
@@ -77,7 +71,7 @@ struct AdminView: View {
         }
         TextField("Modify ...", text: $selectedText, onCommit: {
         
-          print("tenseID ",self.tenseID)
+          print("tenseID ", self.tenseID)
         
           self.display9 = false
           // personID needs to be personClass.px if Infinitif present no 20. tense
@@ -88,8 +82,8 @@ struct AdminView: View {
           let zak = self.env.answery.answerx.firstIndex { ( data ) -> Bool in
             data.personID == self.personID && data.verbID == self.verbID && data.tenseID == self.tenseID
           }
-          print("timeout ",self.personID,self.verbID,self.tenseID)
-          print("fooBar ",self.env.answery.answerx[zak!])
+          print("timeout ", self.personID, self.verbID,self.tenseID)
+          print("fooBar ", self.env.answery.answerx[zak!])
           self.env.answery.answerx.remove(at: zak!)
           
           self.selections[self.tag].name = self.selectedText
@@ -97,16 +91,15 @@ struct AdminView: View {
           self.select[self.tag] = false
           
           let newAnswer = AnswerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.selectedText, redMask: self.sumsum, stemMask: nil, termMask: nil)
-          print("newAnswer ",newAnswer)
+          print("newAnswer ", newAnswer)
           self.env.answery.answerx.append(newAnswer)
-          
           
           DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
             self.display9 = true
             let bob = self.env.answery.answerx.filter({ self.verbID == $0.verbID && self.tenseID == $0.tenseID })
               print("answer [\(bob)]")
               for bobs in bob {
-                  print("bob ",bobs)
+                  print("bob ", bobs)
               }
           }
         })
@@ -193,8 +186,6 @@ struct AdminView: View {
                     self.selectedText = ""
                     self.word = "1234567890abcedf"
                   }
-                 
-                
               }
               self.lvalue = value
                self.selections.sort { (first, second) -> Bool in
@@ -211,67 +202,43 @@ struct AdminView: View {
   }
   
   struct AdmView: View {
-  @EnvironmentObject var env : MyAppEnvironmentData
-  @State var word:String
-  @State var gate:Int?
-  @Binding var selections:[AnswerBlob]
-  @Binding var display2Conjugations:Bool
+  @EnvironmentObject var env: MyAppEnvironmentData
+  @State var word: String
+  @State var gate: Int?
+  @Binding var selections: [AnswerBlob]
+  @Binding var display2Conjugations: Bool
   
   var body: some View {
-    let letter = word.map( { String($0) } )
+    let letter = word.map({String($0)})
     return VStack {
-      HStack(spacing:0) {
+      HStack(spacing: 0) {
         ForEach((0 ..< letter.count), id: \.self) { column in
           Text(letter[column])
-            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
-            
-          
+            .foregroundColor(colorCode(gate: Int(self.gate!), noX: column) ? Color.red: Color.black)
         }
       }
-//      .onTapGesture() {
-//
-//        if linkID != 0  {
-//          //            self.display0Conjugations = false
-//          self.selections.removeAll()
-//          //            self.display0Conjugations = true
-//          DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
-//            for instance in self.env.answery.answerx {
-//              if instance.tenseID == tenseID && instance.verbID == linkID {
-//                self.selections.append(instance)
-//              }
-//            }
-//            self.selections.sort { (first, second) -> Bool in
-//              first.personID.debugDescription < second.personID.debugDescription
-//            }
-//            // fooBar
-//            //                  let zee =
-//            doDivertPublisher.send(linkID)
-//            self.display2Conjugations = true
-//          }
-//        }
-//        }
       
     }
   }
 }
   
    struct SpotView: View {
-    @Binding var word:String
-    @Binding var sumsum:Int
-    @State var gate:Int = 0
+    @Binding var word: String
+    @Binding var sumsum: Int
+    @State var gate: Int = 0
     @State var isReady = false
-    @State var code:String = ""
-    @Binding var display9:Bool
+    @State var code: String = ""
+    @Binding var display9: Bool
     
     @State var colors = [Bool](repeating: false, count: 24)
     
     var body: some View {
-    let letter = word.map( { String($0) } )
+    let letter = word.map({String($0)})
     return VStack {
-      HStack(spacing:0) {
+      HStack(spacing: 0) {
             ForEach((0 ..< letter.count), id: \.self) { column in
               Text(letter[column])
-                .foregroundColor(colorCodex(gate: Int(self.gate), no: column) ? Color.red: Color.black)
+                .foregroundColor(colorCodex(gate: Int(self.gate), noX: column) ? Color.red: Color.black)
                 .font(Fonts.avenirNextCondensedBold(size: 30))
                 .background(self.colors[column] ? Color.yellow : Color.clear)
                 .foregroundColor(self.colors[column] ? Color.red : Color.clear)
@@ -280,7 +247,7 @@ struct AdminView: View {
                 }
                 .onTapGesture {
                     let code = 1 << column
-                    print("code ",code)
+                    print("code ", code)
                     if self.colors[column] {
                       self.colors[column] = false
                       self.sumsum = (self.sumsum - Int(code))
@@ -288,12 +255,12 @@ struct AdminView: View {
                       self.colors[column] = true
                       self.sumsum = (self.sumsum + Int(code))
                     }
-                    print("sumsum ",self.sumsum)
+                    print("sumsum ", self.sumsum)
                 }
                 .gesture(DragGesture(minimumDistance: 0)
                   .onEnded({ ( value ) in
                     let code = 1 << column
-                    print("code ",code)
+                    print("code ", code)
                     if self.colors[column] {
                       self.colors[column] = false
                       self.sumsum = (self.sumsum - Int(code))
@@ -301,7 +268,7 @@ struct AdminView: View {
                       self.colors[column] = true
                       self.sumsum = (self.sumsum + Int(code))
                     }
-                    print("sumsum ",self.sumsum)
+                    print("sumsum ", self.sumsum)
                   })
                 )
             }
@@ -311,21 +278,20 @@ struct AdminView: View {
     }
 }
 
+func colorCodex(gate: Int, noX: Int) -> Bool {
 
-func colorCodex(gate:Int, no:Int) -> Bool {
-
-    let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
-    let bcr = String(no, radix:2).pad(with: "0", toLength: 16)
-    let binaryColumn = 1 << no
+//    let bgr = String(gate, radix:2).pad(with: "0", toLength: 16)
+//    let bcr = String(noX, radix:2).pad(with: "0", toLength: 16)
+    let binaryColumn = 1 << noX
     
     let value = UInt64(gate) & UInt64(binaryColumn)
-    let vr = String(value, radix:2).pad(with: "0", toLength: 16)
+//    let vr = String(value, radix:2).pad(with: "0", toLength: 16)
     
 //    print("bg ",bgr," bc ",bcr,vr)
     return value > 0 ? true:false
   }
 
-func writeFile(answers:[AnswerBlob]) {
+func writeFile(answers: [AnswerBlob]) {
 //  print("amswerBlob ",answers.count)
   let uuid = UUID().uuidString
   let fileName = "Conjugations-" + uuid
@@ -333,9 +299,9 @@ func writeFile(answers:[AnswerBlob]) {
                                          in: .userDomainMask, appropriateFor: nil, create: true)
   
   // If the directory was found, we write a file to it and read it back
-  print("Saved ",dir)
+  print("Saved ", dir)
   if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension("txt") {
-    var lines:String = ""
+    var lines: String = ""
       for line in answers {
         lines += "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
       }
@@ -345,7 +311,6 @@ func writeFile(answers:[AnswerBlob]) {
         print("Failed writing to URL: \(fileURL), Error: " + error.localizedDescription)
       }
     
-   
     //reading
     DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
       var inString = ""

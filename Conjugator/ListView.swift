@@ -10,7 +10,7 @@ import SwiftUI
 import Combine
 
 struct ListView: View {
-  @EnvironmentObject var env : MyAppEnvironmentData
+  @EnvironmentObject var env: MyAppEnvironmentData
   
   var body: some View {
     var verbView = [String]()
@@ -53,24 +53,24 @@ struct ListView: View {
 struct TableView: View {
   
 //  @EnvironmentObject var env : MyAppEnvironmentData
-  @State var word:String
-  @State var gate:Int?
+  @State var word: String
+  @State var gate: Int?
   
   var body: some View {
-    let letter = word.map( { String($0) } )
+    let letter = word.map({String($0)})
     
     return VStack {
-      HStack(spacing:0) {
+      HStack(spacing: 0) {
         ForEach((0 ..< letter.count), id: \.self) { column in
           Text(letter[column])
-            .foregroundColor(colorCode(gate: Int(self.gate!), no: column) ? Color.red: Color.black)
+            .foregroundColor(colorCode(gate: Int(self.gate!), noX: column) ? Color.red: Color.black)
         }
       }
      }
     }
 }
 
-func returnDB(tenseID: Int, verbID: Int, environment: MyAppEnvironmentData) -> [AnswerBlob]{
+func returnDB(tenseID: Int, verbID: Int, environment: MyAppEnvironmentData) -> [AnswerBlob] {
   var selections = [AnswerBlob]()
   for instance in environment.answery.answerx {
       if instance.tenseID == tenseID && instance.verbID == verbID {
