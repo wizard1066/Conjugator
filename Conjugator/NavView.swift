@@ -19,19 +19,19 @@ let purchasePublisher = PassthroughSubject<(String, Bool), Never>()
 
 
 enum MyAppPage {
-  case Menu
-  case SecondPage
-  case NavigationView
-  case PlayerPage
-  case ListView
+  case menu
+  case secondPage
+  case navigationView
+  case playerPage
+  case listView
 }
 
 final class MyAppEnvironmentData: ObservableObject {
-  @Published var currentPage : MyAppPage? = .Menu
+  @Published var currentPage : MyAppPage? = .menu
   @Published var level:String = "model"
-  @Published var verby = verbDB()
-  @Published var tensey = tenseDB()
-  @Published var answery = answerDB()
+  @Published var verby = VerbDB()
+  @Published var tensey = TenseDB()
+  @Published var answery = AnswerDB()
 //  @Published var groupy = groupDB()
   @Published var switchLanguage:Bool = false
 }
@@ -81,7 +81,7 @@ struct ContentView: View {
         .padding()
         .modifier(DownLoadConjugations())
         .onAppear {
-          DownLoadTenses(environment: self.env)
+          downLoadTenses(environment: self.env)
         }.onReceive(purchasePublisher) { ( toutBon ) in
           let (message, success) = toutBon
           if success {
@@ -90,26 +90,26 @@ struct ContentView: View {
           }
         }
         
-      NavigationLink(destination: PageTwo(), tag: .SecondPage, selection: self.$env.currentPage) {
+      NavigationLink(destination: PageTwo(), tag: .secondPage, selection: self.$env.currentPage) {
         EmptyView()
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
 
 
-      NavigationLink(destination: playerPage(), tag: .PlayerPage, selection: self.$env.currentPage) {
+      NavigationLink(destination: PlayerPage(), tag: .playerPage, selection: self.$env.currentPage) {
         EmptyView()
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-      NavigationLink(destination: ListView(), tag: .ListView, selection: self.$env.currentPage) {
+      NavigationLink(destination: ListView(), tag: .listView, selection: self.$env.currentPage) {
         EmptyView()
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
       Button(env.switchLanguage ? "Demo Verbs":"Verbes Demo") {
-          DownLoadVerbs(levels:["model"], environment: self.env)
+          downLoadVerbs(levels:["model"], environment: self.env)
           
-          self.env.currentPage = played ? .SecondPage : .PlayerPage
+          self.env.currentPage = played ? .secondPage : .playerPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -151,44 +151,44 @@ struct PaidView: View {
     
     VStack {
      Button(env.switchLanguage ? "Beginner":"Débutant") {
-          DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["easy"], environment: self.env)
-          self.env.currentPage = .SecondPage
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels:["easy"], environment: self.env)
+          self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
        
 
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
-          DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["medium"], environment: self.env)
-          self.env.currentPage = .SecondPage
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels:["medium"], environment: self.env)
+          self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
 
         Button(env.switchLanguage ? "Advanced": "Avancé") {
-          DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["hard"], environment: self.env)
-          self.env.currentPage = .SecondPage
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels:["hard"], environment: self.env)
+          self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
 
         Button(env.switchLanguage ? "Superior":"Supérieur") {
-          DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
-          self.env.currentPage = .SecondPage
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels:["easy","medium","hard","dynamic","model"], environment: self.env)
+          self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
         Button(env.switchLanguage ? "List":"List") {
-          DownLoadTenses(environment: self.env)
-          DownLoadVerbs(levels:["easy","medium","hard","model"], environment: self.env)
-          self.env.currentPage = .ListView
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels:["easy","medium","hard","model"], environment: self.env)
+          self.env.currentPage = .listView
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
@@ -199,7 +199,7 @@ struct PaidView: View {
 
 struct BuyViewV5: View {
   @Binding var purchased:Bool
-  @ObservedObject var products = productsDB.shared
+  @ObservedObject var products = ProductsDB.shared
   var body: some View {
       List {
         ForEach((0 ..< self.products.items.count), id: \.self) { column in
@@ -237,7 +237,7 @@ struct BuyView: View {
   @State private var message:String = ""
   @State private var showingAlert = false
   @Binding var purchased:Bool
-  @ObservedObject var products = productsDB.shared
+  @ObservedObject var products = ProductsDB.shared
   @State var ready = false
   
   var body: some View {
@@ -286,7 +286,7 @@ struct BuyView: View {
 
 
 
-func DownLoadTenses(environment: MyAppEnvironmentData) {
+func downLoadTenses(environment: MyAppEnvironmentData) {
   if environment.tensey.tensex.count > 0 {
     return
   }
@@ -307,7 +307,7 @@ func DownLoadTenses(environment: MyAppEnvironmentData) {
   
     let breakout = instance.split(separator: ".")
     let breakdown = breakout[0].split(separator: "-")
-    let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
+    let newTense = TenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
     environment.tensey.tensex.append(newTense)
     
   }
@@ -319,7 +319,7 @@ func DownLoadTenses(environment: MyAppEnvironmentData) {
 
 
 
-func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
+func downLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
   
   environment.verby.verbx.removeAll()
   
@@ -336,7 +336,7 @@ func DownLoadVerbs(levels:[String], environment: MyAppEnvironmentData) {
           let link = Int(String(verb[2]))
           let stage = String(verb[3])
           if level == stage {
-            let newVerb = verbBlob(id: index, name: String(verb[1]), link: link)
+            let newVerb = VerbBlob(id: index, name: String(verb[1]), link: link)
             environment.verby.verbx.append(newVerb)
           }
       }
@@ -405,7 +405,7 @@ struct DownLoadConjugations: ViewModifier {
             
             
             if verbID != nil {
-              let newAnswer = answerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
+              let newAnswer = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
               self.env.answery.answerx.append(newAnswer)
             }
           }

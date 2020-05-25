@@ -15,7 +15,7 @@ struct ListView: View {
   var body: some View {
     var verbView = [String]()
     var colorView = [Int]()
-    var selections = [answerBlob]()
+    var selections = [AnswerBlob]()
     for idx in 0..<env.verby.verbx.count {
       if env.verby.verbx[idx].id < 99 {
         for idx2 in 0..<env.tensey.tensex.count {
@@ -70,8 +70,8 @@ struct TableView: View {
     }
 }
 
-func returnDB(tenseID: Int, verbID: Int, environment: MyAppEnvironmentData) -> [answerBlob]{
-  var selections = [answerBlob]()
+func returnDB(tenseID: Int, verbID: Int, environment: MyAppEnvironmentData) -> [AnswerBlob]{
+  var selections = [AnswerBlob]()
   for instance in environment.answery.answerx {
       if instance.tenseID == tenseID && instance.verbID == verbID {
           selections.append(instance)

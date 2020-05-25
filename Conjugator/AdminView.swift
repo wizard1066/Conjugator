@@ -33,7 +33,7 @@ struct AdminView: View {
   @State var persons = [PersonClass](repeating: PersonClass.cx, count: 7)
   @State var select = [Bool](repeating: false, count: 7)
   @State var choice = [Bool](repeating: false, count: 99)
-  @State var selections:[answerBlob] = []
+  @State var selections:[AnswerBlob] = []
   @State var selectedAnswer = 0
   @State var verbText = ""
   
@@ -96,7 +96,7 @@ struct AdminView: View {
           self.selections[self.tag].redMask = self.sumsum
           self.select[self.tag] = false
           
-          let newAnswer = answerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.selectedText, redMask: self.sumsum, stemMask: nil, termMask: nil)
+          let newAnswer = AnswerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.selectedText, redMask: self.sumsum, stemMask: nil, termMask: nil)
           print("newAnswer ",newAnswer)
           self.env.answery.answerx.append(newAnswer)
           
@@ -148,7 +148,7 @@ struct AdminView: View {
         if display9 {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
 //            newView(word: self.selections[column].name, gate: self.selections[column].redMask!)
-            admView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display9)
+            AdmView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display9)
                 .font(Fonts.avenirNextCondensedMedium(size: 24))
                 .onTapGesture {
 //                  resetPublisher.send()
@@ -210,11 +210,11 @@ struct AdminView: View {
     }
   }
   
-  struct admView: View {
+  struct AdmView: View {
   @EnvironmentObject var env : MyAppEnvironmentData
   @State var word:String
   @State var gate:Int?
-  @Binding var selections:[answerBlob]
+  @Binding var selections:[AnswerBlob]
   @Binding var display2Conjugations:Bool
   
   var body: some View {
@@ -325,7 +325,7 @@ func colorCodex(gate:Int, no:Int) -> Bool {
     return value > 0 ? true:false
   }
 
-func writeFile(answers:[answerBlob]) {
+func writeFile(answers:[AnswerBlob]) {
 //  print("amswerBlob ",answers.count)
   let uuid = UUID().uuidString
   let fileName = "Conjugations-" + uuid
@@ -337,7 +337,7 @@ func writeFile(answers:[answerBlob]) {
   if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension("txt") {
     var lines:String = ""
       for line in answers {
-        lines = lines + "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
+        lines += "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
       }
       do {
         try lines.write(to: fileURL, atomically: false, encoding: .utf8)

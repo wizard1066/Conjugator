@@ -95,7 +95,7 @@ struct PlayerView: UIViewRepresentable {
   }
 }
 
-struct playerPage: View {
+struct PlayerPage: View {
   @EnvironmentObject var env : MyAppEnvironmentData
   @Environment(\.presentationMode) var presentation
   

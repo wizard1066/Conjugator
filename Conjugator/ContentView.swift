@@ -28,14 +28,14 @@ enum PersonClass {
   case cx
 }
 
-struct verbBlob {
+struct VerbBlob {
   var id:Int!
   var name:String!
   var link:Int?
 }
 
-final class verbDB: ObservableObject, Identifiable {
-  @Published var verbx:[verbBlob] = [] {
+final class VerbDB: ObservableObject, Identifiable {
+  @Published var verbx:[VerbBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -79,7 +79,7 @@ func readConjugations() -> [String]? {
   return nil
 }
 
-struct tenseBlob {
+struct TenseBlob {
   var id:Int!
   var groupID:Int!
   var name:String!
@@ -90,15 +90,15 @@ struct tenseBlob {
   var linked:Int!
 }
 
-final class tenseDB: ObservableObject, Identifiable {
-  @Published var tensex:[tenseBlob] = [] {
+final class TenseDB: ObservableObject, Identifiable {
+  @Published var tensex:[TenseBlob] = [] {
     willSet {
       objectWillChange.send()
     }
   }
 }
 
-struct answerBlob {
+struct AnswerBlob {
   var verbID: Int!
   var tenseID: Int!
   var personID: PersonClass!
@@ -108,21 +108,21 @@ struct answerBlob {
   var termMask:Int?
 }
 
-final class answerDB: ObservableObject, Identifiable {
-  @Published var answerx:[answerBlob] = [] {
+final class AnswerDB: ObservableObject, Identifiable {
+  @Published var answerx:[AnswerBlob] = [] {
     willSet {
       objectWillChange.send()
     }
   }
 }
 
-struct groupBlob {
+struct GroupBlob {
   var groupID: Int!
   var name:String!
 }
 
-final class groupDB: ObservableObject, Identifiable {
-  @Published var groupx:[groupBlob] = [] {
+final class GroupDB: ObservableObject, Identifiable {
+  @Published var groupx:[GroupBlob] = [] {
     willSet {
       objectWillChange.send()
     }
@@ -139,12 +139,12 @@ struct Fonts {
   }
 }
 
-struct newView: View {
+struct NewView: View {
   
   @EnvironmentObject var env : MyAppEnvironmentData
   @State var word:String
   @State var gate:Int?
-  @Binding var selections:[answerBlob]
+  @Binding var selections:[AnswerBlob]
   @Binding var display2Conjugations:Bool
   @State var color2U:Color!
   
@@ -338,7 +338,7 @@ struct PageTwo: View {
   
   @State var noDivert = true
   
-  @State var selections:[answerBlob] = []
+  @State var selections:[AnswerBlob] = []
   @State private var action: Int? = 0
   @State private var overText = false
   
@@ -417,7 +417,7 @@ struct PageTwo: View {
         .navigationBarTitle(Text(env.switchLanguage ? "Conjugator":"Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           self.action = 1
-          self.env.currentPage = .NavigationView
+          self.env.currentPage = .navigationView
         })
         .opacity(0)
         .onAppear {
@@ -497,7 +497,7 @@ struct PageTwo: View {
               }
             } else {
               if self.noDivert {
-                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                let spc = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
               }
             }
@@ -511,8 +511,8 @@ struct PageTwo: View {
               self.display1Verb = true
               self.display2Conjugations = true
               self.newValue = 256
-              for i in 0...5 {
-                self.showMe[i] = false
+              for loop in 0...5 {
+                self.showMe[loop] = false
               }
             }
             //              }
@@ -652,7 +652,7 @@ struct PageTwo: View {
               }
             } else {
               if self.noDivert {
-                let spc = answerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
+                let spc = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
               }
             }
@@ -665,8 +665,8 @@ struct PageTwo: View {
               self.display0Verb = false
               self.display1Verb = true
               self.newValue = 256
-              for i in 0...5 {
-                self.showMe[i] = false
+              for loop in 0...5 {
+                self.showMe[loop] = false
               }
               withAnimation { ()
                 self.display2Conjugations = true
@@ -693,17 +693,17 @@ struct PageTwo: View {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
             HStack(spacing:0) {
               Spacer()
-             newView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations, color2U: self.linkColor)
+              NewView(env: self._env, word: self.selections[column].name, gate: self.selections[column].redMask!, selections: self.$selections, display2Conjugations: self.$display2Conjugations, color2U: self.linkColor)
 //              Text(self.selections[column].name)
                 .opacity(self.showMe[column] ? 1 : 0)
                 //                  .offset(x: 0, y: self.newValue)
                 .font(Fonts.avenirNextCondensedBold(size: 22))
                 .onAppear(perform: {
-            for i in 0..<6 {
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(i)) {
+            for loop in 0..<6 {
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(loop)) {
                 withAnimation(.easeOut(duration: 1.0)) {
                   //                    self.newValue = 0
-                  self.showMe[i] = true
+                  self.showMe[loop] = true
                 }
               }
             }

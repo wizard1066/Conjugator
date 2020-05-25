@@ -50,7 +50,6 @@
 11, 1, 1P, Nous,  congelons, congel, ons  0
 11, 1, 2P, Vous,  congelez, congel, ez  0
 11, 10, , ,  congelé(s), congel, é(s)  0
-11, 10, , ,  congelée(s), congel, ée(s)  0
 11, 2, 0, Il,  congèlera, 0, 0 ,128
 11, 2, 0, Ils,  congèleront, 0, 0 ,256
 11, 2, 0, Je,  congèlerai, 0, 0 ,128
@@ -83,6 +82,13 @@
 11, 7, 0, Tu,  congèlerais, 0, 0 ,128
 11, 7, 0, Vous,  congèleriez, 0, 0 ,512
 11, 9, , ,  congelant, congel, ant  0
+11, 4, Q1, Je,congel-ai, 0,0,0,0
+11, 4, Q1, Tu,congel-as, 0,0,0,0
+11, 4, Q1, Il,congel-a, 0,0,0,0
+11, 4, Q1, Ils,congel-èrent, 0,0,0,0
+11, 4, Q1, Nous,congel-âmes, 0,0,0,0
+11, 4, Q1, Vous,congel-âtes, 0,0,0,0
+
 12, 1, 0, Il,  arguë, 0, 0 ,640
 12, 1, 0, Ils,  arguënt, 0, 0 ,1792
 12, 1, 0, J',  arguë, 0, 0 ,640
@@ -1022,12 +1028,6 @@
 30,2,2S,Tu,apercevras,1,,0
 30,2,3P,Ils,apercevront,1,,0
 30,2,3S,Il,apercevra,1,,0
-30,3,1P,Nous,apercevions,,,0
-30,3,1S,J',apercevais,,,0
-30,3,2P,Vous,aperceviez,,,0
-30,3,2S,Tu,apercevais,,,0
-30,3,3P,Ils,apercevaient,,,0
-30,3,3S,Il,apercevait,,,0
 30,4,1P,Nous,aperçûmes,1,,1
 30,4,1S,J',aperçus,1,,1
 30,4,2P,Vous,aperçûtes,1,,1
@@ -1416,6 +1416,9 @@
 41, 7, 3P, Vous,  connaîtriez, 0, 0
 41, 7, 3S, Il,  connaîtrait, 0, 0
 41, 9, , ,  connaissant, connaiss, ant  0
+42, 1, 1Q, Je,coud-s,0,0,0,0
+42, 1, 1Q, Tu,coud-s,0,0,0,0
+42, 1, 1Q, Il,coud,0,0,0,0
 42, 1, 1P, Ils,  cousent, 0, 0 ,240
 42, 1, 2P, Nous,  cousons, 0, 0 ,480
 42, 1, 3P, Vous,  cousez, 0, 0 ,480
@@ -1992,6 +1995,13 @@
 53,6,2,Tu,écrivisses,0
 53,6,2,Vous,écrivissiez,0
 53,9,2,,écrivant,0
+
+55, 1, 1Q, Je,fai-s,0,0,0,0
+55, 1, 1Q, Tu,fai-s,0,0,0,0
+55, 1, 1Q, Il,fai-t,0,0,0,0
+55, 1, 1Q, Ils,f-ont,0,0,0,0
+55, 1, 1Q, Nous,fais-ons,0,0,0,0
+55, 1, 1Q, Vous,fait-es,0,0,0,0
 55, 10, 1X, fai,  t, 0, 0 ,16
 55, 2, 1X, Il,  fera, 0, 0 ,56
 55, 2, 1X, Ils,  feront, 0, 0 ,112
@@ -2031,6 +2041,7 @@
 55, 7, 1X, Tu,  ferais, 0, 0 ,56
 55, 7, 1X, Vous,  feriez, 0, 0 ,224
 55, 9, , ,  faisant, fai, sant  0
+
 56, 1, 1X, Il,  faut, 0, 0 ,184
 56, 10, , ,  fallu, fall, u  0
 56, 2, 1X, Il,  faudra, 0, 0 ,248
@@ -2190,6 +2201,7 @@
 60, 3, 3P, Ils,  gisaient, gis, aient  0
 60, 3, 3S, Il,  gisait, gis, ait  0
 60, 9, , ,  gisant, gis, ant  0
+
 61, 1, 1X, Il,  joint, 0, 0 ,1912
 61, 1, 1X, Ils,  joignent, 0, 0 ,496
 61, 1, 1X, Je,  joins, 0, 0 ,1912
@@ -2197,7 +2209,6 @@
 61, 1, 1X, Tu,  joins, 0, 0 ,1912
 61, 1, 1X, Vous,  joignez, 0, 0 ,992
 61, 10, 1X, 0,  join, t(s), 0 0 ,559
-61, 10, 1X, 0,  join, te(s), 0 0 ,47
 61, 2, 1X, Il,  joindra, 0, 0 ,504
 61, 2, 1X, Ils,  joindront, 0, 0 ,1008
 61, 2, 1X, Je,  joindrai, 0, 0 ,504
@@ -2236,6 +2247,7 @@
 61, 7, 1X, Tu,  joindrais, 0, 0 ,504
 61, 7, 1X, Vous,  joindriez, 0, 0 ,2016
 61, 9, , ,  joignant, joign, ant  0
+
 62, 1, 1S, Je,  lis, li, s  0
 62, 1, 1X, Ils,  lisent, 0, 0 ,112
 62, 1, 1X, Nous,  lisons, 0, 0 ,224
@@ -2281,6 +2293,7 @@
 62, 7, 1X, Tu,  lirais, 0, 0 ,56
 62, 7, 1X, Vous,  liriez, 0, 0 ,224
 62, 9, , ,  lisant, li, sant  0
+
 63, 1, 0, Il,  met, 0, 0 ,952
 63, 1, 0, Je,  mets, 0, 0 ,952
 63, 1, 0, Tu,  mets, 0, 0 ,952
@@ -2326,11 +2339,12 @@
 63, 7, 0, Tu,  mettrais, 0, 0 ,248
 63, 7, 0, Vous,  mettriez, 0, 0 ,992
 63, 9, , ,  mettant, mett, ant  0
+
 64, 1, 0, Ils,  moulent, 0, 0 ,240
 64, 1, 0, Nous,  moulons, 0, 0 ,480
 64, 1, 0, Vous,  moulez, 0, 0 ,480
 64, 10, 0, moul,  u(s), 0, 0 ,15
-64, 20, XX, moudre, , 0, 0, 0
+64, 20, XX, moudre, 0, 0, 0, 0
 64, 7, 0, Il,  moudrait, 0, 0 ,248
 64, 7, 0, Ils,  moudraient, 0, 0 ,496
 64, 7, 0, Je,  moudrais, 0, 0 ,248
@@ -2371,6 +2385,7 @@
 64,6,3P,Ils,moulussent,,,0
 64,6,3S,Il,moulût,,,0
 64,9,1X,,moulant,,,0
+
 65, 1, 0, Il,  meurt, 0, 0 ,888
 65, 1, 0, Je,  meurs, 0, 0 ,888
 65, 1, 0, Tu,  meurs, 0, 0 ,888
@@ -2763,6 +2778,9 @@
 72,6,3P,Ils,perdissent,,,0
 72,6,3S,Il,perdît,,,0
 72,9,1X,,perdant,,,0
+
+73, 1, 1Q, Je,plai-s,0,0,0,0
+73, 1, 1Q, Tu,plai-s,0,0,0,0
 73, 1, 0, Il,  plaît, 0, 0 ,888
 73, 1, 0, Ils,  plaisent, 0, 0 ,496
 73, 1, 0, Nous,  plaisons, 0, 0 ,992
@@ -3264,17 +3282,14 @@
 84,4,2,Tu,servis,0
 84,5,2,Nous,servions,0
 84,5,2,Vous,serviez,0
-84,6,2,Ils,servissent,0
-84,6,2,Je,servisse,0
-84,6,2,Nous,servissions,0
-84,6,2,Tu,servisses,0
-84,6,2,Vous,servissiez,0
+
 84,7,2,Il,servirait,0
 84,7,2,Ils,serviraient,0
 84,7,2,Je,servirais,0
 84,7,2,Nous,servirions,0
 84,7,2,Tu,servirais,0
 84,7,2,Vous,serviriez,0
+
 85, 1, 0, Il,  sort, 0, 0 ,56
 85, 1, 0, Je,  sors, 0, 0 ,56
 85, 1, 0, Tu,  sors, 0, 0 ,56

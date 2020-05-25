@@ -10,9 +10,9 @@ import StoreKit
 import Combine
 
 
-final class productsDB: ObservableObject, Identifiable {
+final class ProductsDB: ObservableObject, Identifiable {
   
-  static let shared = productsDB()
+  static let shared = ProductsDB()
   var items:[SKProduct] = []
   {
       willSet {
@@ -202,8 +202,8 @@ extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
     let goodProducts = response.products
     
     if goodProducts.count > 0 {
-      productsDB.shared.items = response.products
-      print("bon ",productsDB.shared.items)
+      ProductsDB.shared.items = response.products
+      print("bon ",ProductsDB.shared.items)
     }
     
     print("badProducts ",badProducts)
