@@ -393,7 +393,7 @@ func returnClass(class2C: String) -> PersonClass {
 
 extension Substring {
   func c2Int() -> Int {
-    return Int(String(self))!
+    return Int(String(self)) ?? 0
   }
 }
 
