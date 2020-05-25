@@ -743,22 +743,7 @@ struct PageTwo: View {
         
         
         
-//        if once {
-//          once = false
-//          
-//          for instance in self.tenses {
-//            let breakout = instance.split(separator: ".")
-//            let breakdown = breakout[0].split(separator: "-")
-//            print("breakdown ",breakdown)
-//            print("breakout ",breakout)
-//            let newTense = tenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
-//            self.env.tensey.tensex.append(newTense)
-//          }
-//          
-//          self.env.tensey.tensex.sort { (first, second) -> Bool in
-//            first.name < second.name
-//          }
-//        }
+
         
         if seek != nil {
           self.selectedVerb = self.env.verby.verbx.firstIndex(where: { ( data ) -> Bool in

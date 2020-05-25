@@ -305,9 +305,12 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   
   for instance in tenses {
   
-    let breakout = instance.split(separator: ".")
-    let breakdown = breakout[0].split(separator: "-")
-    let newTense = TenseBlob(id: Int(breakdown[0]), groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3]),nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
+    let bo = instance.split(separator: ".")
+    let bd = bo[0].split(separator: "-")
+//    let newTense = TenseBlob(id: Int(breakdown[0]),
+// groupID: Int(breakdown[1]), name: String(breakout[1]), derive: String(breakout[2]), color: String(breakout[3])
+//,nom: String(breakout[4]), worked: String(breakout[5]),linked: Int(breakout[6]))
+    let newTense = TenseBlob(id: bd[0].c2Int(), groupID: bo[1].c2Int(), name: bo[1].c2Str(), derive: bo[2].c2Str(), color: bo[3].c2Str(),nom: bo[4].c2Str(), worked: bo[5].c2Str(),linked: bo[6].c2Int())
     environment.tensey.tensex.append(newTense)
     
   }
@@ -447,6 +450,17 @@ func returnClass(class2C:String) -> PersonClass {
     return personID
 }
 
+extension Substring {
+  func c2Int() -> Int {
+    return Int(String(self))!
+  }
+}
+
+extension Substring {
+  func c2Str() -> String {
+    return String(self)
+  }
+}
 
 
 //#if DEBUG
