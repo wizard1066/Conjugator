@@ -44,6 +44,7 @@
 10, 7, 0, Tu,  appellerais, 0, 0 ,384
 10, 7, 0, Vous,  appelleriez, 0, 0 ,1536
 10, 9, , ,  appelant, appel, ant  0
+
 11, 1, 0, Il,  congèle, 0, 0 ,128
 11, 1, 0, Ils,  congèlent, 0, 0 ,256
 11, 1, 0, Je,  congèle, 0, 0 ,128
@@ -817,7 +818,7 @@
 27,1,1P,Nous,absolvons,1,,0
 27,1,2P,Vous,absolvez,1,,0
 27,1,3P,Ils,absolvent,1,,0
-27,10,0,absous,0,0
+
 27,2,0,Il,absoudra,1016
 27,2,0,Ils,absoudront,2032
 27,2,0,J',absoudrai,1016
@@ -855,8 +856,10 @@
 27,7,0,Tu,absoudrais,1016
 27,7,0,Vous,absoudriez,4064
 
-27,9,ZP,,absou-s,,,0
-27,9,ZP,,absou-te,,,0
+27,10,ZP,,absou-s,,,0
+27,10,ZP,,absou-te,,,0
+
+27,9,ZP,,absolv-ant
 
 28, 1, 0, Il,  acquiert, 0, 0 ,1016
 28, 1, 0, Ils,  acquièrent, 0, 0 ,2032
@@ -1651,7 +1654,6 @@
 47, 1, 1X, Nous,  croissons, 0, 0 ,2032
 47, 1, 1X, Tu,  croîs, 0, 0 ,1912
 47, 1, 1X, Vous,  croissez, 0, 0 ,2016
-47, 10, 1X, cr,  ue(s), 0, 0 ,16131
 
 47, 10, 1X, crû, 0,0,0,0
 47, 10, 1X, cru-e, 0,0,0,0
@@ -1840,7 +1842,6 @@
 50, 1, 1X, Je,  dois, 0, 0 ,440
 50, 1, 1X, Tu,  dois, 0, 0 ,440
 50, 1, 2P, Vous,  devez, dev, ez  0
-50, 10, 1X, d us,  0, 0, 0
 
 50, 10, 1X, dû,0,0,0,0
 50, 10, 1X, du-e,0,0,0,0
@@ -2125,9 +2126,6 @@
 57,6,2,Nous,fondissions,0
 57,6,2,Tu,fondisses,0
 57,6,2,Vous,fondissiez,0
-57,8,2,Nous,fondons,0
-57,8,2,Tu,fonds,0
-57,8,2,Vous,fondez,0
 57,9,2,,fondant,0
 59, 1, 1X, Il,  fuit, 0, 0 ,56
 59, 1, 1X, Ils,  fuient, 0, 0 ,112
@@ -2456,12 +2454,11 @@
 66, 1, 0, Tu,  meus, 0, 0 ,952
 66, 1, 1P, Nous,  mouvons, mouv, ons  0
 66, 1, 2P, Vous,  mouvez, mouv, ez  0
-66, 10, , ,  mue(s), m, ue(s) ,1 0
 
-10, 10,  ,mû,0,0,0,0
-10, 10,  ,mu-e,0,0,0,0
-10, 10,  ,mu-s,0,0,0,0
-10, 10,  ,mu-es,0,0,0,0
+66, 10, 1A ,mû,0,0,0,0
+66, 10, 1A ,mu-e,0,0,0,0
+66, 10, 1A ,mu-s,0,0,0,0
+66, 10, 1A ,mu-es,0,0,0,0
 
 66, 2, 0, Il,  mouvra, 0, 0 ,248
 66, 2, 0, Ils,  mouvront, 0, 0 ,496
@@ -3896,92 +3893,7 @@
 96, 7, 0, Tu,  voudrais, 0, 0 ,248
 96, 7, 0, Vous,  voudriez, 0, 0 ,992
 96, 9, , ,  voulant, voul, ant  0
-97, 1, 1P, Nous,  arrivons, arriv, ons 0 0
-97, 1, 1S, J',  arrive, arriv, e 0 0
-97, 1, 2P, Vous,  arrivez, arriv, ez 0 0
-97, 1, 2S, Tu,  arrives, arriv, es 0 0
-97, 1, 3P, Ils,  arrivent, arriv, ent 0 0
-97, 1, 3S, Il,  arrive, arriv, e 0 0
-97, 10, , ,  arrivé, arriv, é(s) 0 0
-97, 2, 1P, Nous,  arriverons, arriv, erons 0 0
-97, 2, 1S, J',  arriverai, arriv, erai 0 0
-97, 2, 2P, Vous,  arriverez, arriv, erez 0 0
-97, 2, 2S, Tu,  arriveras, arriv, eras 0 0
-97, 2, 3P, Ils,  arriveront, arriv, eront 0 0
-97, 2, 3S, Il,  arrivera, arriv, era 0 0
-97, 3, 1P, Nous,  arrivions, arriv, ions 0 0
-97, 3, 1S, J',  arrivais, arriv, ais 0 0
-97, 3, 2P, Vous,  arriviez, arriv, iez 0 0
-97, 3, 2S, Tu,  arrivais, arriv, ais 0 0
-97, 3, 3P, Ils,  arrivaient, arriv, aient 0 0
-97, 3, 3S, Il,  arrivait, arriv, ait 0 0
-97, 4, 1P, Nous,  arrivâmes, arriv, âmes 0 0
-97, 4, 1S, J',  arrivai, arriv, ai 0 0
-97, 4, 2P, Vous,  arrivâtes, arriv, âtes 0 0
-97, 4, 2S, Tu,  arrivas, arriv, as 0 0
-97, 4, 3P, Ils,  arrivèrent, arriv, èrent 0 0
-97, 4, 3S, Il,  arriva, arriv, a 0 0
-97, 5, 1P, Nous,  arrivions, arriv, ions 0 0
-97, 5, 1S, J',  arrive, arriv, e 0 0
-97, 5, 2P, Vous,  arriviez, arriv, iez 0 0
-97, 5, 2S, Tu,  arrives, arriv, es 0 0
-97, 5, 3P, Ils,  arrivent, arriv, ent 0 0
-97, 5, 3S, Il,  arrive, arriv, e 0 0
-97, 6, 1P, Nous,  arrivassions, arriv, assions 0 0
-97, 6, 1S, J',  arrivasse, arriv, asse 0 0
-97, 6, 2P, Vous,  arrivassiez, arriv, assiez 0 0
-97, 6, 2S, Tu,  arrivasses, arriv, asses 0 0
-97, 6, 3P, Ils,  arrivassent, arriv, assent 0 0
-97, 6, 3S, Il,  arrivât, arriv, ât 0 0
-97, 7, 1P, Nous,  arriverions, arriv, erions 0 0
-97, 7, 1S, J',  arriverais, arriv, erais 0 0
-97, 7, 2P, Vous,  arriveriez, arriv, eriez 0 0
-97, 7, 2S, Tu,  arriverais, arriv, erais 0 0
-97, 7, 3P, Ils,  arriveraient, arriv, eraient 0 0
-97, 7, 3S, Il,  arriverait, arriv, erait 0 0
-97, 9, , ,  arrivant, arriv, ant 0 0
-98, 1, 1P, Nous,  aim, aim,  0 0
-98, 1, 1S, J',  aim, aim,  0 0
-98, 1, 2P, Vous,  aim, aim,  0 0
-98, 1, 2S, Tu,  aim, aim,  0 0
-98, 1, 3P, Ils,  aim, aim,  0 0
-98, 1, 3S, Il,  aim, aim,  0 0
-98, 2, 1P, Nous,  aim, aim,  0 0
-98, 2, 1S, J',  aim, aim,  0 0
-98, 2, 2P, Vous,  aim, aim,  0 0
-98, 2, 2S, Tu,  aim, aim,  0 0
-98, 2, 3P, Ils,  aim, aim,  0 0
-98, 2, 3S, Il,  aim, aim,  0 0
-98, 3, 1P, Nous,  aim, aim,  0 0
-98, 3, 1S, J',  aim, aim,  0 0
-98, 3, 2P, Vous,  aim, aim,  0 0
-98, 3, 2S, Tu,  aim, aim,  0 0
-98, 3, 3P, Ils,  aim, aim,  0 0
-98, 3, 3S, Il,  aim, aim,  0 0
-98, 4, 1P, Nous,  aim, aim,  0 0
-98, 4, 1S, J',  aim, aim,  0 0
-98, 4, 2P, Vous,  aim, aim,  0 0
-98, 4, 2S, Tu,  aim, aim,  0 0
-98, 4, 3P, Ils,  aim, aim,  0 0
-98, 4, 3S, Il,  aim, aim,  0 0
-98, 5, 1P, Nous,  aim, aim,  0 0
-98, 5, 1S, J',  aim, aim,  0 0
-98, 5, 2P, Vous,  aim, aim,  0 0
-98, 5, 2S, Tu,  aim, aim,  0 0
-98, 5, 3P, Ils,  aim, aim,  0 0
-98, 5, 3S, Il,  aim, aim,  0 0
-98, 6, 1P, Nous,  aim, aim,  0 0
-98, 6, 1S, J',  aim, aim,  0 0
-98, 6, 2P, Vous,  aim, aim,  0 0
-98, 6, 2S, Tu,  aim, aim,  0 0
-98, 6, 3P, Ils,  aim, aim,  0 0
-98, 6, 3S, Il,  aim, aim,  0 0
-98, 7, 1P, Nous,  aim, aim,  0 0
-98, 7, 1S, J',  aim, aim,  0 0
-98, 7, 2P, Vous,  aim, aim,  0 0
-98, 7, 2S, Tu,  aim, aim,  0 0
-98, 7, 3P, Ils,  aim, aim,  0 0
-98, 7, 3S, Il,  aim, aim,  0 0
+
 
 
 34, 9, 1Z,  batt-u, 0,0,0,0
