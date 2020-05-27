@@ -2218,19 +2218,8 @@
 6, 7, 3P, Ils,  se méfieraient, se méfier, aient  0
 6, 7, 3S, Il,  se méfierait, se méfier, ait  0
 6, 9, , ,  se méfiant, se méfi, ant  0
-60, 1, 1P, Nous,  gisons, gis, ons  0
-60, 1, 1S, Je,  gis, gi, s  0
-60, 1, 2P, Vous,  gisez, gis, ez  0
-60, 1, 2S, Tu,  gis, gi, s  0
-60, 1, 3P, Ils,  gisent, gis, ent  0
-60, 1, 3S, Il,  gît, gî, t  0
-60, 3, 1P, Nous,  gisions, gis, ions  0
-60, 3, 1S, Je,  gisais, gis, ais  0
-60, 3, 2P, Vous,  gisiez, gis, iez  0
-60, 3, 2S, Tu,  gisais, gis, ais  0
-60, 3, 3P, Ils,  gisaient, gis, aient  0
-60, 3, 3S, Il,  gisait, gis, ait  0
-60, 9, , ,  gisant, gis, ant  0
+
+
 
 61, 1, 1X, Il,  joint, 0, 0 ,1912
 61, 1, 1X, Ils,  joignent, 0, 0 ,496
@@ -3275,19 +3264,6 @@
 82,7,3P,Ils,sentiraient,,,0
 82,7,3S,Il,sentirait,,,0
 82,9,1X,,sentant,,,0
-83, 1, 3P, Ils,  siéent, sié, ent  0
-83, 1, 3S, Il,  sied, sie, d  0
-83, 10, , ,  sis, s, is  0
-83, 2, 3P, Ils,  siéront, siér, ont  0
-83, 2, 3S, Il,  siéra, siér, a  0
-83, 3, 3P, Ils,  seyaient, sey, aient  0
-83, 3, 3S, Il,  seyait, sey, ait  0
-83, 5, 3P, Ils,  siéent, sié, ent  0
-83, 5, 3S, Il,  siée, sié, e  0
-83, 7, 3P, Ils,  siéraient, siér, aient  0
-83, 7, 3S, Il,  siérait, siér, ait  0
-83, 9, , ,  seyant, se, yant  0
-83, 9, , ,  séant, sé, ant  0
 
 84, 10, , ,  servi, serv, i(s)  0
 84, 20, XX, servir, , 0, 0, 0
@@ -4006,50 +3982,7 @@
 98, 7, 2S, Tu,  aim, aim,  0 0
 98, 7, 3P, Ils,  aim, aim,  0 0
 98, 7, 3S, Il,  aim, aim,  0 0
-99, 1, 1P, Nous,  restons, rest, ons 0 0
-99, 1, 1S, Je,  reste, rest, e 0 0
-99, 1, 2P, Vous,  restez, rest, ez 0 0
-99, 1, 2S, Tu,  restes, rest, es 0 0
-99, 1, 3P, Ils,  restent, rest, ent 0 0
-99, 1, 3S, Il,  reste, rest, e 0 0
-99, 10, , ,  resté, rest, é(s) 0 0
-99, 2, 1P, Nous,  resterons, rest, erons 0 0
-99, 2, 1S, Je,  resterai, rest, erai 0 0
-99, 2, 2P, Vous,  resterez, rest, erez 0 0
-99, 2, 2S, Tu,  resteras, rest, eras 0 0
-99, 2, 3P, Ils,  resteront, rest, eront 0 0
-99, 2, 3S, Il,  restera, rest, era 0 0
-99, 3, 1P, Nous,  restions, rest, ions 0 0
-99, 3, 1S, Je,  restais, rest, ais 0 0
-99, 3, 2P, Vous,  restiez, rest, iez 0 0
-99, 3, 2S, Tu,  restais, rest, ais 0 0
-99, 3, 3P, Ils,  restaient, rest, aient 0 0
-99, 3, 3S, Il,  restait, rest, ait 0 0
-99, 4, 1P, Nous,  restâmes, rest, âmes 0 0
-99, 4, 1S, Je,  restai, rest, ai 0 0
-99, 4, 2P, Vous,  restâtes, rest, âtes 0 0
-99, 4, 2S, Tu,  restas, rest, as 0 0
-99, 4, 3P, Ils,  restèrent, rest, èrent 0 0
-99, 4, 3S, Il,  resta, rest, a 0 0
-99, 5, 1P, Nous,  restions, rest, ions 0 0
-99, 5, 1S, Je,  reste, rest, e 0 0
-99, 5, 2P, Vous,  restiez, rest, iez 0 0
-99, 5, 2S, Tu,  restes, rest, es 0 0
-99, 5, 3P, Ils,  restent, rest, ent 0 0
-99, 5, 3S, Il,  reste, rest, e 0 0
-99, 6, 1P, Nous,  restassions, rest, assions 0 0
-99, 6, 1S, Je,  restasse, rest, asse 0 0
-99, 6, 2P, Vous,  restassiez, rest, assiez 0 0
-99, 6, 2S, Tu,  restasses, rest, asses 0 0
-99, 6, 3P, Ils,  restassent , rest, assent 0 0
-99, 6, 3S, Il,  restât, rest, ât 0 0
-99, 7, 1P, Nous,  resterions, rest, erions 0 0
-99, 7, 1S, Je,  resterais, rest, erais 0 0
-99, 7, 2P, Vous,  resteriez, rest, eriez 0 0
-99, 7, 2S, Tu,  resterais, rest, erais 0 0
-99, 7, 3P, Ils,  resteraient, rest, eraient 0 0
-99, 7, 3S, Il,  resterait, rest, erait 0 0
-99, 9, , ,  restant, rest, ant 0 0
+
 
 34, 9, 1Z,  batt-u, 0,0,0,0
 39, 9, 1Z,  concl-u, 0,0,0,0
