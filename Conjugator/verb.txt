@@ -83,6 +83,7 @@
 94,vivre,0,hard,avoir,vécu,viv,-re
 95,voir,0,hard,avoir,vu,v,-oir
 96,vouloir,0,hard,avoir,voulu,voul,-oir
+36,bouillir,0,hard
 1000,s'aider,4,dynamic
 1001,s'aimer,4,dynamic
 1002,s'appeler,4,dynamic

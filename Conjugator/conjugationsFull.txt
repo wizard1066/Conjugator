@@ -1270,6 +1270,7 @@
 36, 7, 3P, Ils,  bouilliraient, bouillir, aient  0
 36, 7, 3S, Il,  bouillirait, bouillir, ait  0
 36, 9, , ,  bouillant, bouill, ant  0
+36, 20-10,0,bouillir,0,0,0,0
 
 38, 1, 0, Il,  clôt, 0, 0 ,4536
 38, 1, 0, Ils,  closent, 0, 0 ,4336
@@ -1799,52 +1800,6 @@
 49,6,2,Vous,cuisissiez,0
 49,9,2,,cuisant,0
 
-5, 1, 1P, Nous,  nous parlons, nous parl, ons  0
-5, 1, 1S, Je,  me  parle, me  parl, e  0
-5, 1, 2P, Vous,  vous parlez, vous parl, ez  0
-5, 1, 2S, Tu,  te  parles, te  parl, es  0
-5, 1, 3P, Ils,  se parlent, se parl, ent  0
-5, 1, 3S, Il,  se parle, se parl, e  0
-5, 10, , ,  parlé(s), parl, é(s)  0
-5, 10, , ,  parlée(s), parl, ée(s)  0
-5, 2, 1P, Nous,  nous parlerons, nous parler, ons  0
-5, 2, 1S, Je,  me  parlerai, me  parler, ai 0 0
-5, 2, 2P, Vous,  vous parlerez, vous parler, ez  0
-5, 2, 2S, Tu,  te  parleras, te  parler, as  0
-5, 2, 3P, Ils,  se parleront, se parler, ont  0
-5, 2, 3S, Il,  se parlera, se parler, a  0
-5, 3, 1P, Nous,  nous parlions, nous parl, ions  0
-5, 3, 1S, Je,  me  parlais, me  parl, ais  0
-5, 3, 2P, Vous,  vous parliez, vous parl, iez  0
-5, 3, 2S, Tu,  te  parlais, te  parl, ais  0
-5, 3, 3P, Ils,  se parlaient, se parl, aient  0
-5, 3, 3S, Il,  se parlait, se parl, ait  0
-5, 4, 1P, Nous,  nous parlâmes, nous parl, âmes  0
-5, 4, 1S, Je,  me  parlai, me  parl, ai  0
-5, 4, 2P, Vous,  vous parlâtes, vous parl, âtes  0
-5, 4, 2S, Tu,  te  parlas, te  parl, as  0
-5, 4, 3P, Ils,  se parlèrent, se parl, èrent  0
-5, 4, 3S, Il,  se parla, se parl, a  0
-5, 5, 1P, Nous,  nous parlions, nous parl, ions  0
-5, 5, 1S, Je,  me  parle, me  parl, e  0
-5, 5, 2P, Vous,  vous parliez, vous parl, iez  0
-5, 5, 2S, Tu,  te  parles, te  parl, es  0
-5, 5, 3P, Ils,  se parlent, se parl, ent  0
-5, 5, 3S, Il,  se parle, se parl, e  0
-5, 6, 1P, Nous,  nous parlassions, nous parl, assions  0
-5, 6, 1S, Je,  me  parlasse, me  parl, asse  0
-5, 6, 2P, Vous,  vous parlassiez, vous parl, assiez  0
-5, 6, 2S, Tu,  te  parlasse, te  parl, asse  0
-5, 6, 3P, Ils,  se parlassent, se parl, assent  0
-5, 6, 3S, Il,  se parlât, se parl, ât  0
-5, 7, 1P, Nous,  nous parlerions, nous parler, ions  0
-5, 7, 1S, Je,  me  parlerais, me  parler, ais  0
-5, 7, 2P, Vous,  vous parleriez, vous parler, iez  0
-5, 7, 2S, Tu,  te  parlerais, te  parler, ais  0
-5, 7, 3P, Ils,  se parleraient, se parler, aient  0
-5, 7, 3S, Il,  se parlerait, se parler, ait  0
-5, 9, , ,  se parlant, se parl, ant  0
-
 50, 1, 1P, Nous,  devons, dev, ons  0
 50, 1, 1X, Il,  doit, 0, 0 ,440
 50, 1, 1X, Ils,  doivent, 0, 0 ,240
@@ -2182,50 +2137,7 @@
 59, 7, 3S, Il,  fuirait, fuir, ait  0
 59, 9, , ,  fuyant, fu, yant  0
 
-6, 1, 1P, Nous,  nous méfions, nous méfi, ons  0
-6, 1, 1S, Je,  me méfie, me méfi, e  0
-6, 1, 2P, Vous,  vous méfiez, vous méfi, ez  0
-6, 1, 2S, Tu,  te méfies, te méfi, es  0
-6, 1, 3P, Ils,  se méfient, se méfi, ent  0
-6, 1, 3S, Il,  se méfie, se méfi, e  0
-6, 10, , ,  méfié, méfi, é(s)  0
-6, 2, 1P, Nous,  nous méfierons, nous méfier, ons  0
-6, 2, 1S, Je,  me méfierai, me méfier, ai  0
-6, 2, 2P, Vous,  vous méfierez, vous méfier, ez  0
-6, 2, 2S, Tu,  te méfieras, te méfier, as  0
-6, 2, 3P, Ils,  se méfieront, se méfier, ont  0
-6, 2, 3S, Il,  se méfiera, se méfier, a  0
-6, 3, 1P, Nous,  nous méfiions, nous méfi, ions  0
-6, 3, 1S, Je,  me méfiais, me méfi, ais  0
-6, 3, 2P, Vous,  vous méfiiez, vous méfi, iez  0
-6, 3, 2S, Tu,  te méfiais, te méfi, ais  0
-6, 3, 3P, Ils,  se méfiaient, se méfi, aient  0
-6, 3, 3S, Il,  se méfiait, se méfi, ait  0
-6, 4, 1P, Nous,  nous méfiâmes, nous méfi, âmes  0
-6, 4, 1S, Je,  me méfiai, me méfi, ai  0
-6, 4, 2P, Vous,  vous méfiâtes, vous méfi, âtes  0
-6, 4, 2S, Tu,  te méfias, te méfi, as  0
-6, 4, 3P, Ils,  se méfièrent, se méfi, èrent  0
-6, 4, 3S, Il,  se méfia, se méfi, a  0
-6, 5, 1P, Nous,  nous méfiions, nous méfi, ions  0
-6, 5, 1S, Je,  me méfie, me méfi, e  0
-6, 5, 2P, Vous,  vous méfiiez, vous méfi, iez  0
-6, 5, 2S, Tu,  te méfies, te méfi, es  0
-6, 5, 3P, Ils,  se méfient, se méfi, ent  0
-6, 5, 3S, Il,  se méfie, se méfi, e  0
-6, 6, 1P, Nous,  nous méfiassions, nous méfi, assions  0
-6, 6, 1S, Je,  me méfiasse, me méfi, asse  0
-6, 6, 2P, Vous,  vous méfiassiez, vous méfi, assiez  0
-6, 6, 2S, Tu,  te méfiasses, te méfi, asses  0
-6, 6, 3P, Ils,  se méfiassent, se méfi, assent  0
-6, 6, 3S, Il,  se méfiât, se méfi, ât  0
-6, 7, 1P, Nous,  nous méfierions, nous méfier, ions  0
-6, 7, 1S, Je,  me méfierais, me méfier, ais  0
-6, 7, 2P, Vous,  vous méfieriez, vous méfier, iez  0
-6, 7, 2S, Tu,  te méfierais, te méfier, ais  0
-6, 7, 3P, Ils,  se méfieraient, se méfier, aient  0
-6, 7, 3S, Il,  se méfierait, se méfier, ait  0
-6, 9, , ,  se méfiant, se méfi, ant  0
+
 
 
 61, 1, 1X, Il,  joint, 0, 0 ,1912

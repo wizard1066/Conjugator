@@ -397,6 +397,7 @@ struct PageTwo: View {
             }
           }
           .frame(width: 128, height: 162, alignment: .center)
+          .fixedSize()
 //          .background(InsideView)
           .offset(x: 0, y: -32)
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
@@ -478,6 +479,7 @@ struct PageTwo: View {
           if display1Verb {
             VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
               .frame(width: 256, height: 162, alignment: .center)
+              .fixedSize()
               .offset(x: 0, y: -32)
               .onReceive(doDivertPublisher, perform: { ( row ) in
                 let (verbIDidx, tenseIDidx) = row
@@ -536,6 +538,7 @@ struct PageTwo: View {
             }
           }.labelsHidden()
             .frame(width: 256, height: 162, alignment: .center)
+            .fixedSize()
             .offset(x: 0, y: -64)
             .onReceive([selectedTense].publisher) { ( value ) in
               self.selectedTense = value
@@ -607,6 +610,7 @@ struct PageTwo: View {
         if display1Tense {
           TenseView(display0Tense: $display0Tense, display1Tense: $display1Tense, preTenseSelected: $preTenseSelected, tenseSelected: $tenseSelected, postTenseSelected: $postTenseSelected)
             .frame(width: 256, height: 162, alignment: .center)
+            .fixedSize()
             .offset(x: 0, y: -64)
         }
         
