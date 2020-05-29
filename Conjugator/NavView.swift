@@ -31,6 +31,7 @@ final class MyAppEnvironmentData: ObservableObject {
   @Published var verby = VerbDB()
   @Published var tensey = TenseDB()
   @Published var answery = AnswerDB()
+  @Published var bisy = BisDB()
 //  @Published var groupy = groupDB()
   @Published var switchLanguage: Bool = false
 }

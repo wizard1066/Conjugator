@@ -115,11 +115,15 @@ extension IAPManager: SKProductsRequestDelegate, SKRequestDelegate {
   
   func request(_ request: SKRequest, didFailWithError error: Error) {
     print("didFailWithError ", error)
-    purchasePublisher.send(("Purchase request failed ", true))
+    DispatchQueue.main.async {
+      purchasePublisher.send(("Purchase request failed ", true))
+    }
   }
   
   func requestDidFinish(_ request: SKRequest) {
-    print("request did finish ")
+    DispatchQueue.main.async {
+      print("request did finish ")
+    }
   }
   
 }

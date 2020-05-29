@@ -859,7 +859,7 @@
 27,10,ZP,,absou-s,,,0
 27,10,ZP,,absou-te,,,0
 
-27,9,ZP,,absolv-ant
+27,9,ZP,,absolv-ant,0
 
 28, 1, 0, Il,  acquiert, 0, 0 ,1016
 28, 1, 0, Ils,  acquièrent, 0, 0 ,2032
@@ -1141,12 +1141,7 @@
 34, 2, 0, Tu,  battras, 0, 0 ,248
 34, 2, 0, Vous,  battrez, 0, 0 ,992
 34, 20, XX, battre, , 0, 0, 0
-34, 7, 0, Il,  battrait, 0, 0 ,248
-34, 7, 0, Ils,  battraient, 0, 0 ,496
-34, 7, 0, Je,  battrais, 0, 0 ,248
-34, 7, 0, Nous,  battrions, 0, 0 ,992
-34, 7, 0, Tu,  battrais, 0, 0 ,248
-34, 7, 0, Vous,  battriez, 0, 0 ,992
+
 34,1,1P,Nous,battons,,,0
 34,1,2P,Vous,battez,,,0
 34,1,3P,Ils,battent,0,,0
@@ -1175,6 +1170,16 @@
 34,6,2S,Tu,battisses,,,0
 34,6,3P,Ils,battissent,,,0
 34,6,3S,Il,battît,,,0
+
+
+34, 7, 0, Il,  battrait, 0, 0 ,248
+34, 7, 0, Ils,  battraient, 0, 0 ,496
+34, 7, 0, Je,  battrais, 0, 0 ,248
+34, 7, 0, Nous,  battrions, 0, 0 ,992
+34, 7, 0, Tu,  battrais, 0, 0 ,248
+34, 7, 0, Vous,  battriez, 0, 0 ,992
+
+
 35, 1, 0, Il,  boit, 0, 0 0
 35, 1, 0, Ils,  boivent, 0, 0 ,240
 35, 1, 0, Je,  bois, 0, 0 0
@@ -1220,6 +1225,7 @@
 35, 7, 0, Tu,  boirais, 0, 0 ,120
 35, 7, 0, Vous,  boiriez, 0, 0 ,480
 35, 9, 0, buv,  ant, 0, 0 0
+
 36, 1, 1P, Nous,  bouillons, bouill, ons  0
 36, 1, 1S, Je,  bous, bou, s  0
 36, 1, 2P, Vous,  bouillez, bouill, ez  0
@@ -1264,6 +1270,7 @@
 36, 7, 3P, Ils,  bouilliraient, bouillir, aient  0
 36, 7, 3S, Il,  bouillirait, bouillir, ait  0
 36, 9, , ,  bouillant, bouill, ant  0
+
 38, 1, 0, Il,  clôt, 0, 0 ,4536
 38, 1, 0, Ils,  closent, 0, 0 ,4336
 38, 1, 1S, Je,  clos, clo, s  0
@@ -1791,6 +1798,7 @@
 49,6,2,Tu,cuisisses,0
 49,6,2,Vous,cuisissiez,0
 49,9,2,,cuisant,0
+
 5, 1, 1P, Nous,  nous parlons, nous parl, ons  0
 5, 1, 1S, Je,  me  parle, me  parl, e  0
 5, 1, 2P, Vous,  vous parlez, vous parl, ez  0
@@ -1836,6 +1844,7 @@
 5, 7, 3P, Ils,  se parleraient, se parler, aient  0
 5, 7, 3S, Il,  se parlerait, se parler, ait  0
 5, 9, , ,  se parlant, se parl, ant  0
+
 50, 1, 1P, Nous,  devons, dev, ons  0
 50, 1, 1X, Il,  doit, 0, 0 ,440
 50, 1, 1X, Ils,  doivent, 0, 0 ,240
@@ -2172,6 +2181,7 @@
 59, 7, 3P, Ils,  fuiraient, fuir, aient  0
 59, 7, 3S, Il,  fuirait, fuir, ait  0
 59, 9, , ,  fuyant, fu, yant  0
+
 6, 1, 1P, Nous,  nous méfions, nous méfi, ons  0
 6, 1, 1S, Je,  me méfie, me méfi, e  0
 6, 1, 2P, Vous,  vous méfiez, vous méfi, ez  0
@@ -2216,7 +2226,6 @@
 6, 7, 3P, Ils,  se méfieraient, se méfier, aient  0
 6, 7, 3S, Il,  se méfierait, se méfier, ait  0
 6, 9, , ,  se méfiant, se méfi, ant  0
-
 
 
 61, 1, 1X, Il,  joint, 0, 0 ,1912
@@ -3126,6 +3135,10 @@
 8, 9, , ,  achetant, achet, ant  0
 8,1,1P,Nous,achetons,achet,ons,,,0,
 8,1,2P,Vous,achetez,achet,ez,,,0,
+
+
+
+
 80, 2, 0, Il,  rompra, 0, 0 ,248
 80, 2, 0, Ils,  rompront, 0, 0 ,496
 80, 2, 0, Je,  romprai, 0, 0 ,248

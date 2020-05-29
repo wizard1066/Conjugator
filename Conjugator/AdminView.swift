@@ -12,6 +12,7 @@ import Combine
 
 let nextPublisher = PassthroughSubject<Void, Never>()
 let resetPublisher = PassthroughSubject<Void, Never>()
+let savedFile = PassthroughSubject<Void, Never>()
 
 struct AdminView: View {
   @State private var firstname = ""
@@ -51,6 +52,7 @@ struct AdminView: View {
   @State private var count = 0
   @State var word = "PRESSME"
   @State var sumsum = 0
+  @State var showingAlert = false
   
   @EnvironmentObject var env: MyAppEnvironmentData
   
@@ -65,10 +67,16 @@ struct AdminView: View {
           .navigationBarTitle(Text("Admin Page"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
           .navigationBarItems(trailing: Text("Do Update").onTapGesture {
             print("Updating ...")
-            writeFile(answers: self.env.answery.answerx)
+//            writeFile(answers: self.env.answery.answerx)
+              writeFile(answers: self.env.bisy.bisx)
         }).onReceive(nextPublisher) { (_) in
           self.display9 = false
+        }.onReceive(savedFile) { (_) in
+          self.showingAlert = true
         }
+        .alert(isPresented: $showingAlert) {
+Alert(title: Text("Save File"), message: Text("Saved"), dismissButton: .default(Text("OK")))
+          }
         TextField("Modify ...", text: $selectedText, onCommit: {
         
           print("tenseID ", self.tenseID)
@@ -83,7 +91,7 @@ struct AdminView: View {
             data.personID == self.personID && data.verbID == self.verbID && data.tenseID == self.tenseID
           }
           print("timeout ", self.personID, self.verbID,self.tenseID)
-          print("fooBar ", self.env.answery.answerx[zak!])
+//          print("fooBar ", self.env.answery.answerx[zak!])
           self.env.answery.answerx.remove(at: zak!)
           
           self.selections[self.tag].name = self.selectedText
@@ -92,7 +100,8 @@ struct AdminView: View {
           
           let newAnswer = AnswerBlob(verbID: self.verbID, tenseID: self.tenseID, personID: self.personID, name: self.selectedText, redMask: self.sumsum, stemMask: nil, termMask: nil)
           print("newAnswer ", newAnswer)
-          self.env.answery.answerx.append(newAnswer)
+//          self.env.answery.answerx.append(newAnswer)
+          self.env.bisy.bisx.append(newAnswer)
           
           DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
             self.display9 = true
@@ -223,6 +232,7 @@ struct AdminView: View {
 }
   
    struct SpotView: View {
+    
     @Binding var word: String
     @Binding var sumsum: Int
     @State var gate: Int = 0
@@ -235,6 +245,7 @@ struct AdminView: View {
     var body: some View {
     let letter = word.map({String($0)})
     return VStack {
+      
       HStack(spacing: 0) {
             ForEach((0 ..< letter.count), id: \.self) { column in
               Text(letter[column])
@@ -294,7 +305,8 @@ func colorCodex(gate: Int, noX: Int) -> Bool {
 func writeFile(answers: [AnswerBlob]) {
 //  print("amswerBlob ",answers.count)
   let uuid = UUID().uuidString
-  let fileName = "Conjugations-" + uuid
+  let fileName = "ConjugationsBis" + uuid
+//  let fileName = "ConjugationsBis"
   let dir = try? FileManager.default.url(for: .documentDirectory,
                                          in: .userDomainMask, appropriateFor: nil, create: true)
   
@@ -303,7 +315,8 @@ func writeFile(answers: [AnswerBlob]) {
   if let fileURL = dir?.appendingPathComponent(fileName).appendingPathExtension("txt") {
     var lines: String = ""
       for line in answers {
-        lines += "\(line.verbID!),\(line.tenseID!),0,\(line.name!),\(line.redMask!)\n"
+        let newLine = line.name!.replacingOccurrences(of: " ", with: ",")
+        lines += "\(line.verbID!),\(line.tenseID!),0,\(newLine),0,0,\(line.redMask!)\n"
       }
       do {
         try lines.write(to: fileURL, atomically: false, encoding: .utf8)
@@ -321,6 +334,7 @@ func writeFile(answers: [AnswerBlob]) {
         print("Failed reading from URL: \(fileURL), Error: " + error.localizedDescription)
       }
 //      print("Read from the file: \(inString) ")
+      savedFile.send()
     }
     }
 }

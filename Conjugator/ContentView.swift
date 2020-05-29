@@ -116,6 +116,14 @@ final class AnswerDB: ObservableObject, Identifiable {
   }
 }
 
+final class BisDB: ObservableObject, Identifiable {
+  @Published var bisx: [AnswerBlob] = [] {
+    willSet {
+      objectWillChange.send()
+    }
+  }
+}
+
 struct GroupBlob {
   var groupID: Int!
   var name: String!
