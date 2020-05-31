@@ -302,6 +302,8 @@ struct PageTwo: View {
   @State private var action: Int? = 0
   @State private var overText = false
   
+  @State var newColor: Color = Color.clear
+  
   var body: some View {
     
     func resetButtons() {
@@ -616,10 +618,15 @@ struct PageTwo: View {
         
       } // ZStack
       Text(groupName)
-        .font(Fonts.avenirNextCondensedBold(size: 24))
-        .background(groupColor ? Color.yellow: Color.clear)
+        .font(Fonts.avenirNextCondensedBold(size: 18))
+        .background(groupColor ? newColor: Color.clear)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         .offset(x: 0, y: -64)
+        .onAppear {
+          self.newColor = Color.init(0xccff00)
+//          self.newColor = Color.init(0xfaed27)
+//          self.newColor = Color.yellow
+        }
       if display2Conjugations {
         List {
           ForEach((0 ..< self.selections.count), id: \.self) { column in
@@ -796,5 +803,14 @@ extension String {
 extension UIApplication {
   func endEditing() {
     sendAction(#selector(UIResponder.resignFirstResponder), to: nil, from: nil, for: nil)
+  }
+}
+
+extension Color {
+  init(_ hex: Int, opacity: Double = 1.0) {
+    let red = Double((hex & 0xff0000) >> 16) / 255.0
+    let green = Double((hex & 0xff00) >> 8) / 255.0
+    let blue = Double((hex & 0xff) >> 0) / 255.0
+    self.init(.sRGB, red: red, green: green, blue: blue, opacity: opacity)
   }
 }
