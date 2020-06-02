@@ -3010,7 +3010,7 @@
 8, 1, 0, Tu,  achètes, 0, 0 ,64
 8, 10, , ,  acheté, achet, é(s)  0
 8, 2, 0, Il,  achètera, 0, 0 ,64
-8, 2, 0, Ils,  achèteront, 0, 0 ,64
+8, 2, 0, Ils,  achèteront, 0, 0 ,128
 8, 2, 0, J',  achèterai, 0, 0 ,64
 8, 2, 0, Nous,  achèterons, 0, 0 ,256
 8, 2, 0, Tu,  achèteras, 0, 0 ,64
