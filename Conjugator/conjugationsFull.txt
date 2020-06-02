@@ -815,9 +815,6 @@
 27,1,0,Il,absout,248
 27,1,0,J',absous,248
 27,1,0,Tu,absous,248
-27,1,1P,Nous,absolvons,1,,0
-27,1,2P,Vous,absolvez,1,,0
-27,1,3P,Ils,absolvent,1,,0
 
 27,2,0,Il,absoudra,1016
 27,2,0,Ils,absoudront,2032
@@ -831,12 +828,7 @@
 27,3,2S,Tu,absolvais,,,0
 27,3,3P,Ils,absolvaient,,,0
 27,3,3S,Il,absolvait,,,0
-27,4,1P,Nous,absolûmes,1,,0
-27,4,1S,J',absolus,1,,0
-27,4,2P,Vous,absolûtes,1,,0
-27,4,2S,Tu,absolus,1,,0
-27,4,3P,Ils,absolurent,1,,0
-27,4,3S,Il,absolut,1,,0
+
 27,5,1P,Nous,absolvions,,,0
 27,5,1S,J',absolve,,,0
 27,5,2P,Vous,absolviez,,,0
@@ -855,11 +847,21 @@
 27,7,0,Nous,absoudrions,4064
 27,7,0,Tu,absoudrais,1016
 27,7,0,Vous,absoudriez,4064
-
-27,10,ZP,,absou-s,,,0
-27,10,ZP,,absou-te,,,0
-
 27,9,ZP,,absolv-ant,0
+
+27,4,0,J',absolus,0,0,248
+27,4,0,Tu,absolus,0,0,248
+27,4,0,Il,absolut,0,0,248
+27,4,0,Ils,absolurent,0,0,496
+27,4,0,Nous,absolûmes,0,0,992
+27,4,0,Vous,absolûtes,0,0,992
+
+27,1,0,Ils,absolvent,0,0,1008
+27,1,0,Nous,absolvons,0,0,2016
+27,1,0,Vous,absolvez,0,0,2016
+
+27,10,0,absou-te,0,0,991
+27,10,0,absou-s,0,0,991
 
 28, 1, 0, Il,  acquiert, 0, 0 ,1016
 28, 1, 0, Ils,  acquièrent, 0, 0 ,2032

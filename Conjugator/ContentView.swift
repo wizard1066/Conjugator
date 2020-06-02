@@ -577,35 +577,42 @@ struct PageTwo: View {
             self.display2Conjugations = false
             self.selections.removeAll()
             if linkID! == 0 {
-              for instance in self.env.answery.answerx {
-                if instance.tenseID == tenseID && instance.verbID == verbID {
-                  self.selections.append(instance)
+              if searchNrespond(self.env, &self.selections) {
+                  DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                    self.display0Tense = false
+                    self.display1Tense = true
+                    self.display0Verb = false
+                    self.display1Verb = true
+                    self.newValue = 256
+                    for loop in 0...5 {
+                      self.showMe[loop] = false
+                    }
+                    withAnimation { ()
+                      self.display2Conjugations = true
+                    }
                 }
-              }
-              self.selections.sort { (first, second) -> Bool in
-                first.personID.debugDescription < second.personID.debugDescription
               }
             } else {
               if self.noDivert {
                 let spc = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
+                DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+                  self.display0Tense = false
+                  self.display1Tense = true
+                  self.display0Verb = false
+                  self.display1Verb = true
+                  self.newValue = 256
+                  for loop in 0...5 {
+                    self.showMe[loop] = false
+                  }
+                  withAnimation { ()
+                    self.display2Conjugations = true
+                  }
+                }
               }
             }
             if !self.groupColor {
               self.selections.removeAll()
-            }
-            DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-              self.display0Tense = false
-              self.display1Tense = true
-              self.display0Verb = false
-              self.display1Verb = true
-              self.newValue = 256
-              for loop in 0...5 {
-                self.showMe[loop] = false
-              }
-              withAnimation { ()
-                self.display2Conjugations = true
-              }
             }
           }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         }
@@ -623,8 +630,8 @@ struct PageTwo: View {
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
         .offset(x: 0, y: -64)
         .onAppear {
-          self.newColor = Color.init(0xccff00)
-//          self.newColor = Color.init(0xfaed27)
+//          self.newColor = Color.init(0xccff00)
+          self.newColor = Color.init(0xfaed27)
 //          self.newColor = Color.yellow
         }
       if display2Conjugations {
@@ -683,6 +690,19 @@ struct PageTwo: View {
         }
       }).statusBar(hidden: true)
   }
+}
+
+
+func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob]) -> Bool {
+  for instance in env.answery.answerx {
+    if instance.tenseID == tenseID && instance.verbID == verbID {
+      selections.append(instance)
+    }
+  }
+  selections.sort { (first, second) -> Bool in
+    first.personID.debugDescription < second.personID.debugDescription
+  }
+  return true
 }
 
 func colorCode(gate: Int, noX: Int) -> Bool {

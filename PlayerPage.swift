@@ -31,7 +31,6 @@ let nextFrame = PassthroughSubject<Void, Never>()
 //}
 
 struct PlayerTimeView: View {
-//  let timeObserver: PlayerTimeObserver
   @State private var currentTime: TimeInterval = 0
   
   var body: some View {
@@ -45,7 +44,6 @@ struct PlayerTimeView: View {
 }
 
 class PlayerUIView: UIView {
-//  let publisher = PassthroughSubject<TimeInterval, Never>()
   private var timeObservation: Any?
   private let playerLayer = AVPlayerLayer()
   override init(frame: CGRect) {

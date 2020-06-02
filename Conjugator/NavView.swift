@@ -254,7 +254,7 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   }
   print("DownLoadTenses")
   let tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif.1.Present indicative.Derived from infinitive stem.4",
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present indicative.Derived from infinitive stem.4",
     "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
     "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect indicative.Derived from the stem of nous present.4",
     "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past participle.Derived from infinitive stem.4",
