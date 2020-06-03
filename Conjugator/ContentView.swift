@@ -577,8 +577,8 @@ struct PageTwo: View {
             self.display2Conjugations = false
             self.selections.removeAll()
             if linkID! == 0 {
-              if searchNrespond(self.env, &self.selections) {
-                  DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
+              searchNrespond(self.env, &self.selections) {
+//                  DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
                     self.display0Tense = false
                     self.display1Tense = true
                     self.display0Verb = false
@@ -590,7 +590,7 @@ struct PageTwo: View {
                     withAnimation { ()
                       self.display2Conjugations = true
                     }
-                }
+//                }
               }
             } else {
               if self.noDivert {
@@ -693,7 +693,7 @@ struct PageTwo: View {
 }
 
 
-func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob]) -> Bool {
+func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob], endOfMethod: @escaping () -> Void) {
   for instance in env.answery.answerx {
     if instance.tenseID == tenseID && instance.verbID == verbID {
       selections.append(instance)
@@ -702,7 +702,7 @@ func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob]
   selections.sort { (first, second) -> Bool in
     first.personID.debugDescription < second.personID.debugDescription
   }
-  return true
+  endOfMethod()
 }
 
 func colorCode(gate: Int, noX: Int) -> Bool {
