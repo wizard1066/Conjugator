@@ -185,7 +185,7 @@
 13,7,2S,Tu,assiégerais,assiéger,ais0
 13,7,3P,Ils,assiégeraient,assiéger,aient0
 13,7,3S,Il,assiégerait,assiéger,ait0
-13,9,0,assiég,eant,0,0,128
+13,9,0,assiégeant,0,0,128
 14,1,0,Nous,commençons,0,0,2048
 14,1,1S,Je,commence,commenc,e0
 14,1,2P,Vous,commencez,commenc,ez0
@@ -1126,7 +1126,7 @@
 32,1,0,Tu,assois,0,0,248
 32,1,0,Vous,assoyez,0,00
 
-32,10,0,ass,is,0,0,967
+32,10,0,assis,0,0,967
 
 32,2,0,Il,assoira,0,0,504
 32,2,0,Ils,assoiront,0,0,1008
@@ -1167,7 +1167,7 @@
 32,7,0,Nous,assoirions,0,0,2016
 32,7,0,Tu,assoirais,0,0,504
 32,7,0,Vous,assoiriez,0,0,2016
-32,9,0,asso,yant,0,00
+32,9,0,assoyant,0,00
 
 34,1,0,Il,bat,0,0,952
 34,1,0,Je,bats,0,0,952
@@ -1317,7 +1317,7 @@
 38,1,0,Ils,closent,0,0,4336
 38,1,1S,Je,clos,clo,s0
 38,1,2S,Tu,clos,clo,s0
-38,10,0,clo,s,0,04336
+38,10,0,clos,0,04336
 38,2,0,Il,clora,0,0,120
 38,2,0,Ils,cloront,0,0,240
 38,2,0,Je,clorai,0,0,120
@@ -1339,7 +1339,7 @@
 38,7,0,Vous,cloriez,0,0,480
 38,9,0,closant,0,0,0,0
 
-39,10,0,concl,u,0,0,0
+39,10,0,conclu,0,0,0
 
 39,2,0,Il,conclura,0,0,1016
 39,2,0,Ils,concluront,0,0,2032
@@ -1394,7 +1394,7 @@
 40,1,1X,Vous,confisez,0,0,2016
 40,1,2S,Tu,confis,confi,s0
 40,1,3S,Il,confit,confi,t0
-40,10,0,confi,t,0,0,2016
+40,10,0,confit,0,0,2016
 
 40,2,0,Il,confira,0,0,504
 40,2,0,Ils,confiront,0,0,1008
@@ -1491,7 +1491,7 @@
 42,1,1P,Ils,cousent,0,0,240
 42,1,2P,Nous,cousons,0,0,480
 42,1,3P,Vous,cousez,0,0,480
-42,10,0,cous,u,0,0,0
+42,10,0,cousu,0,0,0
 
 42,2,1P,Ils,coudront,0,0,496
 42,2,1S,Je,coudrai,0,0,248
@@ -1628,7 +1628,7 @@
 45,1,1X,Nous,craignons,0,0,2032
 45,1,1X,Tu,crains,0,0,3832
 45,1,1X,Vous,craignez,0,0,2032
-45,10,0,crain,t,0,0,95
+45,10,0,craint,0,0,95
 
 45,2,1X,Il,craindra,0,0,1016
 45,2,1X,Ils,craindront,0,0,2040
