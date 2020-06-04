@@ -13,7 +13,6 @@
 52,dormir,0,easy,avoir,dormi,dorm,-ir
 54,faillir,0,hard,avoir,failli,faill,-ir
 57,fondre,0,easy,avoir,fondu,fond,-re
-58,foutre,0,easy,avoir,foutu,fout,-re
 64,moudre,0,easy,avoir,moulu,moud,-re
 70,partir,0,easy,être,parti,part,-ir
 71,peindre,0,easy,avoir,peint,peind,-re
