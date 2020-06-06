@@ -11,7 +11,6 @@
 21,étudier,0,easy,avoir,étudié,étudi,-er
 49,cuire,0,easy,avoir,cuit,cui,-re
 52,dormir,0,easy,avoir,dormi,dorm,-ir
-54,faillir,0,hard,avoir,failli,faill,-ir
 57,fondre,0,easy,avoir,fondu,fond,-re
 64,moudre,0,easy,avoir,moulu,moud,-re
 70,partir,0,easy,être,parti,part,-ir
@@ -22,7 +21,7 @@
 80,rompre,0,easy,avoir,rompu,romp,-re
 82,sentir,0,easy,avoir,senti,sent,-ir
 84,servir,0,easy,avoir,servi,serv,-ir
-85,sortir,0,hard,être,sorti,sort,-ir
+85,sortir,0,easy,être,sorti,sort,-ir
 86,suivre,0,easy,avoir,suivi,suiv,-re
 93,vêtir,0,easy,avoir,vêtu,vêt,-ir
 8,acheter,0,medium,avoir,acheté,achet,-er
