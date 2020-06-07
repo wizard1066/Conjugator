@@ -20,9 +20,10 @@
 		7BB9E81A245F3E6B00A96743 /* PlayerPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB9E819245F3E6B00A96743 /* PlayerPage.swift */; };
 		7BB9E84124602E2D00A96743 /* IAPManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BB9E84024602E2D00A96743 /* IAPManager.swift */; };
 		7BDBB6862457465900A37CC6 /* verb.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBB6852457465900A37CC6 /* verb.txt */; };
-		7BDBB68824574A1400A37CC6 /* conjugationsFull.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBB68724574A1300A37CC6 /* conjugationsFull.txt */; };
+		7BDBB68824574A1400A37CC6 /* xconjugationsFull.txt in Resources */ = {isa = PBXBuildFile; fileRef = 7BDBB68724574A1300A37CC6 /* xconjugationsFull.txt */; };
 		7BDBB68A24585A4800A37CC6 /* NavView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDBB68924585A4800A37CC6 /* NavView.swift */; };
 		7BDBB68C24587C9700A37CC6 /* AdminView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7BDBB68B24587C9700A37CC6 /* AdminView.swift */; };
+		7BFB9CD2248CFD18007DBA06 /* Verbs.csv in Resources */ = {isa = PBXBuildFile; fileRef = 7BFB9CD1248CFD18007DBA06 /* Verbs.csv */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -41,9 +42,10 @@
 		7BB9E819245F3E6B00A96743 /* PlayerPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PlayerPage.swift; sourceTree = SOURCE_ROOT; };
 		7BB9E84024602E2D00A96743 /* IAPManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IAPManager.swift; sourceTree = SOURCE_ROOT; };
 		7BDBB6852457465900A37CC6 /* verb.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = verb.txt; sourceTree = "<group>"; };
-		7BDBB68724574A1300A37CC6 /* conjugationsFull.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = conjugationsFull.txt; sourceTree = "<group>"; };
+		7BDBB68724574A1300A37CC6 /* xconjugationsFull.txt */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = xconjugationsFull.txt; sourceTree = "<group>"; };
 		7BDBB68924585A4800A37CC6 /* NavView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NavView.swift; sourceTree = "<group>"; };
 		7BDBB68B24587C9700A37CC6 /* AdminView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AdminView.swift; sourceTree = "<group>"; };
+		7BFB9CD1248CFD18007DBA06 /* Verbs.csv */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = Verbs.csv; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -89,7 +91,8 @@
 				7BDBB68924585A4800A37CC6 /* NavView.swift */,
 				7B2A9DB1244DC6FC00210574 /* Assets.xcassets */,
 				7B2A9DB6244DC6FC00210574 /* LaunchScreen.storyboard */,
-				7BDBB68724574A1300A37CC6 /* conjugationsFull.txt */,
+				7BFB9CD1248CFD18007DBA06 /* Verbs.csv */,
+				7BDBB68724574A1300A37CC6 /* xconjugationsFull.txt */,
 				7BDBB6852457465900A37CC6 /* verb.txt */,
 				7B2A9DB9244DC6FC00210574 /* Info.plist */,
 				7B2A9DAC244DC6F800210574 /* Conjugator.xcdatamodeld */,
@@ -175,10 +178,11 @@
 			files = (
 				7B3A7AF524607A63004198C9 /* AppDemo.mov in Resources */,
 				7B2A9DB8244DC6FC00210574 /* LaunchScreen.storyboard in Resources */,
+				7BFB9CD2248CFD18007DBA06 /* Verbs.csv in Resources */,
 				7B2A9DB5244DC6FC00210574 /* Preview Assets.xcassets in Resources */,
 				7B2A9DB2244DC6FC00210574 /* Assets.xcassets in Resources */,
 				7BDBB6862457465900A37CC6 /* verb.txt in Resources */,
-				7BDBB68824574A1400A37CC6 /* conjugationsFull.txt in Resources */,
+				7BDBB68824574A1400A37CC6 /* xconjugationsFull.txt in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

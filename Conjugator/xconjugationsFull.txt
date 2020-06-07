@@ -115,7 +115,7 @@
 12,4,0,J',arguai,argu,0
 12,4,0,Tu,arguas,argu,0
 12,4,0,Ils,arguèrent,argu,0
-12,4,0,Il,argua,argu,a0
+12,4,0,Il,argua,argu,0
 
 12,5,0,Il,arguë,0,0,1920
 12,5,0,Ils,arguënt,0,0,7936
@@ -1844,12 +1844,12 @@
 50,3,0,Tu,devais,dev,0
 50,3,0,Ils,devaient,dev,0
 50,3,0,Il,devait,dev,0
-50,4,0,Nous,dûmes,0,0,16
-50,4,0,Vous,dûtes,0,0,16
+
+50,4,0,Nous,dûmes,0,0,32
+50,4,0,Vous,dûtes,0,0,32
 50,4,0,Il,dut,0,0,200
 50,4,0,Ils,durent,0,0,16
 50,4,0,Je,dus,0,0,200
-
 50,4,0,Tu,dus,0,0,200
 
 50,5,0,Je,doive,doiv,e0
@@ -1891,12 +1891,14 @@
 51,3,0,Tu,disais,dis,0
 51,3,0,Ils,disaient,dis,0
 51,3,0,Il,disait,dis,0
+
 51,4,0,Il,dit,0,0,968
 51,4,0,Ils,dirent,0,0,16
 51,4,0,Je,dis,0,0,968
 51,4,0,Nous,dîmes,0,0,32
 51,4,0,Tu,dis,0,0,968
 51,4,0,Vous,dîtes,0,0,32
+
 51,5,0,Nous,disions,dis,0
 51,5,0,Je,dise,dis,e0
 51,5,0,Vous,disiez,dis,0
@@ -2495,7 +2497,7 @@
 68,1,0,Nous,oyons,0,0,96
 68,1,0,Tu,ois,0,0,24
 68,1,0,Vous,oyez,0,0,96
-68,10,0,ouï,0,0,0
+68,10,0,ouï,0,0,4
 68,2,0,Nous,ouïrons,ouïr,0
 68,2,0,J',ouïrai,ouïr,0
 68,2,0,Vous,ouïrez,ouïr,0
@@ -2796,8 +2798,8 @@
 73,7,0,Vous,plairiez,0,0,992
 73,9,0,plaisant,0,0,0,0
 74,1,0,Il,pleut,0,0,376
-74,10,0,pl,u,0,0,3
-74,10,0,plu,0,0,0
+74,10,0,plu,0,0,3
+
 74,2,0,Il,pleuvra,0,0,504
 74,20,0,pleuvoir,,0,0,0
 74,3,0,Il,pleuvait,0,0,248
@@ -3418,7 +3420,7 @@
 88,1,0,Nous,tenons,ten,0
 88,1,0,Vous,tenez,ten,0
 
-88,10,0,tenu,0,0,16
+88,10,0,tenu,0,0,8
 88,2,0,Il,tiendra,0,0,504
 88,2,0,Ils,tiendront,0,0,1008
 88,2,0,Je,tiendrai,0,0,504
@@ -3464,7 +3466,7 @@
 89,1,0,Ils,traient,trai,0
 89,1,0,Il,trait,trai,t0
 
-89,10,0,trait,0,0,32
+89,10,0,trait,0,0,16
 89,2,0,Il,traira,0,0,248
 89,2,0,Ils,trairont,0,0,496
 89,2,0,Je,trairai,0,0,248
@@ -3633,7 +3635,7 @@
 92,1,0,Nous,venons,0
 92,1,0,Tu,viens,0,0,1912
 92,1,0,Vous,venez,0
-92,10,0,ven,u,0,0,16144
+92,10,0,venu,0,0,8
 92,2,0,Il,viendra,0,0,504
 92,2,0,Ils,viendront,0,0,1008
 92,2,0,Je,viendrai,0,0,504
@@ -3678,7 +3680,7 @@
 93,1,0,Tu,vêts,vêt,s0
 93,1,0,Ils,vêtent,vêt,0
 93,1,0,Il,vêt,vêt,0
-93,10,0,vêt,u(s),0,0,16
+93,10,0,vêtu,0,0,8
 93,2,0,Nous,vêtirons,vêtir,0
 93,2,0,Je,vêtirai,vêtir,0
 93,2,0,Vous,vêtirez,vêtir,0

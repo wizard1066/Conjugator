@@ -256,13 +256,13 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   let tenses = [
     "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present indicative.Derived from infinitive stem.4",
     "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
-    "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect indicative.Derived from the stem of nous present.4",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past participle.Derived from infinitive stem.4",
-    "5-5.Subjonctif présent.Dérivé du radical du ils de l’indicatif présent.1.Present subjunctive.Derived from the stem of ils present.4",
-    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect subjunctive.Derived from the simple past stem.4",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect indicative.Derived from the stem of nous indicative present.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past participle.The simple past indicative is derived from the stem of the present nous.4",
+    "5-5.Subjonctif présent.Dérivé du radical du ils de l’indicatif présent.1.Present subjunctive.Derived from the stem of ils indicative present.4",
+    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect subjunctive.Derived from the unique simple past stem.4",
     "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
-    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present participle.Derived from the stem of nous present.4",
-    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Simple past indicative.Derived from the stem of nous present.4",
+    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present participle.Derived from the stem of nous indicative present.4",
+    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Simple past indicative.The past participle is derived from the infinitive stem.4",
     "20-10.Infinitif présent.Forme de base.0.Present infinitive.Basic form.4"]
   
   for instance in tenses {

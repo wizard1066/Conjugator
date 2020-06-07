@@ -62,7 +62,7 @@ func readVerb(fileName: String) -> [String]? {
 }
 
 func readConjugations() -> [String]? {
-  let fileURL = Bundle.main.url(forResource: "conjugationsFull", withExtension: "txt")
+  let fileURL = Bundle.main.url(forResource: "Verbs", withExtension: "csv")
   do {
     if try fileURL!.checkResourceIsReachable() {
       print("file exist")
