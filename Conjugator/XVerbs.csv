@@ -840,6 +840,7 @@
 27,2,0,Nous,absoudrons,4064
 27,2,0,Tu,absoudras,1016
 27,2,0,Vous,absoudrez,4064
+
 27,20,0,absoudre,,0,0,0
 27,3,0,Nous,absolvions,,,0
 27,3,0,J',absolvais,,,0
@@ -1249,6 +1250,7 @@
 36,1,0,Vous,bouillez,bouill,0
 36,1,0,Ils,bouillent,bouill,0
 36,10,0,bouilli,0,0,0
+
 36,2,0,Nous,bouillirons,bouillir,0
 36,2,0,Je,bouillirai,bouillir,0
 36,2,0,Vous,bouillirez,bouillir,0
