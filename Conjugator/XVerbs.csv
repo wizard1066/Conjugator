@@ -243,12 +243,14 @@
 15,2,0,Ils,créeront,cré,0
 15,2,0,Il,créera,créer,a0
 15,20,0,créer,,0,0,0
+
 15,3,0,Nous,créions,cré,0
 15,3,0,Je,créais,cré,0
 15,3,0,Vous,créiez,cré,0
 15,3,0,Tu,créais,cré,0
 15,3,0,Ils,créaient,cré,0
 15,3,0,Il,créait,cré,0
+
 15,4,0,Nous,créâmes,cré,0
 15,4,0,Je,créai,cré,0
 15,4,0,Vous,créâtes,cré,0
@@ -289,12 +291,14 @@
 16,2,0,Tu,emploieras,0,0,256
 16,2,0,Vous,emploierez,0,0,1024
 16,20,0,employer,,0,0,0
+
 16,3,0,Nous,employions,employ,0
-16,3,0,Je,employais,employ,0
+16,3,0,J',employais,employ,0
 16,3,0,Vous,employiez,employ,0
 16,3,0,Tu,employais,employ,0
 16,3,0,Ils,employaient,employ,0
 16,3,0,Il,employait,employ,0
+
 16,4,0,Nous,employâmes,employ,0
 16,4,0,J',employai,employ,0
 16,4,0,Vous,employâtes,employ,0
@@ -503,6 +507,7 @@
 2,7,0,Nous,aurions,0,0,224
 2,7,0,Tu,aurais,0,0,56
 2,7,0,Vous,auriez,0,0,224
+
 2,9,0,ayant,0,0,67
 20,1,0,Il,essuie,0,0,640
 20,1,0,Ils,essuient,0,0,256
@@ -825,12 +830,14 @@
 26,7,2,Tu,haïrais,0
 26,7,2,Vous,haïriez,0
 26,9,2,haïssant,0,0,0
+
 27,1,0,Il,absout,248
 27,1,0,Ils,absolvent,0,0,1008
 27,1,0,J',absous,248
 27,1,0,Nous,absolvons,0,0,2016
 27,1,0,Tu,absous,248
 27,1,0,Vous,absolvez,0,0,2016
+
 27,10,1,absous,0,0,63
 27,10,2,absoute,0,0,127
 
@@ -880,6 +887,7 @@
 28,1,0,Tu,acquiers,0,0,1016
 28,1,0,Vous,acquérez,0,000
 28,10,0,acquis,0,0,3471
+
 28,2,0,Il,acquerra,0,0,1016
 28,2,0,Ils,acquerront,0,0,2032
 28,2,0,J',acquerrai,0,0,1016
@@ -970,6 +978,7 @@
 3,1,0,Nous,sommes,0,0,2016
 3,1,0,Tu,es,0,0,248
 3,1,0,Vous,êtes,0,0,1920
+
 3,10,0,été,0,0,15
 
 3,2,0,Il,sera,0,0,568
@@ -979,6 +988,7 @@
 3,2,0,Tu,seras,0,0,568
 3,2,0,Vous,serez,0,0,224
 3,20,0,être,,0,0,0
+
 3,3,0,J',étais,0,0,24
 3,3,0,Il,était,0,0,1048
 3,3,0,Ils,étaient,0,0,48
@@ -1415,12 +1425,14 @@
 41,1,0,Vous,connaissez,0,0,8160
 
 41,10,0,connu,0,0,15
+
 41,2,0,Ils,connaîtront,0,0
 41,2,0,Je,connaîtrai,0,0
 41,2,0,Nous,connaîtrons,0,0
 41,2,0,Tu,connaîtras,0,0
 41,2,0,Vous,connaîtrez,0,0
 41,2,0,Il,connaîtra,0,0
+
 41,20,0,connaître,,0,0,0
 41,3,0,Nous,connaissions,connaiss,0
 41,3,0,Je,connaissais,connaiss,0
@@ -1446,12 +1458,14 @@
 41,6,0,Tu,connusses,conn,0
 41,6,0,Ils,connussent,conn,0
 41,6,0,Il,connût,conn,ût0
+
 41,7,0,Ils,connaîtraient,0,0
 41,7,0,Je,connaîtrais,0,0
 41,7,0,Nous,connaîtrions,0,0
 41,7,0,Tu,connaîtrais,0,0
 41,7,0,Vous,connaîtriez,0,0
 41,7,0,Il,connaîtrait,0,0
+
 41,9,0,connaissant,0,0,0,0
 42,1,0,Ils,cousent,0,0,240
 42,1,0,Il,coud,0,0,0,0
@@ -1644,6 +1658,7 @@
 46,1,0,Il,croit,croi,t0
 
 46,10,0,cru,0,0,3
+
 46,2,0,Il,croira,0,0,248
 46,2,0,Ils,croiront,0,0,496
 46,2,0,Je,croirai,0,0,248
@@ -1833,6 +1848,7 @@
 50,10,2,due,0,0,3
 50,10,3,dus,0,0,3
 50,10,4,dues,0,0,3
+
 50,2,0,Il,devra,0,0,120
 50,2,0,Ils,devront,0,0,240
 50,2,0,Je,devrai,0,0,120
@@ -1872,6 +1888,7 @@
 50,7,0,Nous,devrions,0,0,480
 50,7,0,Tu,devrais,0,0,120
 50,7,0,Vous,devriez,0,0,480
+
 50,9,0,devant,0,0,0,0
 51,1,0,Je,dis,di,s0
 51,1,0,Ils,disent,0,0,112
@@ -3008,6 +3025,7 @@
 79,1,0,Il,rit,,,0
 
 79,10,0,ri,0,0,1
+
 79,2,0,Il,rira,0,0,56
 
 79,2,0,Ils,riront,0,0,120
