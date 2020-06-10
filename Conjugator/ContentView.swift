@@ -692,7 +692,6 @@ struct PageTwo: View {
   }
 }
 
-
 func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob], endOfMethod: @escaping () -> Void) {
   for instance in env.answery.answerx {
     if instance.tenseID == tenseID && instance.verbID == verbID {

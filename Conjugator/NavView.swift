@@ -50,6 +50,25 @@ struct NavigationTest: View {
 
 var argent: String = ""
 
+struct XContentView: View {
+  @EnvironmentObject var env: MyAppEnvironmentData
+  @State private var showingAlert = false
+  
+#if targetEnvironment(simulator)
+  // your simulator code
+  @State var purchased = true
+#else
+  @State var purchased = true
+#endif
+
+  var body: some View {
+    WaitingV().onAppear {
+      downLoadTenses(environment: self.env)
+      downLoadConjugations(env: self.env)
+    }
+  }
+}
+
 struct ContentView: View {
   @EnvironmentObject var env: MyAppEnvironmentData
   @State private var showingAlert = false
@@ -58,9 +77,8 @@ struct ContentView: View {
   // your simulator code
   @State var purchased = true
 #else
-  @State var purchased = true
+  @State var purchased = false
 #endif
-
 
   var body: some View {
 
@@ -68,9 +86,10 @@ struct ContentView: View {
       Text(env.switchLanguage ? "Conjugator":"Conjugateur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
-        .modifier(DownLoadConjugations())
+//        .modifier(DownLoadConjugations())
         .onAppear {
           downLoadTenses(environment: self.env)
+          downLoadConjugations(env: self.env)
         }.onReceive(purchasePublisher) { ( toutBon ) in
           let (message, success) = toutBon
           if success {
@@ -95,8 +114,6 @@ struct ContentView: View {
       .statusBar(hidden: true)
       
       Button(env.switchLanguage ? "Video":"Video") {
-          downLoadVerbs(levels: ["model"], environment: self.env)
-          
           self.env.currentPage = played ? .secondPage : .playerPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
@@ -167,13 +184,13 @@ struct PaidView: View {
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
-        Button(env.switchLanguage ? "List":"List") {
-          downLoadTenses(environment: self.env)
-          downLoadVerbs(levels: ["easy", "medium", "hard", "model"], environment: self.env)
-          self.env.currentPage = .listView
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+//        Button(env.switchLanguage ? "List":"List") {
+//          downLoadTenses(environment: self.env)
+//          downLoadVerbs(levels: ["easy", "medium", "hard", "model"], environment: self.env)
+//          self.env.currentPage = .listView
+//        }
+//        .font(Fonts.avenirNextCondensedBold(size: 20))
+//        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
       }
   }
@@ -343,6 +360,58 @@ func downLoadVerbs(levels: [String], environment: MyAppEnvironmentData) {
   }
 }
 
+func downLoadConjugations(env: MyAppEnvironmentData) {
+       if prime {
+          prime = false
+        env.tensey.tensex.removeAll()
+        env.answery.answerx.removeAll()
+        
+        let content2 = readConjugations()
+        
+        for lines in content2! {
+          if lines.count > 1 {
+            let tense = lines.split(separator: ",")
+            let verbID = Int(String(tense[0]).trimmingCharacters(in: .whitespacesAndNewlines))
+            let tenseID = Int(String(tense[1]).trimmingCharacters(in: .whitespacesAndNewlines))
+            var conjugation: String!
+            if tense[4].trimmingCharacters(in: .whitespacesAndNewlines) != "0" {
+              conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines) + " " + tense[4].trimmingCharacters(in: .whitespacesAndNewlines))
+            } else {
+              conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            let personID = returnClass(class2C: String(tense[3]).trimmingCharacters(in: .whitespacesAndNewlines))
+
+            var redMask: Int!
+            if tense.count > 5 {
+              redMask = Int(String(tense[5]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 6 {
+              redMask = Int(String(tense[6]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 7 {
+              redMask = Int(String(tense[7]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 8 {
+              redMask = Int(String(tense[8]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if tense.count > 9 {
+              redMask = Int(String(tense[9]).trimmingCharacters(in: .whitespacesAndNewlines))
+            }
+            if redMask == nil {
+              redMask = 0
+            }
+            
+            print("red ", tense[0], redMask!)
+            
+            if verbID != nil {
+              let newAnswer = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: personID, name: conjugation, redMask: redMask, stemMask: nil, termMask: nil)
+              env.answery.answerx.append(newAnswer)
+            }
+          }
+        }
+    }
+}
+
 struct DownLoadConjugations: ViewModifier {
   @EnvironmentObject var env: MyAppEnvironmentData
   func body(content: Content) -> some View {
@@ -351,7 +420,6 @@ struct DownLoadConjugations: ViewModifier {
         if prime {
           prime = false
         self.env.tensey.tensex.removeAll()
-//        self.env.groupy.groupx.removeAll()
         self.env.answery.answerx.removeAll()
         
         let content2 = readConjugations()
