@@ -61,6 +61,7 @@ struct ContentView: View {
   @State var purchased = true
 #endif
 
+
   var body: some View {
 
     VStack {
@@ -93,7 +94,7 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-      Button(env.switchLanguage ? "Demo Verbs":"Verbes Demo") {
+      Button(env.switchLanguage ? "Video":"Video") {
           downLoadVerbs(levels: ["model"], environment: self.env)
           
           self.env.currentPage = played ? .secondPage : .playerPage
@@ -248,6 +249,39 @@ struct BuyView: View {
   }
 }
 
+struct WaitingV: View {
+    
+    let timer = Timer.publish(every: 1.6, on: .main, in: .common).autoconnect()
+    @State var leftOffset: CGFloat = -100
+    @State var rightOffset: CGFloat = 100
+    
+  var body: some View {
+    ZStack {
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 20, height: 20)
+                .offset(x: leftOffset)
+                .opacity(0.7)
+                .animation(Animation.easeInOut(duration: 1))
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 20, height: 20)
+                .offset(x: leftOffset)
+                .opacity(0.7)
+                .animation(Animation.easeInOut(duration: 1).delay(0.2))
+            Circle()
+                .fill(Color.blue)
+                .frame(width: 20, height: 20)
+                .offset(x: leftOffset)
+                .opacity(0.7)
+                .animation(Animation.easeInOut(duration: 1).delay(0.4))
+        }
+        .onReceive(timer) { (_) in
+            swap(&self.leftOffset, &self.rightOffset)
+        }
+  }
+}
+
 func downLoadTenses(environment: MyAppEnvironmentData) {
   if !environment.tensey.tensex.isEmpty {
     return
@@ -375,6 +409,8 @@ func returnClass(class2C: String) -> PersonClass {
             case "Je":
               personID = PersonClass.a1
             case "J'":
+              personID = PersonClass.a1
+            case "J’":
               personID = PersonClass.a1
             case "Tu":
               personID = PersonClass.a2
