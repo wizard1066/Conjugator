@@ -58,7 +58,7 @@ struct XContentView: View {
   // your simulator code
   @State var purchased = true
 #else
-  @State var purchased = true
+  @State var purchased = false
 #endif
 
   var body: some View {
@@ -77,7 +77,7 @@ struct ContentView: View {
   // your simulator code
   @State var purchased = true
 #else
-  @State var purchased = false
+  @State var purchased = true
 #endif
 
   var body: some View {
@@ -113,14 +113,14 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-      Button(env.switchLanguage ? "Video":"Video") {
-          self.env.currentPage = played ? .secondPage : .playerPage
-        }
-        .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-        .onReceive(nextFrame) { (_) in
-          played = true
-        }
+//      Button(env.switchLanguage ? "Video":"Video") {
+//          self.env.currentPage = played ? .secondPage : .playerPage
+//        }
+//        .font(Fonts.avenirNextCondensedBold(size: 20))
+//        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+//        .onReceive(nextFrame) { (_) in
+//          played = true
+//        }
 
       if !purchased {
         BuyView(purchased: self.$purchased)
@@ -262,6 +262,14 @@ struct BuyView: View {
       .font(Fonts.avenirNextCondensedBold(size: 20))
       .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
       
+      Button(env.switchLanguage ? "Beginner":"Débutant") {
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels: ["easy"], environment: self.env)
+          self.env.currentPage = .secondPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
     }
   }
 }
@@ -305,16 +313,16 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   }
   print("DownLoadTenses")
   let tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present indicative.Derived from infinitive stem.4",
-    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future indicative.Derived from full infinitive.4",
-    "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect indicative.Derived from the stem of nous indicative present.4",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past participle.The simple past indicative is derived from the stem of the present nous.4",
-    "5-5.Subjonctif présent.Dérivé du radical du ils de l’indicatif présent.1.Present subjunctive.Derived from the stem of ils indicative present.4",
-    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect subjunctive.Derived from the unique simple past stem.4",
-    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present conditional.Derived from the full infinitive.4",
-    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present participle.Derived from the stem of nous indicative present.4",
-    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Simple past indicative.The past participle is derived from the infinitive stem.4",
-    "20-10.Infinitif présent.Forme de base.0.Present infinitive.Basic form.4"]
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.4",
+    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.4",
+    "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect Indicative.Derived from the stem of nous indicative present.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past Participle.The simple past indicative from the stem of the present nous.4",
+    "5-5.Subjonctif présent.Dérivé du radical du Ils de l’indicatif présent.1.Present Subjunctive.Derived from the stem of Ils indicative present.4",
+    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.4",
+    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.4",
+    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present Participle.Derived from the stem of nous indicative present.4",
+    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Simple Past Indicative.The past participle from the infinitive stem.4",
+    "20-10.Infinitif présent.Forme de base.0.Present Infinitive.Basic form.4"]
   
   for instance in tenses {
   
@@ -435,7 +443,7 @@ struct DownLoadConjugations: ViewModifier {
             } else {
               conjugation = String(tense[3].trimmingCharacters(in: .whitespacesAndNewlines))
             }
-            let personID = returnClass(class2C: String(tense[3]).trimmingCharacters(in: .whitespacesAndNewlines))
+            let personID = returnClass(class2C: String(tense[2]).trimmingCharacters(in: .whitespacesAndNewlines))
 
             var redMask: Int!
             if tense.count > 5 {
@@ -489,10 +497,11 @@ func returnClass(class2C: String) -> PersonClass {
             case "Vous":
               personID = PersonClass.b2
             case "Ils":
-              personID = PersonClass.a4
+              personID = PersonClass.b3
             default:
               personID = PersonClass.cx
             }
+            print("personID ",personID)
     return personID
 }
 

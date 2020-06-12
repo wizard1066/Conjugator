@@ -24,7 +24,7 @@ enum PersonClass {
   case a3
   case b1
   case b2
-  case a4
+  case b3
   case cx
 }
 
@@ -562,7 +562,7 @@ struct PageTwo: View {
             }
 
             if self.selectedTense < (self.env.tensey.tensex.count - 1 ) {
-              self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
+              self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense + 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
             } else {
               self.postTenseSelected = ""
             }
@@ -700,6 +700,10 @@ func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob]
   }
   selections.sort { (first, second) -> Bool in
     first.personID.debugDescription < second.personID.debugDescription
+  }
+  print("selections ",selections)
+  for fuck in selections {
+    print("fuck ",fuck.personID)
   }
   endOfMethod()
 }
