@@ -701,10 +701,6 @@ func searchNrespond(_ env: MyAppEnvironmentData, _ selections:inout [AnswerBlob]
   selections.sort { (first, second) -> Bool in
     first.personID.debugDescription < second.personID.debugDescription
   }
-  print("selections ",selections)
-  for fuck in selections {
-    print("fuck ",fuck.personID)
-  }
   endOfMethod()
 }
 

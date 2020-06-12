@@ -14,6 +14,7 @@
 		7B2A9DB2244DC6FC00210574 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B2A9DB1244DC6FC00210574 /* Assets.xcassets */; };
 		7B2A9DB5244DC6FC00210574 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 7B2A9DB4244DC6FC00210574 /* Preview Assets.xcassets */; };
 		7B2A9DB8244DC6FC00210574 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 7B2A9DB6244DC6FC00210574 /* LaunchScreen.storyboard */; };
+		7B3A36C02493A517005EC16B /* demoVerb.mp4 in Resources */ = {isa = PBXBuildFile; fileRef = 7B3A36BF2493A517005EC16B /* demoVerb.mp4 */; };
 		7B3A7AF324603420004198C9 /* StoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 7B3A7AF224603420004198C9 /* StoreKit.framework */; };
 		7B3A7AF524607A63004198C9 /* AppDemo.mov in Resources */ = {isa = PBXBuildFile; fileRef = 7B3A7AF424607A63004198C9 /* AppDemo.mov */; };
 		7B3A7B1D2465D8E0004198C9 /* ListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 7B3A7B1C2465D8DE004198C9 /* ListView.swift */; };
@@ -36,6 +37,7 @@
 		7B2A9DB4244DC6FC00210574 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
 		7B2A9DB7244DC6FC00210574 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		7B2A9DB9244DC6FC00210574 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		7B3A36BF2493A517005EC16B /* demoVerb.mp4 */ = {isa = PBXFileReference; lastKnownFileType = file; path = demoVerb.mp4; sourceTree = "<group>"; };
 		7B3A7AF224603420004198C9 /* StoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = StoreKit.framework; path = System/Library/Frameworks/StoreKit.framework; sourceTree = SDKROOT; };
 		7B3A7AF424607A63004198C9 /* AppDemo.mov */ = {isa = PBXFileReference; lastKnownFileType = video.quicktime; path = AppDemo.mov; sourceTree = "<group>"; };
 		7B3A7B1C2465D8DE004198C9 /* ListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListView.swift; sourceTree = "<group>"; };
@@ -83,6 +85,7 @@
 				7BB9E84024602E2D00A96743 /* IAPManager.swift */,
 				7BB9E819245F3E6B00A96743 /* PlayerPage.swift */,
 				7B3A7B1C2465D8DE004198C9 /* ListView.swift */,
+				7B3A36BF2493A517005EC16B /* demoVerb.mp4 */,
 				7B3A7AF424607A63004198C9 /* AppDemo.mov */,
 				7B2A9DA8244DC6F800210574 /* AppDelegate.swift */,
 				7B2A9DAA244DC6F800210574 /* SceneDelegate.swift */,
@@ -183,6 +186,7 @@
 				7B2A9DB2244DC6FC00210574 /* Assets.xcassets in Resources */,
 				7BDBB6862457465900A37CC6 /* verb.txt in Resources */,
 				7BDBB68824574A1400A37CC6 /* XVerbs.csv in Resources */,
+				7B3A36C02493A517005EC16B /* demoVerb.mp4 in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

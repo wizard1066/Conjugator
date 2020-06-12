@@ -113,14 +113,14 @@ struct ContentView: View {
       }.navigationBarHidden(true)
       .statusBar(hidden: true)
       
-//      Button(env.switchLanguage ? "Video":"Video") {
-//          self.env.currentPage = played ? .secondPage : .playerPage
-//        }
-//        .font(Fonts.avenirNextCondensedBold(size: 20))
-//        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
-//        .onReceive(nextFrame) { (_) in
-//          played = true
-//        }
+      Button(env.switchLanguage ? "Video":"Video") {
+          self.env.currentPage = played ? .secondPage : .playerPage
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .onReceive(nextFrame) { (_) in
+          played = true
+        }
 
       if !purchased {
         BuyView(purchased: self.$purchased)
