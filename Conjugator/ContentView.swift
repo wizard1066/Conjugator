@@ -178,7 +178,19 @@ struct NewView: View {
               self.selections.sort { (first, second) -> Bool in
                 first.personID.debugDescription < second.personID.debugDescription
               }
-              let newTense = self.env.tensey.tensex[tenseID].linked!
+              // fix
+              var newTense:Int!
+              for regard in self.env.tensey.tensex {
+                if tenseID == regard.id {
+                  newTense = regard.linked
+                }
+              }
+              
+//              let newTense = self.env.tensey.tensex[tenseID - 1].linked!
+              for fuck in self.env.tensey.tensex {
+                print("fuck ",fuck.linked,fuck.id,fuck.name,fuck.nom)
+              }
+              print("fucked ",newTense,tenseID)
               doDivertPublisher.send((linkID, newTense))
               defaultLinkColor.send()
               DispatchQueue.main.asyncAfter(deadline: .now() + Double(0.5)) {
@@ -413,7 +425,13 @@ struct PageTwo: View {
             linkID = self.env.verby.verbx[self.selectedVerb].link
             
             if linkID != 0 {
-              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+//              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+              if self.env.switchLanguage {
+                self.utiliser = "Follow model verb "
+              } else {
+                self.utiliser = "Suivre verbe modèle "
+              }
+              self.utiliser += findVerb(searchID: linkID)
               self.linkColor = Color.blue
             } else {
               self.linkColor = Color.black

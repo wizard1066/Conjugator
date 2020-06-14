@@ -83,7 +83,7 @@ struct ContentView: View {
   var body: some View {
 
     VStack {
-      Text(env.switchLanguage ? "Conjugator":"Conjugateur")
+      Text(env.switchLanguage ? "Conjugator":"Conjugueur")
         .font(Fonts.avenirNextCondensedBold(size: 32))
         .padding()
 //        .modifier(DownLoadConjugations())
@@ -176,7 +176,15 @@ struct PaidView: View {
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
-        Button(env.switchLanguage ? "Superior":"Supérieur") {
+        Button(env.switchLanguage ? "All Model Verbs":"Tous verbes modèles") {
+          downLoadTenses(environment: self.env)
+          downLoadVerbs(levels: ["easy", "medium", "hard", "model"], environment: self.env)
+          self.env.currentPage = .listView
+        }
+        .font(Fonts.avenirNextCondensedBold(size: 20))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        
+        Button(env.switchLanguage ? "More Verbs":"Tous les verbes") {
           downLoadTenses(environment: self.env)
           downLoadVerbs(levels: ["easy", "medium", "hard", "dynamic", "model"], environment: self.env)
           self.env.currentPage = .secondPage
@@ -184,13 +192,7 @@ struct PaidView: View {
         .font(Fonts.avenirNextCondensedBold(size: 20))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
-//        Button(env.switchLanguage ? "List":"List") {
-//          downLoadTenses(environment: self.env)
-//          downLoadVerbs(levels: ["easy", "medium", "hard", "model"], environment: self.env)
-//          self.env.currentPage = .listView
-//        }
-//        .font(Fonts.avenirNextCondensedBold(size: 20))
-//        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+
         
       }
   }
@@ -313,24 +315,24 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   }
   print("DownLoadTenses")
   let tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.X",
-    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.X",
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.5",
+    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.5",
     "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect Indicative.Derived from the stem of nous indicative present.4",
     "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Simple past indicative.The simple past indicative from the stem of the present nous.4",
     "5-5.Subjonctif présent.Dérivé du radical du Ils de l’indicatif présent.1.Present Subjunctive.Derived from the stem of Ils indicative present.4",
-    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.X",
-    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.X",
-    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present Participle.Derived from the stem of nous indicative present.X",
-    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Past Participle.The past participle from the infinitive stem.3",
-    "20-10.Infinitif présent.Forme de base.0.Present Infinitive.Basic form.X"]
+    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.3",
+    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.5",
+    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present Participle.Derived from the stem of nous indicative present.5",
+    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Past Participle.The past participle from the infinitive stem.5",
+    "20-10.Infinitif présent.Forme de base.0.Present Infinitive.Basic form.5"]
     
     // Last number in above links to this order, not the order in red
     // 0 Conditional Present
-    // 1 Indicatif future
+    // 1 Indicatif future simple
     // 2 Indicative imparfait
-    // 3 Indicative passe
+    // 3 Indicative passe simple
     // 4 Indicative present
-    // 5 Infinitive present
+    // 5 Infinitive present complete
     // 6 Particple Passe
     // 7 Participle Passe
     // 8 Subjective Imparfait
