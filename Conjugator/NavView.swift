@@ -313,16 +313,28 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
   }
   print("DownLoadTenses")
   let tenses = [
-    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.4",
-    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.4",
+    "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.X",
+    "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.X",
     "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect Indicative.Derived from the stem of nous indicative present.4",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Past Participle.The simple past indicative from the stem of the present nous.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Simple past indicative.The simple past indicative from the stem of the present nous.4",
     "5-5.Subjonctif présent.Dérivé du radical du Ils de l’indicatif présent.1.Present Subjunctive.Derived from the stem of Ils indicative present.4",
-    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.4",
-    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.4",
-    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present Participle.Derived from the stem of nous indicative present.4",
-    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Simple Past Indicative.The past participle from the infinitive stem.4",
-    "20-10.Infinitif présent.Forme de base.0.Present Infinitive.Basic form.4"]
+    "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.X",
+    "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.X",
+    "9-9.Participe présent.Dérivé du radical du nous de l’indicatif présent.1.Present Participle.Derived from the stem of nous indicative present.X",
+    "10-9.Participe passé.Dérivé du radical de l'infinitif présent.1.Past Participle.The past participle from the infinitive stem.3",
+    "20-10.Infinitif présent.Forme de base.0.Present Infinitive.Basic form.X"]
+    
+    // Last number in above links to this order, not the order in red
+    // 0 Conditional Present
+    // 1 Indicatif future
+    // 2 Indicative imparfait
+    // 3 Indicative passe
+    // 4 Indicative present
+    // 5 Infinitive present
+    // 6 Particple Passe
+    // 7 Participle Passe
+    // 8 Subjective Imparfait
+    // 9 Subjective Present
   
   for instance in tenses {
   

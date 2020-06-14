@@ -569,7 +569,12 @@ struct PageTwo: View {
             self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
             
             if linkID != 0 {
-              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
+              if self.env.switchLanguage {
+                self.utiliser = "Follow model verb "
+              } else {
+                self.utiliser = "Suivre verbe modèle "
+              }
+              self.utiliser += findVerb(searchID: linkID)
               self.linkColor = Color.blue
             } else {
               self.linkColor = Color.black
