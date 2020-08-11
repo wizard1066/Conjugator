@@ -58,7 +58,7 @@ struct XContentView: View {
   // your simulator code
   @State var purchased = true
 #else
-  @State var purchased = false
+  @State var purchased = true
 #endif
 
   var body: some View {
@@ -117,7 +117,7 @@ struct ContentView: View {
           self.env.currentPage = played ? .secondPage : .playerPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 50, trailing: 10))
         .onReceive(nextFrame) { (_) in
           played = true
         }
@@ -158,6 +158,7 @@ struct PaidView: View {
           self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
+        .background(Color.gray.opacity(0.3))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
        
         Button(env.switchLanguage ? "Intermediate":"Intermédiaire") {
@@ -166,6 +167,7 @@ struct PaidView: View {
           self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
+        .background(Color.gray.opacity(0.3))
         .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
         
         Button(env.switchLanguage ? "Advanced": "Avancé") {
@@ -174,9 +176,10 @@ struct PaidView: View {
           self.env.currentPage = .secondPage
         }
         .font(Fonts.avenirNextCondensedBold(size: 20))
-        .padding(EdgeInsets(top: 10, leading: 10, bottom: 10, trailing: 10))
+        .background(Color.gray.opacity(0.3))
+        .padding(EdgeInsets(top: 10, leading: 10, bottom: 50, trailing: 10))
         
-        Button(env.switchLanguage ? "All Model Verbs":"Tous verbes modèles") {
+        Button(env.switchLanguage ? "All Model Verbs":"Tous les verbes modèles") {
           downLoadTenses(environment: self.env)
           downLoadVerbs(levels: ["easy", "medium", "hard", "model"], environment: self.env)
           self.env.currentPage = .listView
@@ -318,7 +321,7 @@ func downLoadTenses(environment: MyAppEnvironmentData) {
     "1-1.Indicatif présent.Dérivé du radical de l'infinitif présent.1.Present Indicative.Derived from infinitive stem.5",
     "2-2.Indicatif futur simple.Dérivé de l'infinitif complet.1.Future Indicative.Derived from full infinitive.5",
     "3-3.Indicatif imparfait.Dérivé du radical du nous de l’indicatif présent.1.Imperfect Indicative.Derived from the stem of nous indicative present.4",
-    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Simple past indicative.The simple past indicative from the stem of the present nous.4",
+    "4-4.Indicatif passé simple.Dérivé du radical du nous de l’indicatif présent.1.Simple past indicative.Derived from the stem of the present nous.4",
     "5-5.Subjonctif présent.Dérivé du radical du Ils de l’indicatif présent.1.Present Subjunctive.Derived from the stem of Ils indicative present.4",
     "6-6.Subjonctif imparfait.Dérivé du radical unique du passé simple.1.Imperfect Subjunctive.Derived from the unique simple past stem.3",
     "7-7.Conditionnel présent.Dérivé de l'infinitif complet.1.Present Conditional.Derived from the full infinitive.5",
@@ -511,7 +514,7 @@ func returnClass(class2C: String) -> PersonClass {
             case "Vous":
               personID = PersonClass.b2
             case "Ils":
-              personID = PersonClass.b3
+              personID = PersonClass.a4
             default:
               personID = PersonClass.cx
             }

@@ -22,9 +22,9 @@ enum PersonClass {
   case a1
   case a2
   case a3
+  case a4
   case b1
   case b2
-  case b3
   case cx
 }
 
@@ -266,7 +266,7 @@ struct PageTwo: View {
   @State var groupName = ""
   @State var groupColor = true
   
-  @State var selectedTense = 9
+  @State var selectedTense = 0
   @State var verbSelected = ""
   @State var preVerbSelected = ""
   @State var postVerbSelected = ""
@@ -279,8 +279,8 @@ struct PageTwo: View {
   @State var selectedAnswer = 0
   
   @State var blanks = [String](repeating: "", count: 7)
-  @State var display0Verb = false
-  @State var display0Tense = false
+  @State var display0Verb = true
+  @State var display0Tense = true
   @State var display2Conjugations = false
   @State var display0Conjugations = false
   
@@ -315,6 +315,11 @@ struct PageTwo: View {
   @State private var overText = false
   
   @State var newColor: Color = Color.clear
+  @State private var selectedVerbBackground = Color.red
+  @State private var selectedTenseBackground = Color.red
+  
+  @State var startedUpVerb = false
+  @State var startedUpTense = false
   
   var body: some View {
     
@@ -369,7 +374,7 @@ struct PageTwo: View {
       }
        
       Text("fooBar").frame(width: 256, height: 0, alignment: .center)
-        .navigationBarTitle(Text(env.switchLanguage ? "Conjugator":"Conjugateur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
+        .navigationBarTitle(Text(env.switchLanguage ? "Conjugator":"Conjugueur"), displayMode: .inline).font(Fonts.avenirNextCondensedBold(size: 20))
         .navigationBarItems(trailing: Text("Admin").onTapGesture {
           self.action = 1
           self.env.currentPage = .navigationView
@@ -381,8 +386,8 @@ struct PageTwo: View {
           self.linkColor = Color.black
         }
       
-      ZStack {
-        if display0Verb {
+      ScrollView(showsIndicators: true) {
+        VStack {
         HStack {
           Image(systemName: "goforward.plus")
             .resizable()
@@ -390,7 +395,6 @@ struct PageTwo: View {
             
             .opacity(0.8)
             .frame(width: 32, height: 32, alignment: .center)
-            .offset(x: 0, y: -32)
             .padding()
             .onTapGesture {
               if self.selectedVerb < (self.env.verby.verbx.count + 8) {
@@ -410,22 +414,28 @@ struct PageTwo: View {
                 
             }
           }
-          .frame(width: 128, height: 162, alignment: .center)
-          .fixedSize()
-//          .background(InsideView)
-          .offset(x: 0, y: -32)
+          .frame(maxWidth: UIScreen.main.bounds.maxX - 180, maxHeight: 160)
+          .onAppear(perform: {
+            print("")
+          })
+          .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+            .background(InsideView(backgroundColor: Color.blue))
           .onReceive([selectedVerb].publisher.first()) { ( value ) in
             self.selectedVerb = value
+//            self.selectedVerbBackground = Color.red
           }
           .onTapGesture {
+            self.startedUpVerb = true
+            self.startedUpTense = false
             self.selections.removeAll()
+            self.groupName = ""
             self.display2Conjugations = false
+            self.selectedVerbBackground = Color.green
             
             verbID = self.env.verby.verbx[self.selectedVerb].id
             linkID = self.env.verby.verbx[self.selectedVerb].link
             
             if linkID != 0 {
-//              self.utiliser = "Même règle que " + findVerb(searchID: linkID)
               if self.env.switchLanguage {
                 self.utiliser = "Follow model verb "
               } else {
@@ -464,7 +474,6 @@ struct PageTwo: View {
               self.display2Conjugations = true
               self.display0Tense = true
               self.display1Tense = false
-              self.display0Verb = false
               self.display1Verb = true
               self.display2Conjugations = true
               self.newValue = 256
@@ -482,7 +491,6 @@ struct PageTwo: View {
             
             .opacity(0.8)
             .frame(width: 32, height: 32, alignment: .center)
-            .offset(x: 0, y: -32)
             .padding()
             .onTapGesture {
               if self.selectedVerb > 8 {
@@ -495,60 +503,52 @@ struct PageTwo: View {
               self.selectedVerb = 0
             }
         }
-        } else {
-          if display1Verb {
-            VerbView(display0Verb: $display0Verb, display1Verb: $display1Verb, preVerbSelected: $preVerbSelected, verbSelected: $verbSelected, postVerbSelected: $postVerbSelected)
-              .frame(width: 256, height: 162, alignment: .center)
-              .fixedSize()
-              .offset(x: 0, y: -32)
-              .onReceive(doDivertPublisher, perform: { ( row ) in
-                let (verbIDidx, tenseIDidx) = row
-                
-                self.display1Verb = false
-                self.display0Verb = true
-                self.noDivert = false
-                
-                self.display1Tense = false
-                self.display0Tense = true
-                
-                self.selectedTense = tenseIDidx
-                tenseID = tenseIDidx
-                
-                if self.selectedTense > 0 {
-                  self.preTenseSelected =  self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense - 1].name
-                } else {
-                  self.preTenseSelected = ""
-                }
-                
-                if self.selectedTense < (self.env.tensey.tensex.count - 1 ) {
-                  self.postTenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense - 1].nom : self.env.tensey.tensex[self.selectedTense + 1].name
-                } else {
-                  self.postTenseSelected = ""
-                }
-                self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
-                
-                self.selectedVerb = findVerbIndex(searchID: verbIDidx)
-                verbID = self.env.verby.verbx[self.selectedVerb].id
-                linkID = self.env.verby.verbx[self.selectedVerb].link
-                
-                self.preVerbSelected = self.selectedVerb > 0 ? self.env.verby.verbx[self.selectedVerb - 1].name : ""
-                self.postVerbSelected = self.selectedVerb < (self.env.verby.verbx.count - 1 ) ? self.env.verby.verbx[self.selectedVerb + 1].name : ""
-                self.verbSelected = self.env.verby.verbx[self.selectedVerb].name
-                
-                DispatchQueue.main.asyncAfter(deadline: .now() + Double(4)) {
-                  self.display1Verb = true
-                  self.display0Verb = false
-                  self.display1Tense = true
-                  self.display0Tense = false
-                  self.noDivert = true
-                }
-              })
+        HStack {
+//          Image(systemName: "arrow.up")
+//          .resizable()
+//            .zIndex(1)
+//            .opacity(0.4)
+//            .opacity(0.8)
+//            .frame(width: 32, height: 32, alignment: .center)
+//            .padding()
+          VStack {
+            if startedUpVerb {
+            Text(self.env.verby.verbx[self.selectedVerb].name)
+              .font(Fonts.avenirNextCondensedBold(size: 24))
+               .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+//               .border(selectedVerbBackground)
+               .background(selectedVerbBackground.opacity(0.4))
+            } else {
+              Text("                        ")
+               .font(Fonts.avenirNextCondensedBold(size: 24))
+               .border(Color.black.opacity(0.5))
+               .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+               
+              }
+            if startedUpTense {
+              Text(self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom: self.env.tensey.tensex[self.selectedTense].name)
+              .font(Fonts.avenirNextCondensedBold(size: 24))
+               .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+//               .border(selectedTenseBackground)
+               .background(selectedTenseBackground.opacity(0.4))
+              } else {
+              Text("                         ")
+               .font(Fonts.avenirNextCondensedBold(size: 24))
+               .border(Color.black.opacity(0.5))
+               .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+               
+//               .border(selectedVerbBackground)
+             
+            }
           }
+//          Image(systemName: "arrow.down")
+//          .resizable()
+//            .zIndex(1)
+//            .opacity(0.4)
+//            .opacity(0.8)
+//            .frame(width: 32, height: 32, alignment: .center)
+//            .padding()
         }
-      }
-      
-      ZStack {
-        if display0Tense {
           Picker("", selection: $selectedTense) {
             ForEach((0 ..< self.env.tensey.tensex.count), id: \.self) { column in
               //        ForEach(0 ..< tenses.count) {
@@ -557,15 +557,20 @@ struct PageTwo: View {
                 .background(self.showColor ? Color.yellow: Color.clear)
             }
           }.labelsHidden()
-            .frame(width: 256, height: 162, alignment: .center)
-            .fixedSize()
-            .offset(x: 0, y: -64)
+          .frame(maxWidth: UIScreen.main.bounds.maxX - 180, maxHeight: 160)
+          .padding(EdgeInsets(top: 4, leading: 4, bottom: 4, trailing: 4))
+          .background(InsideView(backgroundColor: Color.gray))
+
             .onReceive([selectedTense].publisher) { ( value ) in
               self.selectedTense = value
+              
+//              self.selectedTenseBackground = Color.red
           }
           .onTapGesture {
+            self.startedUpTense = true
             self.selections.removeAll()
             self.display2Conjugations = false
+            self.selectedTenseBackground = Color.green
             
             self.display1Verb = true
             
@@ -585,7 +590,7 @@ struct PageTwo: View {
               self.postTenseSelected = ""
             }
             self.tenseSelected = self.env.switchLanguage ? self.env.tensey.tensex[self.selectedTense].nom : self.env.tensey.tensex[self.selectedTense].name
-            
+          if linkID != nil {
             if linkID != 0 {
               if self.env.switchLanguage {
                 self.utiliser = "Follow model verb "
@@ -599,12 +604,10 @@ struct PageTwo: View {
             }
             self.display2Conjugations = false
             self.selections.removeAll()
+            
             if linkID! == 0 {
               searchNrespond(self.env, &self.selections) {
-//                  DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                    self.display0Tense = false
                     self.display1Tense = true
-                    self.display0Verb = false
                     self.display1Verb = true
                     self.newValue = 256
                     for loop in 0...5 {
@@ -613,16 +616,13 @@ struct PageTwo: View {
                     withAnimation { ()
                       self.display2Conjugations = true
                     }
-//                }
               }
             } else {
               if self.noDivert {
                 let spc = AnswerBlob(verbID: verbID, tenseID: tenseID, personID: PersonClass.cx, name: self.utiliser, redMask: 0, stemMask: nil, termMask: nil)
                 self.selections.append(spc)
                 DispatchQueue.main.asyncAfter(deadline: .now() + Double(1)) {
-                  self.display0Tense = false
                   self.display1Tense = true
-                  self.display0Verb = false
                   self.display1Verb = true
                   self.newValue = 256
                   for loop in 0...5 {
@@ -637,25 +637,18 @@ struct PageTwo: View {
             if !self.groupColor {
               self.selections.removeAll()
             }
+          }
           }.padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-        }
-        if display1Tense {
-          TenseView(display0Tense: $display0Tense, display1Tense: $display1Tense, preTenseSelected: $preTenseSelected, tenseSelected: $tenseSelected, postTenseSelected: $postTenseSelected)
-            .frame(width: 256, height: 162, alignment: .center)
-            .fixedSize()
-            .offset(x: 0, y: -64)
-        }
-        
-      } // ZStack
+          
+      } // VStack
+      } // ScrollView
       Text(groupName)
-        .font(Fonts.avenirNextCondensedBold(size: 18))
+        .font(Fonts.avenirNextCondensedBold(size: 16))
+//        .font(Fonts.avenirNextCondensedMedium(size: 16))
         .background(groupColor ? newColor: Color.clear)
         .padding(EdgeInsets(top: 4, leading: 0, bottom: 4, trailing: 0))
-        .offset(x: 0, y: -64)
         .onAppear {
-//          self.newColor = Color.init(0xccff00)
           self.newColor = Color.init(0xfaed27)
-//          self.newColor = Color.yellow
         }
       if display2Conjugations {
         List {
@@ -667,37 +660,45 @@ struct PageTwo: View {
                 .font(Fonts.avenirNextCondensedBold(size: 22))
                 .onAppear(perform: {
             for loop in 0..<6 {
-              DispatchQueue.main.asyncAfter(deadline: .now() + Double(loop)) {
+              DispatchQueue.main.asyncAfter(deadline: .now() + Double(loop) + 2) {
                 withAnimation(.easeOut(duration: 1.0)) {
                   self.showMe[loop] = true
                 }
               }
             }
-          })
+          }).onAppear {
+//            DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+//              withAnimation {
+//                self.selectedVerbBackground = Color.orange
+//                self.selectedTenseBackground = Color.orange
+//              }
+//              DispatchQueue.main.asyncAfter(deadline: .now() + 4) {
+//                withAnimation {
+//                  self.selectedVerbBackground = Color.clear
+//                  self.selectedTenseBackground = Color.clear
+//                }
+//              }
+//            }
+          }
               Spacer()
             }
           }.listRowInsets(EdgeInsets(top: 0, leading: 0, bottom: 0, trailing: 0))
         }.environment(\.defaultMinListRowHeight, 20)
           .environment(\.defaultMinListHeaderHeight, 0)
           .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
-          .offset(x: 0, y: -64)
-        
+          
       } else {
         Spacer()
           .frame(width: UIScreen.main.bounds.size.width, height: 180.5, alignment: .center)
-          .offset(x: 0, y: -64)
       }
       Spacer()
       
-    }.statusBar(hidden: true) // VStack
+    }.statusBar(hidden: true) // ScrollView
     
       .onReceive(rulesPublisher, perform: { ( _ ) in
-        self.display0Verb = false
         self.env.verby.verbx.removeAll()
       })
       .onReceive(populatePublisher, perform: { ( seek ) in
-        self.display0Verb = false
-        self.display0Tense = false
         self.display2Conjugations = false
         
         if seek != nil {
@@ -708,7 +709,6 @@ struct PageTwo: View {
         
         DispatchQueue.main.asyncAfter(deadline: .now() + Double(2)) {
           shaker = true
-          self.display0Verb = true
           self.display2Conjugations = true
         }
       }).statusBar(hidden: true)
@@ -753,21 +753,21 @@ struct TenseView: View {
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
           self.display1Tense = false
-          self.display0Tense = true
+//          self.display0Tense = true
       }
-      .opacity(0.1)
+      .opacity(0.4)
       .rotation3DEffect(.degrees(10), axis: (x: 1, y: 0, z: 0))
       Text(tenseSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
           self.display1Tense = false
-          self.display0Tense = true
+//          self.display0Tense = true
       }
       Text(postTenseSelected)
         .font(Fonts.avenirNextCondensedBold(size: 24))
         .onLongPressGesture {
           self.display1Tense = false
-          self.display0Tense = true
+//          self.display0Tense = true
       }
       .opacity(0.1)
       .rotation3DEffect(.degrees(10), axis: (x: -1, y: 0, z: 0))
@@ -811,12 +811,13 @@ struct VerbView: View {
 }
 
 struct InsideView: View {
+  @State var backgroundColor: Color
   var body: some View {
     
     return VStack {
       GeometryReader { geometry in
         Rectangle()
-          .fill(Color.green)
+          .fill(self.backgroundColor)
           .opacity(0.2)
           .onAppear {
             print("geo ", geometry.frame(in: .global))

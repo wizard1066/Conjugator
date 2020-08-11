@@ -32,7 +32,9 @@ struct ListView: View {
       }
     }
     return VStack {
-      Text("ListView").font(Fonts.avenirNextCondensedBold(size: 32))
+//      Text("ListView")
+      Text(self.env.switchLanguage ? "All Model Verbs": "Tous verbes modèles")
+      .font(Fonts.avenirNextCondensedBold(size: 32))
       List {
         ForEach((0 ..< verbView.count), id: \.self) { column1 in
           TableView(word: verbView[column1], gate: colorView[column1])
