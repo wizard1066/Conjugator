@@ -48,9 +48,10 @@ class PlayerUIView: UIView {
   private let playerLayer = AVPlayerLayer()
   override init(frame: CGRect) {
     super.init(frame: .zero)
-    let url = Bundle.main.url(forResource: "demoVerb", withExtension: "mp4")
+    let url = Bundle.main.url(forResource: "frenchVerb", withExtension: "mp4")
 //    let url = URL(string: "https://bitdash-a.akamaihd.net/content/sintel/hls/playlist.m3u8")!
 //    let url = URL(string: "https://www.youtube.com/watch?v=XK8METRgK_U")!
+//    let url = URL(string: "https://www.youtube.com/watch?v=TobIlzoJkR4")
     let player = AVPlayer(url: url!)
     player.play()
     
